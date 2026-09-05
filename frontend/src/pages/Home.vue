@@ -6,8 +6,13 @@
       <nav class="container mx-auto flex items-center justify-between px-6 py-4 lg:px-8">
         <RouterLink to="/" class="flex items-center space-x-2">
           <img src="/favicon.png" alt="Flair Smile Dental Care" class="h-8 w-8 sm:h-10 sm:w-10" />
-          <span class="text-xl font-semibold text-sky-700 sm:text-2xl">Flair Smile</span>
-          <span class="text-xl font-semibold text-gray-700 sm:text-2xl">Dental Care</span>
+          <div class="flex flex-col leading-none">
+            <div class="flex items-center space-x-1.5">
+              <span class="text-lg font-semibold text-sky-700 sm:text-2xl">Flair Smile</span>
+              <span class="text-lg font-semibold text-gray-700 sm:text-2xl">Dental Care</span>
+            </div>
+            <span class="hidden text-xs italic text-gray-500 sm:block">Creating Brighter Smiles</span>
+          </div>
         </RouterLink>
 
         <div class="hidden items-center space-x-8 md:flex">
@@ -23,12 +28,12 @@
         </div>
 
         <button
-          v-if="!mobileOpen"
-          @click="mobileOpen = true"
-          class="rounded-md p-2 text-gray-600 md:hidden"
-          aria-label="Open menu"
+          @click="mobileOpen = !mobileOpen"
+          class="flex h-8 w-8 items-center justify-center rounded-md bg-sky-50 text-sky-800 shadow-sm transition hover:bg-sky-100 hover:text-sky-900 active:scale-95 sm:h-10 sm:w-10 md:hidden"
+          :aria-label="mobileOpen ? 'Close menu' : 'Open menu'"
+          :aria-expanded="mobileOpen"
         >
-          <FeatherIcon name="menu" size="20" />
+          <FeatherIcon :name="mobileOpen ? 'x' : 'menu'" size="20" stroke-width="2.5" />
         </button>
       </nav>
 
@@ -52,33 +57,78 @@
     </header>
 
     <!-- Hero -->
-    <section class="relative overflow-hidden">
+    <section
+      class="relative overflow-hidden min-h-[500px] sm:min-h-[600px] md:min-h-[700px] lg:min-h-[800px]"
+      @mouseenter="stopInterval"
+      @mouseleave="startInterval"
+    >
       <div class="absolute inset-0 z-0">
-        <img
-          src="/chair1.jpeg"
-          alt="Dental clinic interior"
-          class="h-full w-full object-cover"
-        />
+        <!-- Carousel images — replace these 5 files in /frontend/public/ -->
+        <div
+          v-for="(image, index) in heroImages"
+          :key="image"
+          class="absolute inset-0 transition-opacity duration-1000 ease-in-out"
+          :class="index === currentSlide ? 'opacity-100' : 'opacity-0'"
+        >
+          <img
+            :src="image"
+            :alt="`Dental clinic image ${index + 1}`"
+            class="h-full w-full object-cover"
+          />
+        </div>
         <!-- Increased overlay opacity and gradient for readability -->
         <div class="absolute inset-0 bg-gradient-to-r from-slate-900/80 via-slate-900/60 to-slate-900/40"></div>
       </div>
 
-      <div class="relative z-10 container mx-auto px-6 py-20 md:py-28 lg:py-36 lg:px-8">
+      <!-- Carousel controls -->
+      <button
+        type="button"
+        @click="prevSlide"
+        aria-label="Previous image"
+        class="absolute left-4 top-1/2 z-20 -translate-y-1/2 rounded-full bg-white/10 p-2 text-white backdrop-blur-sm transition hover:bg-white/20 focus:outline-none focus:ring-2 focus:ring-white/50 md:left-6"
+      >
+        <FeatherIcon name="chevron-left" class="h-5 w-5 md:h-6 md:w-6" />
+      </button>
+      <button
+        type="button"
+        @click="nextSlide"
+        aria-label="Next image"
+        class="absolute right-4 top-1/2 z-20 -translate-y-1/2 rounded-full bg-white/10 p-2 text-white backdrop-blur-sm transition hover:bg-white/20 focus:outline-none focus:ring-2 focus:ring-white/50 md:right-6"
+      >
+        <FeatherIcon name="chevron-right" class="h-5 w-5 md:h-6 md:w-6" />
+      </button>
+
+      <!-- Carousel dots -->
+      <div class="absolute bottom-6 left-1/2 z-20 flex -translate-x-1/2 gap-2 md:bottom-8">
+        <button
+          v-for="(_, index) in heroImages"
+          :key="index"
+          type="button"
+          @click="goToSlide(index)"
+          :aria-label="`Go to image ${index + 1}`"
+          class="h-2.5 rounded-full transition-all duration-300"
+          :class="index === currentSlide
+            ? 'w-8 bg-white'
+            : 'w-2.5 bg-white/50 hover:bg-white/75'"
+        ></button>
+      </div>
+
+      <div class="relative z-10 flex items-center min-h-[500px] sm:min-h-[600px] md:min-h-[700px] lg:min-h-[800px] py-16 px-6 md:px-8 lg:px-8">
         <div class="max-w-2xl">
           <span class="inline-block rounded-full bg-sky-500/20 px-4 py-1.5 text-sm font-medium text-sky-200 border border-sky-400/30 backdrop-blur-sm">
-            Compassionate. Modern. Expert.
+            Creating Brighter Smiles
           </span>
           <h1 class="mt-5 text-4xl font-extrabold leading-tight tracking-tight text-white sm:text-5xl md:text-6xl lg:text-7xl">
             Flair Smile Dental Care
           </h1>
-          <p class="mt-6 text-base leading-relaxed text-slate-100 sm:text-lg md:text-xl">
+          <p class="mt-4 text-base leading-relaxed text-slate-100 sm:mt-6 sm:text-lg md:text-xl">
             Your trusted home for gentle, modern dentistry right in the heart
             of Nairobi. From routine checkups and cleanings to advanced
             cosmetic and restorative treatments, our experienced team is
             dedicated to keeping your smile healthy, confident, and
             comfortable — for every member of the family.
           </p>
-          <div class="mt-8 flex flex-col gap-3 sm:flex-row">
+          <div class="mt-6 flex flex-col gap-3 sm:mt-8 sm:flex-row">
             <Button
               label="Book an Appointment"
               icon="calendar"
@@ -96,7 +146,7 @@
             />
           </div>
 
-          <div class="mt-10 flex flex-wrap items-center gap-4 sm:gap-6 text-sm text-slate-200">
+          <div class="mt-8 flex flex-wrap items-center gap-3 sm:mt-10 sm:gap-6 text-sm text-slate-200">
             <span class="flex items-center gap-1.5">
               <FeatherIcon name="map-pin" class="h-4 w-4 text-sky-400" /> Laxmi Plaza, Biashara Street, Nairobi
             </span>
@@ -111,6 +161,9 @@
 
     <!-- Stats / Trust Bar -->
     <StatsBar :stats="stats" />
+
+    <!-- Insurance & Payment Strip -->
+    <InsuranceStrip :providers="insuranceProviders" />
 
     <!-- Services -->
     <section id="services" class="py-20">
@@ -321,7 +374,8 @@
               <img src="/favicon.png" alt="Flair Smile" class="h-8 w-8" />
               <span class="text-xl font-semibold text-sky-400">Flair Smile</span>
             </RouterLink>
-            <p class="mt-4 text-sm text-gray-400">
+            <p class="mt-2 text-sm italic text-sky-300">Creating Brighter Smiles</p>
+            <p class="mt-3 text-sm text-gray-400">
               Compassionate, modern dentistry in Nairobi's CBD. We're dedicated
               to creating healthy smiles and confident patients through
               personalized, gentle care for the whole family.
@@ -375,17 +429,19 @@
 
     <!-- Floating WhatsApp contact button -->
     <WhatsAppButton phone="0746721164" />
+
+    <!-- Booking modal -->
+    <BookingModal v-model="bookingOpen" />
   </div>
 </template>
 
 <script setup lang="ts">
-import { ref, computed, onMounted } from "vue";
+import { ref, computed, onMounted, onUnmounted } from "vue";
 import {
   Button,
   Card,
   FeatherIcon,
   LoadingIndicator,
-  toast,
   createResource,
 } from "frappe-ui";
 
@@ -395,6 +451,8 @@ import DoctorCard from "../components/DoctorCard.vue";
 import TestimonialCard from "../components/TestimonialCard.vue";
 import StatsBar from "../components/StatsBar.vue";
 import WhatsAppButton from "../components/WhatsAppButton.vue";
+import InsuranceStrip from "../components/InsuranceStrip.vue";
+import BookingModal from "../components/BookingModal.vue";
 
 interface Service {
   id: number;
@@ -420,6 +478,56 @@ interface Testimonial {
 }
 
 const mobileOpen = ref(false);
+const bookingOpen = ref(false);
+
+// === Hero carousel ===
+// Add or replace image files in /frontend/public/ and update the paths below.
+// Filename suggestions: hero-1.jpeg, hero-2.jpeg, hero-3.jpeg, hero-4.jpeg, hero-5.jpeg
+const heroImages: string[] = [
+  "/chair1.jpeg",
+  "/chair2.jpeg",
+  "/waiting-area.jpeg",
+  "/hero1.jpeg",
+  "/hero3.jpeg",
+  "/reception.jpeg",
+];
+
+const currentSlide = ref(0);
+let slideInterval: ReturnType<typeof setInterval> | null = null;
+
+function nextSlide(): void {
+  currentSlide.value = (currentSlide.value + 1) % heroImages.length;
+  restartInterval();
+}
+
+function prevSlide(): void {
+  currentSlide.value =
+    (currentSlide.value - 1 + heroImages.length) % heroImages.length;
+  restartInterval();
+}
+
+function goToSlide(index: number): void {
+  currentSlide.value = index;
+  restartInterval();
+}
+
+function startInterval(): void {
+  slideInterval = setInterval(() => {
+    currentSlide.value = (currentSlide.value + 1) % heroImages.length;
+  }, 5000);
+}
+
+function stopInterval(): void {
+  if (slideInterval) {
+    clearInterval(slideInterval);
+    slideInterval = null;
+  }
+}
+
+function restartInterval(): void {
+  stopInterval();
+  startInterval();
+}
 
 const services: Service[] = [
   {
@@ -552,6 +660,15 @@ const stats: Stat[] = [
   { id: 4, value: "24/7", label: "Emergency Support", icon: "phone" },
 ];
 
+const insuranceProviders: string[] = [
+  "NHIF",
+  "Jubilee Insurance",
+  "AAR Health",
+  "Madison Insurance",
+  "Britam",
+  "Lipa Mdogo Mdogo",
+];
+
 // Fetch Healthcare Practitioners from Frappe Healthcare
 const doctorsResource = createResource({
   url: "frappe.healthcare.doctype.healthcare_practitioner.healthcare_practitioner.get_list",
@@ -588,16 +705,7 @@ function getQualification(doc: any): string {
 }
 
 function bookAppointment(): void {
-  const el = document.getElementById("contact");
-  if (el) {
-    el.scrollIntoView({ behavior: "smooth" });
-  }
-  toast("info", {
-    title: "Book an Appointment",
-    message:
-      'Please call 0746 721 164 / 0711 842 836 or email us at flairsmiledentalcare@gmail.com to schedule.',
-    duration: 6000,
-  });
+  bookingOpen.value = true;
 }
 
 function callNow(): void {
@@ -606,6 +714,11 @@ function callNow(): void {
 
 onMounted(() => {
   mobileOpen.value = false;
+  startInterval();
+});
+
+onUnmounted(() => {
+  stopInterval();
 });
 </script>
 
