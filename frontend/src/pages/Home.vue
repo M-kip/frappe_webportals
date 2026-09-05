@@ -5,7 +5,7 @@
     <header class="sticky top-0 z-30 bg-white/90 backdrop-blur border-b border-gray-100">
       <nav class="container mx-auto flex items-center justify-between px-6 py-4 lg:px-8">
         <RouterLink to="/" class="flex items-center space-x-2">
-          <img src="/favicon.jpg" alt="Flair Smile Dental Care" class="h-10 w-10" />
+          <img src="/favicon.png" alt="Flair Smile Dental Care" class="h-10 w-10" />
           <span class="text-2xl font-semibold text-sky-700">Flair Smile</span>
           <span class="text-2xl font-semibold text-gray-700">Dental Care</span>
         </RouterLink>
