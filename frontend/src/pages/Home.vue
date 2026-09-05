@@ -72,9 +72,11 @@
             Flair Smile Dental Care
           </h1>
           <p class="mt-6 text-lg text-slate-100">
-            Your trusted dental clinic on Biashara Street, Nairobi. We provide
-            comprehensive, family-friendly dental care in a calm and modern
-            environment.
+            Your trusted home for gentle, modern dentistry right in the heart
+            of Nairobi. From routine checkups and cleanings to advanced
+            cosmetic and restorative treatments, our experienced team is
+            dedicated to keeping your smile healthy, confident, and
+            comfortable — for every member of the family.
           </p>
           <div class="mt-8 flex flex-col gap-3 sm:flex-row">
             <Button
@@ -106,6 +108,9 @@
         </div>
       </div>
     </section>
+
+    <!-- Stats / Trust Bar -->
+    <StatsBar :stats="stats" />
 
     <!-- Services -->
     <section id="services" class="py-20">
@@ -361,6 +366,9 @@
         </div>
       </div>
     </footer>
+
+    <!-- Floating WhatsApp contact button -->
+    <WhatsAppButton phone="+254700123456" />
   </div>
 </template>
 
@@ -379,6 +387,8 @@ import ServiceCard from "../components/ServiceCard.vue";
 import FeatureCard from "../components/FeatureCard.vue";
 import DoctorCard from "../components/DoctorCard.vue";
 import TestimonialCard from "../components/TestimonialCard.vue";
+import StatsBar from "../components/StatsBar.vue";
+import WhatsAppButton from "../components/WhatsAppButton.vue";
 
 interface Service {
   id: number;
@@ -520,6 +530,20 @@ const testimonials: Testimonial[] = [
       "The aligners were barely noticeable. My teeth look amazing and my confidence has soared!",
     avatar: "A",
   },
+];
+
+interface Stat {
+  id: number;
+  value: string;
+  label: string;
+  icon: string;
+}
+
+const stats: Stat[] = [
+  { id: 1, value: "10+", label: "Years of Experience", icon: "calendar" },
+  { id: 2, value: "5,000+", label: "Happy Patients", icon: "users" },
+  { id: 3, value: "4.9", label: "Google Rating", icon: "star" },
+  { id: 4, value: "24/7", label: "Emergency Support", icon: "phone" },
 ];
 
 // Fetch Healthcare Practitioners from Frappe Healthcare
