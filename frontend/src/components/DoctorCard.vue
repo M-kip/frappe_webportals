@@ -41,7 +41,7 @@ defineProps<{
 function bookWithDoctor(): void {
   toast("info", {
     title: "Book with Doctor",
-    message: `Call +254 700 123 456 to schedule with this dentist.`,
+    message: `Call 0746 721 164 / 0711 842 836 to schedule with this dentist.`,
     duration: 4000,
   });
 }

@@ -5,9 +5,9 @@
     <header class="sticky top-0 z-30 bg-white/90 backdrop-blur border-b border-gray-100">
       <nav class="container mx-auto flex items-center justify-between px-6 py-4 lg:px-8">
         <RouterLink to="/" class="flex items-center space-x-2">
-          <img src="/favicon.png" alt="Flair Smile Dental Care" class="h-10 w-10" />
-          <span class="text-2xl font-semibold text-sky-700">Flair Smile</span>
-          <span class="text-2xl font-semibold text-gray-700">Dental Care</span>
+          <img src="/favicon.png" alt="Flair Smile Dental Care" class="h-8 w-8 sm:h-10 sm:w-10" />
+          <span class="text-xl font-semibold text-sky-700 sm:text-2xl">Flair Smile</span>
+          <span class="text-xl font-semibold text-gray-700 sm:text-2xl">Dental Care</span>
         </RouterLink>
 
         <div class="hidden items-center space-x-8 md:flex">
@@ -68,10 +68,10 @@
           <span class="inline-block rounded-full bg-sky-500/20 px-4 py-1.5 text-sm font-medium text-sky-200 border border-sky-400/30 backdrop-blur-sm">
             Compassionate. Modern. Expert.
           </span>
-          <h1 class="mt-5 text-4xl font-extrabold tracking-tight text-white sm:text-5xl lg:text-6xl">
+          <h1 class="mt-5 text-4xl font-extrabold leading-tight tracking-tight text-white sm:text-5xl md:text-6xl lg:text-7xl">
             Flair Smile Dental Care
           </h1>
-          <p class="mt-6 text-lg text-slate-100">
+          <p class="mt-6 text-base leading-relaxed text-slate-100 sm:text-lg md:text-xl">
             Your trusted home for gentle, modern dentistry right in the heart
             of Nairobi. From routine checkups and cleanings to advanced
             cosmetic and restorative treatments, our experienced team is
@@ -98,7 +98,7 @@
 
           <div class="mt-10 flex flex-wrap items-center gap-4 sm:gap-6 text-sm text-slate-200">
             <span class="flex items-center gap-1.5">
-              <FeatherIcon name="map-pin" class="h-4 w-4 text-sky-400" /> Biashara Street, Nairobi
+              <FeatherIcon name="map-pin" class="h-4 w-4 text-sky-400" /> Laxmi Plaza, Biashara Street, Nairobi
             </span>
             <span class="hidden sm:inline-block w-1.5 h-1.5 rounded-full bg-slate-400"></span>
             <span class="flex items-center gap-1.5">
@@ -116,8 +116,8 @@
     <section id="services" class="py-20">
       <div class="container mx-auto px-6 lg:px-8">
         <div class="text-center">
-          <h2 class="text-3xl font-bold text-gray-900">Our Services</h2>
-          <p class="mt-4 text-lg text-gray-600">
+          <h2 class="text-2xl font-bold text-gray-900 sm:text-3xl md:text-4xl">Our Services</h2>
+          <p class="mt-4 text-base text-gray-600 sm:text-lg md:text-xl">
             Comprehensive dental care tailored to your needs.
           </p>
         </div>
@@ -136,8 +136,8 @@
     <section class="bg-gray-50 py-16">
       <div class="container mx-auto px-6 lg:px-8">
         <div class="text-center">
-          <h2 class="text-3xl font-bold text-gray-900">Why Choose Flair Smile?</h2>
-          <p class="mt-4 text-lg text-gray-600">
+          <h2 class="text-2xl font-bold text-gray-900 sm:text-3xl md:text-4xl">Why Choose Flair Smile?</h2>
+          <p class="mt-4 text-base text-gray-600 sm:text-lg md:text-xl">
             We combine modern technology with gentle, personalized care.
           </p>
         </div>
@@ -156,8 +156,8 @@
     <section id="doctors" class="py-20">
       <div class="container mx-auto px-6 lg:px-8">
         <div class="text-center">
-          <h2 class="text-3xl font-bold text-gray-900">Meet Our Dentists</h2>
-          <p class="mt-4 text-lg text-gray-600">
+          <h2 class="text-2xl font-bold text-gray-900 sm:text-3xl md:text-4xl">Meet Our Dentists</h2>
+          <p class="mt-4 text-base text-gray-600 sm:text-lg md:text-xl">
             Highly qualified professionals dedicated to your smile.
           </p>
         </div>
@@ -197,8 +197,8 @@
     <section class="bg-sky-50 py-20">
       <div class="container mx-auto px-6 lg:px-8">
         <div class="text-center">
-          <h2 class="text-3xl font-bold text-gray-900">What Our Patients Say</h2>
-          <p class="mt-4 text-lg text-gray-600">
+          <h2 class="text-2xl font-bold text-gray-900 sm:text-3xl md:text-4xl">What Our Patients Say</h2>
+          <p class="mt-4 text-base text-gray-600 sm:text-lg md:text-xl">
             Hear from people who have experienced the Flair Smile difference.
           </p>
         </div>
@@ -217,10 +217,9 @@
     <section id="contact" class="py-20">
       <div class="container mx-auto px-6 lg:px-8">
         <div class="text-center">
-          <h2 class="text-3xl font-bold text-gray-900">Visit Us</h2>
-          <p class="mt-4 text-lg text-gray-600">
-            We're conveniently located on Biashara Street in the heart of
-            Nairobi.
+          <h2 class="text-2xl font-bold text-gray-900 sm:text-3xl md:text-4xl">Visit Us</h2>
+          <p class="mt-4 text-base text-gray-600 sm:text-lg md:text-xl">
+            Visit us at Laxmi Plaza on Biashara Street in the heart of Nairobi's CBD.
           </p>
         </div>
 
@@ -236,9 +235,9 @@
                 <div>
                   <p class="font-semibold text-gray-900">Our Location</p>
                   <p class="mt-1 text-gray-700">
-                    Biashara Street<br />
-                    Nairobi, Kenya<br />
-                    Flair Smile Building
+                    Laxmi Plaza, 5th Floor, Office No. 1<br />
+                    Biashara Street, Nairobi CBD<br />
+                    Kenya
                   </p>
                 </div>
               </div>
@@ -250,11 +249,16 @@
                 />
                 <div>
                   <p class="font-semibold text-gray-900">Phone</p>
-                  <p class="mt-1">
+                  <p class="mt-1 space-y-1">
                     <a
-                      href="tel:+254700123456"
-                      class="text-sky-700 hover:text-sky-800"
-                      >+254 700 123 456</a
+                      href="tel:0746721164"
+                      class="block text-sky-700 hover:text-sky-800"
+                      >0746 721 164</a
+                    >
+                    <a
+                      href="tel:0711842836"
+                      class="block text-sky-700 hover:text-sky-800"
+                      >0711 842 836</a
                     >
                   </p>
                 </div>
@@ -269,9 +273,9 @@
                   <p class="font-semibold text-gray-900">Email</p>
                   <p class="mt-1">
                     <a
-                      href="mailto:info@flairsmile.co.ke"
+                      href="mailto:flairsmiledentalcare@gmail.com"
                       class="text-sky-700 hover:text-sky-800"
-                      >info@flairsmile.co.ke</a
+                      >flairsmiledentalcare@gmail.com</a
                     >
                   </p>
                 </div>
@@ -300,7 +304,7 @@
               <iframe
                 title="Flair Smile Dental Care location"
                 class="h-64 w-full rounded-md border-0"
-                :src="`https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3988.8200408953426!2d36.8108!3d-1.2921!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1f0!2f0!3f0!3m2!1s0x0%3A0x0!2zMjHCsDExJzM4Ljki!3CzM!1s0!2s!2sBiashara%20Street%2C%20Nairobi!5e0!3m2!1sen!2s!8FBND!2m1!1s?hl=en&z=15`"
+                src="https://www.google.com/maps?q=Laxmi+Plaza,+Biashara+Street,+Nairobi+CBD,+Kenya&output=embed"
               ></iframe>
             </template>
           </Card>
@@ -314,11 +318,13 @@
         <div class="grid gap-8 md:grid-cols-2 lg:grid-cols-4">
           <div>
             <RouterLink to="/" class="flex items-center space-x-2">
-              <img src="/favicon.jpg" alt="Flair Smile" class="h-8 w-8" />
+              <img src="/favicon.png" alt="Flair Smile" class="h-8 w-8" />
               <span class="text-xl font-semibold text-sky-400">Flair Smile</span>
             </RouterLink>
             <p class="mt-4 text-sm text-gray-400">
-              Compassionate, modern dentistry in the heart of Nairobi.
+              Compassionate, modern dentistry in Nairobi's CBD. We're dedicated
+              to creating healthy smiles and confident patients through
+              personalized, gentle care for the whole family.
             </p>
           </div>
 
@@ -338,10 +344,10 @@
           <div>
             <h3 class="text-white">Contact</h3>
             <ul class="mt-4 space-y-2 text-sm">
-              <li>Biashara Street, Nairobi, Kenya</li>
-              <li>+254 700 123 456</li>
-              <li>info@flairsmile.co.ke</li>
-              <li>Mon–Fri: 8am–6pm</li>
+              <li>Laxmi Plaza, 5th Floor, Office No. 1</li>
+              <li>Biashara Street, Nairobi CBD</li>
+              <li>0746 721 164 / 0711 842 836</li>
+              <li>flairsmiledentalcare@gmail.com</li>
             </ul>
           </div>
 
@@ -368,7 +374,7 @@
     </footer>
 
     <!-- Floating WhatsApp contact button -->
-    <WhatsAppButton phone="+254700123456" />
+    <WhatsAppButton phone="0746721164" />
   </div>
 </template>
 
@@ -589,13 +595,13 @@ function bookAppointment(): void {
   toast("info", {
     title: "Book an Appointment",
     message:
-      'Please call +254 700 123 456 or email us at info@flairsmile.co.ke to schedule.',
+      'Please call 0746 721 164 / 0711 842 836 or email us at flairsmiledentalcare@gmail.com to schedule.',
     duration: 6000,
   });
 }
 
 function callNow(): void {
-  window.location.href = "tel:+254700123456";
+  window.location.href = "tel:0746721164";
 }
 
 onMounted(() => {
