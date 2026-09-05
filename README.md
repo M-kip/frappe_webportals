@@ -57,7 +57,21 @@ cd frappe_webportals/frontend
 yarn build
 ```
 
-Serve the `frontend/dist` output from your Frappe app's static files.
+The build command automatically:
+- Compiles the Vue SPA with Vite
+- Outputs to `frontend/dist` with assets path `/assets/frappe_webportals/frontend/`
+- Copies the HTML entry point to `frappe_webportals/www/frontend.html`
+
+---
+
+## Frontend Commands
+
+| Command | Description |
+|---|---|
+| `yarn dev` | Start Vite dev server on port 8080 |
+| `yarn build` | Build for production (includes copy-html-entry) |
+| `yarn preview` | Preview production build locally |
+| `yarn copy-html-entry` | Manually copy HTML entry to Frappe www folder |
 
 ---
 
