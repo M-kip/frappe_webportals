@@ -1,40 +1,115 @@
-### Frappe Webportals
+# Flair Smile Dental Care Portal
 
-Frontend for Frappe ERPnext and health modules
+A modern clinic website portal for **Flair Smile Dental Care**, built on the [Frappe Framework](https://github.com/frappe/frappe). It provides patients with information about the clinic, its services, doctors, and a way to book appointments — all integrated with **Frappe Healthcare** for practitioner management.
 
-### Installation
+---
 
-You can install this app using the [bench](https://github.com/frappe/bench) CLI:
+## Project Overview
+
+### Frontend
+- **Vue 3** + **Vite** SPA served as a standalone frontend
+- **TailwindCSS** for styling
+- **Frappe UI** for UI components (Button, Card, Feather Icons, Toast, etc.)
+- Dynamic content pulled from **Frappe Healthcare** (Healthcare Practitioners)
+
+### Key Pages & Features
+| Page / Section | Description |
+|---|---|
+| **Hero** | Full-bleed hero with clinic name, tagline, and CTA buttons |
+| **Trust Stats Bar** | Key metrics (years, patients, rating, emergency support) |
+| **Services** | Grid of 6 dental services with icons and descriptions |
+| **Why Choose Us** | 6 feature cards highlighting clinic strengths |
+| **Our Dentists** | Dynamic list of active practitioners from Frappe Healthcare |
+| **Testimonials** | 3 patient reviews with star ratings |
+| **Contact** | Address, phone numbers, email, working hours, and Google Maps embed |
+| **Footer** | Brand info, services, contact, and quick links |
+| **Floating WhatsApp** | Fixed WhatsApp button with pre-filled booking message |
+
+---
+
+## Installation
+
+### 1. Install the Frappe App
 
 ```bash
 cd $PATH_TO_YOUR_BENCH
-bench get-app $URL_OF_THIS_REPO --branch develop
+bench get-app https://github.com/your-org/frappe_webportals --branch develop
 bench install-app frappe_webportals
+bench --site your-site.com install-app frappe_webportals
 ```
 
-### Contributing
+> **Note:** In development, add `"ignore_csrf": 1` to your `site_config.json` to avoid CSRF token errors with the Vite dev server.
 
-This app uses `pre-commit` for code formatting and linting. Please [install pre-commit](https://pre-commit.com/#installation) and enable it for this repository:
+### 2. Set up the Frontend
+
+```bash
+cd frappe_webportals/frontend
+yarn install
+yarn dev
+```
+
+The Vite dev server starts on **port 8080** by default. Open `http://your-site.test:8080` in your browser. The app is served at the `/frontend` base path.
+
+### 3. Build for Production
+
+```bash
+cd frappe_webportals/frontend
+yarn build
+```
+
+Serve the `frontend/dist` output from your Frappe app's static files.
+
+---
+
+## Contact Information
+
+```
+Flair Smile Dental Care
+Laxmi Plaza, 5th Floor, Office No. 1
+Biashara Street, Nairobi CBD
+Kenya
+
+Phone:  0746 721 164 / 0711 842 836
+Email:  flairsmiledentalcare@gmail.com
+```
+
+---
+
+## Tech Stack
+
+| Layer | Technology |
+|---|---|
+| Backend | Frappe Framework, Frappe Healthcare |
+| Frontend | Vue 3, Vite, TailwindCSS, Frappe UI |
+| Icons | Feather Icons |
+| Styling | Tailwind CSS utility classes |
+
+---
+
+## Resources
+
+- [Frappe Framework](https://frappeframework.com/docs)
+- [Frappe Healthcare](https://github.com/frappe/healthcare)
+- [Frappe UI](https://github.com/frappe/frappe-ui)
+- [Vue 3](https://vuejs.org/guide/)
+- [TailwindCSS](https://tailwindcss.com/docs)
+- [Vite](https://vitejs.dev/)
+
+---
+
+## Contributing
+
+This project uses **pre-commit** for linting and formatting. Please install and enable it before contributing:
 
 ```bash
 cd apps/frappe_webportals
 pre-commit install
 ```
 
-Pre-commit is configured to use the following tools for checking and formatting your code:
+Tools configured: `ruff`, `eslint`, `prettier`, `pyupgrade`.
 
-- ruff
-- eslint
-- prettier
-- pyupgrade
-### CI
+---
 
-This app can use GitHub Actions for CI. The following workflows are configured:
+## License
 
-- CI: Installs this app and runs unit tests on every push to `develop` branch.
-- Linters: Runs [Frappe Semgrep Rules](https://github.com/frappe/semgrep-rules) and [pip-audit](https://pypi.org/project/pip-audit/) on every pull request.
-
-
-### License
-
-mit
+MIT
