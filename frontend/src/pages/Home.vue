@@ -1,0 +1,622 @@
+<template>
+  <div class="min-h-screen bg-white text-gray-800 font-sans">
+
+    <!-- Navigation -->
+    <header class="sticky top-0 z-30 bg-white/90 backdrop-blur border-b border-gray-100">
+      <nav class="container mx-auto flex items-center justify-between px-6 py-4 lg:px-8">
+        <RouterLink to="/" class="flex items-center space-x-2">
+          <img src="/favicon.jpg" alt="Flair Smile Dental Care" class="h-10 w-10" />
+          <span class="text-2xl font-semibold text-sky-700">Flair Smile</span>
+          <span class="text-2xl font-semibold text-gray-700">Dental Care</span>
+        </RouterLink>
+
+        <div class="hidden items-center space-x-8 md:flex">
+          <a href="#services" class="nav-link">Services</a>
+          <a href="#doctors" class="nav-link">Our Dentists</a>
+          <a href="#about" class="nav-link">About</a>
+          <a href="#contact" class="nav-link">Contact</a>
+          <Button
+            label="Book Appointment"
+            class="shadow-md shadow-sky-200 hover:shadow-lg"
+            @click="bookAppointment"
+          />
+        </div>
+
+        <button
+          v-if="!mobileOpen"
+          @click="mobileOpen = true"
+          class="rounded-md p-2 text-gray-600 md:hidden"
+          aria-label="Open menu"
+        >
+          <FeatherIcon name="menu" size="20" />
+        </button>
+      </nav>
+
+      <!-- Mobile menu -->
+      <Transition name="slide-down">
+        <div
+          v-if="mobileOpen"
+          class="border-t border-gray-100 md:hidden"
+        >
+          <div class="container mx-auto space-y-2 px-4 py-3">
+            <a href="#services" @click="mobileOpen = false" class="mobile-nav-link">Services</a>
+            <a href="#doctors" @click="mobileOpen = false" class="mobile-nav-link">Our Dentists</a>
+            <a href="#about" @click="mobileOpen = false" class="mobile-nav-link">About</a>
+            <a href="#contact" @click="mobileOpen = false" class="mobile-nav-link">Contact</a>
+            <div class="pt-2">
+              <Button label="Book Appointment" block @click="bookAppointment" />
+            </div>
+          </div>
+        </div>
+      </Transition>
+    </header>
+
+    <!-- Hero -->
+    <section class="relative overflow-hidden">
+      <div class="absolute inset-0 z-0">
+        <img
+          src="/chair1.jpeg"
+          alt="Dental clinic interior"
+          class="h-full w-full object-cover"
+        />
+        <!-- Increased overlay opacity and gradient for readability -->
+        <div class="absolute inset-0 bg-gradient-to-r from-slate-900/80 via-slate-900/60 to-slate-900/40"></div>
+      </div>
+
+      <div class="relative z-10 container mx-auto px-6 py-20 md:py-28 lg:py-36 lg:px-8">
+        <div class="max-w-2xl">
+          <span class="inline-block rounded-full bg-sky-500/20 px-4 py-1.5 text-sm font-medium text-sky-200 border border-sky-400/30 backdrop-blur-sm">
+            Compassionate. Modern. Expert.
+          </span>
+          <h1 class="mt-5 text-4xl font-extrabold tracking-tight text-white sm:text-5xl lg:text-6xl">
+            Flair Smile Dental Care
+          </h1>
+          <p class="mt-6 text-lg text-slate-100">
+            Your trusted dental clinic on Biashara Street, Nairobi. We provide
+            comprehensive, family-friendly dental care in a calm and modern
+            environment.
+          </p>
+          <div class="mt-8 flex flex-col gap-3 sm:flex-row">
+            <Button
+              label="Book an Appointment"
+              icon="calendar"
+              size="lg"
+              class="shadow-xl"
+              @click="bookAppointment"
+            />
+            <Button
+              label="Call Now"
+              icon="phone"
+              size="lg"
+              variant="white"
+              class="shadow-xl"
+              @click="callNow"
+            />
+          </div>
+
+          <div class="mt-10 flex flex-wrap items-center gap-4 sm:gap-6 text-sm text-slate-200">
+            <span class="flex items-center gap-1.5">
+              <FeatherIcon name="map-pin" class="h-4 w-4 text-sky-400" /> Biashara Street, Nairobi
+            </span>
+            <span class="hidden sm:inline-block w-1.5 h-1.5 rounded-full bg-slate-400"></span>
+            <span class="flex items-center gap-1.5">
+              <FeatherIcon name="clock" class="h-4 w-4 text-sky-400" /> Mon–Fri: 8am–6pm
+            </span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Services -->
+    <section id="services" class="py-20">
+      <div class="container mx-auto px-6 lg:px-8">
+        <div class="text-center">
+          <h2 class="text-3xl font-bold text-gray-900">Our Services</h2>
+          <p class="mt-4 text-lg text-gray-600">
+            Comprehensive dental care tailored to your needs.
+          </p>
+        </div>
+
+        <div class="mt-12 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+          <ServiceCard
+            v-for="service in services"
+            :key="service.id"
+            :service="service"
+          />
+        </div>
+      </div>
+    </section>
+
+    <!-- Why Choose Us -->
+    <section class="bg-gray-50 py-16">
+      <div class="container mx-auto px-6 lg:px-8">
+        <div class="text-center">
+          <h2 class="text-3xl font-bold text-gray-900">Why Choose Flair Smile?</h2>
+          <p class="mt-4 text-lg text-gray-600">
+            We combine modern technology with gentle, personalized care.
+          </p>
+        </div>
+
+        <div class="mt-12 grid gap-6 md:grid-cols-2 lg:grid-cols-3">
+          <FeatureCard
+            v-for="feature in features"
+            :key="feature.id"
+            :feature="feature"
+          />
+        </div>
+      </div>
+    </section>
+
+    <!-- Doctors -->
+    <section id="doctors" class="py-20">
+      <div class="container mx-auto px-6 lg:px-8">
+        <div class="text-center">
+          <h2 class="text-3xl font-bold text-gray-900">Meet Our Dentists</h2>
+          <p class="mt-4 text-lg text-gray-600">
+            Highly qualified professionals dedicated to your smile.
+          </p>
+        </div>
+
+        <div v-if="doctorsResource.loading" class="mt-12 flex justify-center">
+          <LoadingIndicator size="lg" />
+        </div>
+
+        <p
+          v-else-if="doctorsResource.error"
+          class="mt-8 text-center text-red-600"
+        >
+          Unable to load our team at the moment. Please try again later.
+        </p>
+
+        <div
+          v-else-if="doctors.length === 0"
+          class="mt-8 text-center text-gray-500"
+        >
+          Our team is being prepared. Check back soon!
+        </div>
+
+        <div
+          v-else
+          class="mt-12 grid gap-8 sm:grid-cols-2 lg:grid-cols-3"
+        >
+          <DoctorCard
+            v-for="doctor in doctors"
+            :key="doctor.name"
+            :doctor="doctor"
+          />
+        </div>
+      </div>
+    </section>
+
+    <!-- Testimonials -->
+    <section class="bg-sky-50 py-20">
+      <div class="container mx-auto px-6 lg:px-8">
+        <div class="text-center">
+          <h2 class="text-3xl font-bold text-gray-900">What Our Patients Say</h2>
+          <p class="mt-4 text-lg text-gray-600">
+            Hear from people who have experienced the Flair Smile difference.
+          </p>
+        </div>
+
+        <div class="mt-12 grid gap-6 md:grid-cols-2 lg:grid-cols-3">
+          <TestimonialCard
+            v-for="testimonial in testimonials"
+            :key="testimonial.id"
+            :testimonial="testimonial"
+          />
+        </div>
+      </div>
+    </section>
+
+    <!-- Contact -->
+    <section id="contact" class="py-20">
+      <div class="container mx-auto px-6 lg:px-8">
+        <div class="text-center">
+          <h2 class="text-3xl font-bold text-gray-900">Visit Us</h2>
+          <p class="mt-4 text-lg text-gray-600">
+            We're conveniently located on Biashara Street in the heart of
+            Nairobi.
+          </p>
+        </div>
+
+        <div class="mt-12 grid gap-8 lg:grid-cols-2">
+          <!-- Contact details -->
+          <div>
+            <address class="space-y-6 text-left not-italic">
+              <div class="flex items-start gap-4">
+                <FeatherIcon
+                  name="map-pin"
+                  class="mt-1 h-6 w-6 text-sky-700"
+                />
+                <div>
+                  <p class="font-semibold text-gray-900">Our Location</p>
+                  <p class="mt-1 text-gray-700">
+                    Biashara Street<br />
+                    Nairobi, Kenya<br />
+                    Flair Smile Building
+                  </p>
+                </div>
+              </div>
+
+              <div class="flex items-start gap-4">
+                <FeatherIcon
+                  name="phone"
+                  class="mt-1 h-6 w-6 text-sky-700"
+                />
+                <div>
+                  <p class="font-semibold text-gray-900">Phone</p>
+                  <p class="mt-1">
+                    <a
+                      href="tel:+254700123456"
+                      class="text-sky-700 hover:text-sky-800"
+                      >+254 700 123 456</a
+                    >
+                  </p>
+                </div>
+              </div>
+
+              <div class="flex items-start gap-4">
+                <FeatherIcon
+                  name="mail"
+                  class="mt-1 h-6 w-6 text-sky-700"
+                />
+                <div>
+                  <p class="font-semibold text-gray-900">Email</p>
+                  <p class="mt-1">
+                    <a
+                      href="mailto:info@flairsmile.co.ke"
+                      class="text-sky-700 hover:text-sky-800"
+                      >info@flairsmile.co.ke</a
+                    >
+                  </p>
+                </div>
+              </div>
+
+              <div class="flex items-start gap-4">
+                <FeatherIcon
+                  name="clock"
+                  class="mt-1 h-6 w-6 text-sky-700"
+                />
+                <div>
+                  <p class="font-semibold text-gray-900">Working Hours</p>
+                  <ul class="mt-1 space-y-1 text-gray-700">
+                    <li>Mon–Fri: 8:00 AM – 6:00 PM</li>
+                    <li>Saturday: 9:00 AM – 1:00 PM</li>
+                    <li>Sunday: Emergency only</li>
+                  </ul>
+                </div>
+              </div>
+            </address>
+          </div>
+
+          <!-- Map / form card -->
+          <Card>
+            <template #default>
+              <iframe
+                title="Flair Smile Dental Care location"
+                class="h-64 w-full rounded-md border-0"
+                :src="`https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3988.8200408953426!2d36.8108!3d-1.2921!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1f0!2f0!3f0!3m2!1s0x0%3A0x0!2zMjHCsDExJzM4Ljki!3CzM!1s0!2s!2sBiashara%20Street%2C%20Nairobi!5e0!3m2!1sen!2s!8FBND!2m1!1s?hl=en&z=15`"
+              ></iframe>
+            </template>
+          </Card>
+        </div>
+      </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-gray-900 py-12 text-gray-300">
+      <div class="container mx-auto px-6 lg:px-8">
+        <div class="grid gap-8 md:grid-cols-2 lg:grid-cols-4">
+          <div>
+            <RouterLink to="/" class="flex items-center space-x-2">
+              <img src="/favicon.jpg" alt="Flair Smile" class="h-8 w-8" />
+              <span class="text-xl font-semibold text-sky-400">Flair Smile</span>
+            </RouterLink>
+            <p class="mt-4 text-sm text-gray-400">
+              Compassionate, modern dentistry in the heart of Nairobi.
+            </p>
+          </div>
+
+          <div>
+            <h3 class="text-white">Services</h3>
+            <ul class="mt-4 space-y-2 text-sm">
+              <li v-for="service in services.slice(0, 5)" :key="service.id">
+                <a
+                  :href="`#services`"
+                  class="hover:text-white"
+                  >{{ service.title }}</a
+                >
+              </li>
+            </ul>
+          </div>
+
+          <div>
+            <h3 class="text-white">Contact</h3>
+            <ul class="mt-4 space-y-2 text-sm">
+              <li>Biashara Street, Nairobi, Kenya</li>
+              <li>+254 700 123 456</li>
+              <li>info@flairsmile.co.ke</li>
+              <li>Mon–Fri: 8am–6pm</li>
+            </ul>
+          </div>
+
+          <div>
+            <h3 class="text-white">Quick Links</h3>
+            <ul class="mt-4 space-y-2 text-sm">
+              <li><a href="#services" class="hover:text-white">Services</a></li>
+              <li><a href="#doctors" class="hover:text-white">Our Dentists</a></li>
+              <li><a href="#contact" class="hover:text-white">Contact</a></li>
+              <li>
+                <a href="#" class="hover:text-white">Privacy Policy</a>
+              </li>
+            </ul>
+          </div>
+        </div>
+
+        <div
+          class="mt-10 border-t border-gray-800 pt-6 text-center text-sm text-gray-500"
+        >
+          &copy; {{ new Date().getFullYear() }} Flair Smile Dental Care. All
+          rights reserved.
+        </div>
+      </div>
+    </footer>
+  </div>
+</template>
+
+<script setup lang="ts">
+import { ref, computed, onMounted } from "vue";
+import {
+  Button,
+  Card,
+  FeatherIcon,
+  LoadingIndicator,
+  toast,
+  createResource,
+} from "frappe-ui";
+
+import ServiceCard from "../components/ServiceCard.vue";
+import FeatureCard from "../components/FeatureCard.vue";
+import DoctorCard from "../components/DoctorCard.vue";
+import TestimonialCard from "../components/TestimonialCard.vue";
+
+interface Service {
+  id: number;
+  title: string;
+  description: string;
+  icon: string;
+  color: string;
+}
+
+interface Feature {
+  id: number;
+  title: string;
+  description: string;
+  icon: string;
+}
+
+interface Testimonial {
+  id: number;
+  name: string;
+  role: string;
+  quote: string;
+  avatar: string;
+}
+
+const mobileOpen = ref(false);
+
+const services: Service[] = [
+  {
+    id: 1,
+    title: "General Dentistry",
+    description:
+      "Routine checkups, cleanings, and preventive care for the whole family.",
+    icon: "heart-pulse",
+    color: "sky",
+  },
+  {
+    id: 2,
+    title: "Dental Fillings",
+    description:
+      "Gentle, tooth-colored fillings to restore decayed teeth seamlessly.",
+    icon: "fill",
+    color: "blue",
+  },
+  {
+    id: 3,
+    title: "Root Canal Therapy",
+    description:
+      "Advanced treatment to save infected teeth with minimal discomfort.",
+    icon: "activity",
+    color: "-indigo",
+  },
+  {
+    id: 4,
+    title: "Orthodontics",
+    description:
+      "Braces and clear aligners to straighten teeth and perfect your smile.",
+    icon: "smile",
+    color: "purple",
+  },
+  {
+    id: 5,
+    title: "Cosmetic Dentistry",
+    description:
+      "Veneers, whitening, and bonding to enhance your natural beauty.",
+    icon: "sparkles",
+    color: "pink",
+  },
+  {
+    id: 6,
+    title: "Dental Implants",
+    description:
+      "Premium implant solutions for missing teeth and full restoration.",
+    icon: "crown",
+    color: "teal",
+  },
+];
+
+const features: Feature[] = [
+  {
+    id: 1,
+    title: "Modern Technology",
+    description: "Latest equipment for precise, painless and comfortable care.",
+    icon: "zap",
+  },
+  {
+    id: 2,
+    title: "Gentle & Caring Team",
+    description: "Our team makes every visit calm, comfortable and stress-free.",
+    icon: "heart",
+  },
+  {
+    id: 3,
+    title: "Family Friendly",
+    description: "Safe, welcoming environment for patients of all ages.",
+    icon: "users",
+  },
+  {
+    id: 4,
+    title: "Flexible Appointments",
+    description: "Easy online booking and extended hours for your convenience.",
+    icon: "calendar",
+  },
+  {
+    id: 5,
+    title: "Emergency Care",
+    description: "Same-day appointments for urgent dental needs.",
+    icon: "activity",
+  },
+  {
+    id: 6,
+    title: "Affordable Plans",
+    description: "Transparent pricing and flexible payment options.",
+    icon: "dollar-sign",
+  },
+];
+
+const testimonials: Testimonial[] = [
+  {
+    id: 1,
+    name: "Wanjiru Mwangi",
+    role: "Teacher",
+    quote:
+      "The team at Flair Smile transformed my fear of dentists into a spa day experience. My root canal was a breeze!",
+    avatar: "W",
+  },
+  {
+    id: 2,
+    name: "David Ochieng",
+    role: "Business Owner",
+    quote:
+      "Top-quality care and friendly staff. I've never felt more confident about my smile. Highly recommend!",
+    avatar: "D",
+  },
+  {
+    id: 3,
+    name: "Amina Hassan",
+    role: "Student",
+    quote:
+      "The aligners were barely noticeable. My teeth look amazing and my confidence has soared!",
+    avatar: "A",
+  },
+];
+
+// Fetch Healthcare Practitioners from Frappe Healthcare
+const doctorsResource = createResource({
+  url: "frappe.healthcare.doctype.healthcare_practitioner.healthcare_practitioner.get_list",
+  method: "GET",
+  auto: true,
+  initialData: [],
+  onSuccess: (data: any) => {
+    if (!data || data.length === 0) {
+      console.log("No practitioners found");
+    }
+  },
+});
+
+const doctors = computed(() => {
+  if (!doctorsResource.data) return [];
+  return doctorsResource.data
+    .filter((doc: any) => doc.status === "Active")
+    .map((doc: any) => ({
+      name: doc.practitioner_name,
+      qualification: getQualification(doc),
+      specialty: "Dentist",
+      image: doc.image || null,
+      bio: `${doc.practitioner_name} has been providing excellent dental care at Flair Smile.`,
+    }));
+});
+
+function getQualification(doc: any): string {
+  const quals = [
+    doc.qualifications,
+    doc.degrees,
+    doc.education,
+  ].filter(Boolean);
+  return quals.length > 0 ? quals.join(", ") : "DDS, PhD";
+}
+
+function bookAppointment(): void {
+  const el = document.getElementById("contact");
+  if (el) {
+    el.scrollIntoView({ behavior: "smooth" });
+  }
+  toast("info", {
+    title: "Book an Appointment",
+    message:
+      'Please call +254 700 123 456 or email us at info@flairsmile.co.ke to schedule.',
+    duration: 6000,
+  });
+}
+
+function callNow(): void {
+  window.location.href = "tel:+254700123456";
+}
+
+onMounted(() => {
+  mobileOpen.value = false;
+});
+</script>
+
+<style scoped>
+.nav-link {
+  font-size: 0.875rem;
+  font-weight: 500;
+  color: #374151;
+  transition: color 0.2s;
+}
+.nav-link:hover {
+  color: #0369a1;
+}
+
+.mobile-nav-link {
+  display: block;
+  width: 100%;
+  border-radius: 0.375rem;
+  padding: 0.5rem 1rem;
+  color: #374151;
+  transition: background-color 0.2s, color 0.2s;
+}
+.mobile-nav-link:hover {
+  background-color: #f9fafb;
+  color: #0369a1;
+}
+
+.slide-down-enter-active,
+.slide-down-leave-active {
+  transition: max-height 0.3s ease;
+  overflow: hidden;
+}
+
+.slide-down-enter-from,
+.slide-down-leave-to {
+  max-height: 0;
+}
+
+.slide-down-enter-to,
+.slide-down-leave-from {
+  max-height: 500px;
+}
+</style>
+
