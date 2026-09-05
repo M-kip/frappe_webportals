@@ -427,7 +427,7 @@ const services: Service[] = [
     title: "General Dentistry",
     description:
       "Routine checkups, cleanings, and preventive care for the whole family.",
-    icon: "heart-pulse",
+    icon: "heart",
     color: "sky",
   },
   {
@@ -435,7 +435,7 @@ const services: Service[] = [
     title: "Dental Fillings",
     description:
       "Gentle, tooth-colored fillings to restore decayed teeth seamlessly.",
-    icon: "fill",
+    icon: "droplet",
     color: "blue",
   },
   {
@@ -443,15 +443,15 @@ const services: Service[] = [
     title: "Root Canal Therapy",
     description:
       "Advanced treatment to save infected teeth with minimal discomfort.",
-    icon: "activity",
-    color: "-indigo",
+    icon: "zap",
+    color: "indigo",
   },
   {
     id: 4,
     title: "Orthodontics",
     description:
       "Braces and clear aligners to straighten teeth and perfect your smile.",
-    icon: "smile",
+    icon: "grid",
     color: "purple",
   },
   {
@@ -459,7 +459,7 @@ const services: Service[] = [
     title: "Cosmetic Dentistry",
     description:
       "Veneers, whitening, and bonding to enhance your natural beauty.",
-    icon: "sparkles",
+    icon: "star",
     color: "pink",
   },
   {
@@ -467,7 +467,7 @@ const services: Service[] = [
     title: "Dental Implants",
     description:
       "Premium implant solutions for missing teeth and full restoration.",
-    icon: "crown",
+    icon: "plus-circle",
     color: "teal",
   },
 ];
