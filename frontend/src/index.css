@@ -1,2 +1,5 @@
-@import './assets/Inter/inter.css';
+/* Inter loaded from Google Fonts CDN — no local font files bundled in the build */
+@import url('https://fonts.googleapis.com/css2?family=Inter:ital,wght@0,100..900;1,100..900&display=swap');
+
+/* Frappe UI base styles */
 @import 'frappe-ui/src/style.css';

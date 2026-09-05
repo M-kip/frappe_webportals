@@ -96,6 +96,7 @@ Email:  flairsmiledentalcare@gmail.com
 | Backend | Frappe Framework, Frappe Healthcare |
 | Frontend | Vue 3, Vite, TailwindCSS, Frappe UI |
 | Icons | Feather Icons |
+| Typography | Inter via Google Fonts CDN |
 | Styling | Tailwind CSS utility classes |
 
 ---
