@@ -305,6 +305,6 @@ require_type_annotated_api_methods = True
 # ignore_translatable_strings_from = []
 
 website_route_rules = [
-    {"from_route": "/frontend/<path:app_path>", "to": "frontend"},
-    {"from_route": "/frontend", "to": "frontend"},
+    {"from_route": "/frontend/<path:app_path>", "to_route": "frontend"},
+    {"from_route": "/frontend", "to_route": "frontend"},
 ]
