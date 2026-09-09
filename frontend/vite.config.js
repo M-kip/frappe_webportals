@@ -15,6 +15,8 @@ if (fs.existsSync(configPath)) {
 }
 
 export default defineConfig({
+  // Crucial: Tells Vite where assets will be served by Frappe web server
+  base: '/assets/frappe_webportals/frontend/',
   plugins: [vue()],
   server: {
     port: 8080,
