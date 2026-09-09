@@ -2,9 +2,7 @@ import { defineConfig } from 'vite'
 import vue from '@vitejs/plugin-vue'
 import path from 'path'
 import { getProxyOptions } from 'frappe-ui/src/utils/vite-dev-server'
-import commonConfig from '../../../sites/common_site_config.json' assert { type: 'json' }
-
-const webserver_port = commonConfig?.webserver_port || 8000
+import webserver_port from '../../../sites/common_site_config.json' 
 
 // https://vitejs.dev/config/
 export default defineConfig({
