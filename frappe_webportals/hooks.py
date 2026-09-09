@@ -68,7 +68,7 @@ use_json_request_body = True
 
 # Home Pages
 # ----------
-
+home_page = "frontend"
 # application home page (will override Website Settings)
 # home_page = "login"
 
