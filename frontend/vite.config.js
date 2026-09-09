@@ -1,26 +1,15 @@
 import { defineConfig } from 'vite'
 import vue from '@vitejs/plugin-vue'
 import path from 'path'
-import fs from 'fs'
 import { getProxyOptions } from 'frappe-ui/src/utils/vite-dev-server'
+import { webserver_port } from '../../../sites/common_site_config.json'
 
-// Resolve path to common_site_config.json
-const configPath = path.resolve(__dirname, '../../../sites/common_site_config.json')
-
-// Read webserver_port or fallback to default Frappe port 8000
-let webserverPort = 8000
-if (fs.existsSync(configPath)) {
-  const config = JSON.parse(fs.readFileSync(configPath, 'utf-8'))
-  webserverPort = config.webserver_port || 8000
-}
-
+// https://vitejs.dev/config/
 export default defineConfig({
-  // Crucial: Tells Vite where assets will be served by Frappe web server
-  base: '/assets/frappe_webportals/frontend/',
   plugins: [vue()],
   server: {
     port: 8080,
-    proxy: getProxyOptions({ port: webserverPort }),
+    proxy: getProxyOptions({ port: webserver_port }),
   },
   resolve: {
     alias: {
