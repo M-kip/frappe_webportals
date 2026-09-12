@@ -371,7 +371,7 @@
         <div class="grid gap-8 md:grid-cols-2 lg:grid-cols-4">
           <div>
             <RouterLink to="/" class="flex items-center space-x-2">
-              <img src="/favicon.png" alt="Flair Smile" class="h-8 w-8" />
+              <img src="/assets/frappe_webportals/favicon.png" alt="Flair Smile" class="h-8 w-8" />
               <span class="text-xl font-semibold text-sky-400">Flair Smile</span>
             </RouterLink>
             <p class="mt-2 text-sm italic text-sky-300">Creating Brighter Smiles</p>
@@ -484,12 +484,12 @@ const bookingOpen = ref(false);
 // Add or replace image files in /frontend/public/ and update the paths below.
 // Filename suggestions: hero-1.jpeg, hero-2.jpeg, hero-3.jpeg, hero-4.jpeg, hero-5.jpeg
 const heroImages: string[] = [
-  "/chair1.jpeg",
-  "/chair2.jpeg",
-  "/waiting-area.jpeg",
-  "/hero1.jpeg",
-  "/hero3.jpeg",
-  "/reception.jpeg",
+  "/assets/frappe_webportals/chair1.jpeg",
+  "/assets/frappe_webportals/chair2.jpeg",
+  "/assets/frappe_webportals/waiting-area.jpeg",
+  "/assets/frappe_webportals/hero1.jpeg",
+  "/assets/frappe_webportals/hero3.jpeg",
+  "/assets/frappe_webportals/reception.jpeg",
 ];
 
 const currentSlide = ref(0);
