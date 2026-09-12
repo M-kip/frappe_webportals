@@ -66,12 +66,12 @@
         <!-- Carousel images — replace these 5 files in /frontend/public/ -->
         <div
           v-for="(image, index) in heroImages"
-          :key="image"
+          :key="index"
           class="absolute inset-0 transition-opacity duration-1000 ease-in-out"
           :class="index === currentSlide ? 'opacity-100' : 'opacity-0'"
         >
           <img
-            :src="image"
+            :src="`/assets/frappe_webportals/frontend/${image}`"
             :alt="`Dental clinic image ${index + 1}`"
             class="h-full w-full object-cover"
           />
@@ -455,6 +455,7 @@ import WhatsAppButton from "../components/WhatsAppButton.vue";
 import InsuranceStrip from "../components/InsuranceStrip.vue";
 import BookingModal from "../components/BookingModal.vue";
 
+
 interface Service {
   id: number;
   title: string;
@@ -485,12 +486,12 @@ const bookingOpen = ref(false);
 // Add or replace image files in /frontend/public/ and update the paths below.
 // Filename suggestions: hero-1.jpeg, hero-2.jpeg, hero-3.jpeg, hero-4.jpeg, hero-5.jpeg
 const heroImages: string[] = [
-  new URL("../assets/chair1.jpeg", import.meta.url).href,
-  new URL("../assets/chair2.jpeg", import.meta.url).href,
-  new URL("../assets/waiting-area.jpeg", import.meta.url).href,
-  new URL("../assets/hero1.jpeg", import.meta.url).href,
-  new URL("../assets/hero3.jpeg", import.meta.url).href,
-  new URL("../assets/reception.jpeg", import.meta.url).href,
+  "chair1.jpeg",
+  "chair2.jpeg",
+  "waiting-area.jpeg",
+  "hero1.jpeg",
+  "hero3.jpeg",
+  "reception.jpeg",
 ];
 
 const currentSlide = ref(0);
