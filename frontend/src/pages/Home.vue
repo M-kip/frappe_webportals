@@ -163,7 +163,8 @@
     <StatsBar :stats="stats" />
 
     <!-- Insurance & Payment Strip -->
-    <InsuranceStrip :providers="insuranceProviders" />
+    <!---->
+    <!-- <InsuranceStrip :providers="insuranceProviders" /> -->
 
     <!-- Services -->
     <section id="services" class="py-20">
