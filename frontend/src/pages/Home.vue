@@ -71,7 +71,7 @@
           :class="index === currentSlide ? 'opacity-100' : 'opacity-0'"
         >
           <img
-            :src="`/assets/frappe_webportals/frontend/${image}`"
+            :src="image"
             :alt="`Dental clinic image ${index + 1}`"
             class="h-full w-full object-cover"
           />
@@ -372,7 +372,7 @@
         <div class="grid gap-8 md:grid-cols-2 lg:grid-cols-4">
           <div>
             <RouterLink to="/" class="flex items-center space-x-2">
-              <img src="/assets/frappe_webportals/frontend/favicon.png" alt="Flair Smile" class="h-8 w-8" />
+              <img src="/favicon.png" alt="Flair Smile" class="h-8 w-8" />
               <span class="text-xl font-semibold text-sky-400">Flair Smile</span>
             </RouterLink>
             <p class="mt-2 text-sm italic text-sky-300">Creating Brighter Smiles</p>
@@ -486,12 +486,12 @@ const bookingOpen = ref(false);
 // Add or replace image files in /frontend/public/ and update the paths below.
 // Filename suggestions: hero-1.jpeg, hero-2.jpeg, hero-3.jpeg, hero-4.jpeg, hero-5.jpeg
 const heroImages: string[] = [
-  "chair1.jpeg",
-  "chair2.jpeg",
-  "waiting-area.jpeg",
-  "hero1.jpeg",
-  "hero3.jpeg",
-  "reception.jpeg",
+  "/assets/frappe_webportals/frontend/chair1.jpeg",
+  "/assets/frappe_webportals/frontend/chair2.jpeg",
+  "/assets/frappe_webportals/frontend/waiting-area.jpeg",
+  "/assets/frappe_webportals/frontend/hero1.jpeg",
+  "/assets/frappe_webportals/frontend/hero3.jpeg",
+  "/assets/frappe_webportals/frontend/reception.jpeg",
 ];
 
 const currentSlide = ref(0);
@@ -714,8 +714,25 @@ function callNow(): void {
   window.location.href = "tel:0746721164";
 }
 
+function updateMetaTags(): void {
+  document.title = "Flair Smile Dental Care — Dentist in Nairobi CBD";
+
+  const metaDescription = document.querySelector('meta[name="description"]');
+  metaDescription?.setAttribute(
+    "content",
+    "Your trusted dental clinic in Nairobi CBD. Offering general dentistry, cosmetic dentistry, orthodontics, dental implants, and more. Book an appointment today.",
+  );
+
+  const metaKeywords = document.querySelector('meta[name="keywords"]');
+  metaKeywords?.setAttribute(
+    "content",
+    "dentist Nairobi, dental care Nairobi, cosmetic dentistry Nairobi, dental implants Nairobi, orthodontics Nairobi, Flair Smile Dental Care",
+  );
+}
+
 onMounted(() => {
   mobileOpen.value = false;
+  updateMetaTags();
   startInterval();
 });
 

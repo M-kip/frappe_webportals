@@ -3,22 +3,49 @@ import vue from '@vitejs/plugin-vue'
 import path from 'path'
 import fs from 'fs'
 import { fileURLToPath } from 'url'
-import { getProxyOptions } from 'frappe-ui/src/utils/vite-dev-server.js'
+import frappeui from "frappe-ui/vite"
 
-// Resolve paths safely using import.meta.url directly
 const currentDir = path.dirname(fileURLToPath(import.meta.url))
 
-// Load site config dynamically
 const configPath = path.resolve(currentDir, '../../../sites/common_site_config.json')
-const commonSiteConfig = JSON.parse(fs.readFileSync(configPath, 'utf-8'))
-const webserver_port = commonSiteConfig.webserver_port || 8000
+let webserver_port = 8000
 
-// https://vitejs.dev/config/
+if (fs.existsSync(configPath)) {
+  try {
+    const commonSiteConfig = JSON.parse(fs.readFileSync(configPath, 'utf-8'))
+    webserver_port = commonSiteConfig.webserver_port || 8000
+  } catch (e) {
+    console.warn('Could not load common_site_config.json, defaulting to port 8000.')
+  }
+}
+
 export default defineConfig({
-  plugins: [vue()],
+  define: {
+    __VUE_PROD_HYDRATION_MISMATCH_DETAILS__: false,
+  },
+  plugins: [
+    vue(),
+    frappeui({
+      frontendRoute: '/frontend',
+      frappeProxy: {
+        port: webserver_port,
+        source: '^/(app|desk|login|api|assets|files|pages)',
+      },
+    }),
+  ],
+  css: {
+    postcss: path.resolve(currentDir, 'postcss.config.cjs'),
+  },
   server: {
-    port: 8080,
-    proxy: getProxyOptions({ port: webserver_port }),
+    allowedHosts: true,
+    proxy: {
+      "^/(?!(?:builder|_builder|app|desk|login|api|assets|files|private|pages|src|node_modules)(?:[/?#]|$)|@|__)(?![^?]*\\.)[^/?#].*":
+        {
+          target: `http://127.0.0.1:${process.env.FRAPPE_WEB_SERVER_PORT || webserver_port}`,
+          router: (req) =>
+            `http://${req.headers.host.split(":")[0]}:${process.env.FRAPPE_WEB_SERVER_PORT || webserver_port}`,
+        },
+    },
   },
   resolve: {
     alias: {
@@ -26,12 +53,14 @@ export default defineConfig({
     },
   },
   build: {
-    // Using currentDir ensures the output path stays predictable
     outDir: path.resolve(currentDir, '../public/frontend'),
     emptyOutDir: true,
-    target: 'es2015',
+    target: 'esnext',
+    commonjsOptions: {
+      include: [/node_modules/],
+    },
   },
   optimizeDeps: {
-    include: ['frappe-ui > feather-icons', 'showdown', 'engine.io-client'],
+    include: ['frappe-ui > feather-icons', 'showdown', 'engine.io-client', 'feather-icons'],
   },
 })

@@ -1,0 +1,17 @@
+{
+    "private": true,
+    "workspaces": [
+        "frontend"
+    ],
+    "type": "module",
+    "scripts": {
+        "dev": "yarn workspace frappe-ui-frontend dev",
+        "build": "yarn workspace frappe-ui-frontend build"
+    },
+    "version": "0.0.0",
+    "license": "MIT",
+    "engines": {
+        "node": ">=18.0.0"
+    },
+    "dependencies": {}
+}

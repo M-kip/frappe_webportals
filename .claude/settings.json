@@ -1,0 +1,7 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(git -C /home/mose/frappe/frappe-bench/apps/frappe_webportals status --short -- frontend/src/index.css frontend/public/fonts)"
+    ]
+  }
+}
