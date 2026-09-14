@@ -76,8 +76,9 @@
             class="h-full w-full object-cover"
           />
         </div>
-        <!-- Increased overlay opacity and gradient for readability -->
-        <div class="absolute inset-0 bg-gradient-to-r from-slate-900/80 via-slate-900/60 to-slate-900/40"></div>
+        <!-- Dark overlay for better text readability -->
+        <div class="absolute inset-0 bg-gradient-to-r from-slate-900/90 via-slate-900/75 to-slate-900/60"></div>
+        <div class="absolute inset-0 bg-slate-900/30"></div>
       </div>
 
       <!-- Carousel controls -->
@@ -115,13 +116,13 @@
 
       <div class="relative z-10 flex items-center min-h-[500px] sm:min-h-[600px] md:min-h-[700px] lg:min-h-[800px] py-16 px-6 md:px-8 lg:px-8">
         <div class="max-w-2xl">
-          <span class="inline-block rounded-full bg-sky-500/20 px-4 py-1.5 text-sm font-medium text-sky-200 border border-sky-400/30 backdrop-blur-sm">
+          <span class="inline-block rounded-full bg-sky-500/30 px-4 py-1.5 text-sm font-medium text-white border border-sky-300/40 backdrop-blur-sm drop-shadow-lg">
             Creating Brighter Smiles
           </span>
-          <h1 class="mt-5 text-4xl font-extrabold leading-tight tracking-tight text-white sm:text-5xl md:text-6xl lg:text-7xl">
+          <h1 class="mt-5 text-4xl font-extrabold leading-tight tracking-tight text-white drop-shadow-xl sm:text-5xl md:text-6xl lg:text-7xl">
             Flair Smile Dental Care
           </h1>
-          <p class="mt-4 text-base leading-relaxed text-slate-100 sm:mt-6 sm:text-lg md:text-xl">
+          <p class="mt-4 text-base leading-relaxed text-slate-100 drop-shadow-md sm:mt-6 sm:text-lg md:text-xl">
             Your trusted home for gentle, modern dentistry right in the heart
             of Nairobi. From routine checkups and cleanings to advanced
             cosmetic and restorative treatments, our experienced team is
@@ -146,7 +147,7 @@
             />
           </div>
 
-          <div class="mt-8 flex flex-wrap items-center gap-3 sm:mt-10 sm:gap-6 text-sm text-slate-200">
+          <div class="mt-8 flex flex-wrap items-center gap-3 sm:mt-10 sm:gap-6 text-sm text-slate-200 drop-shadow">
             <span class="flex items-center gap-1.5">
               <FeatherIcon name="map-pin" class="h-4 w-4 text-sky-400" /> Laxmi Plaza, Biashara Street, Nairobi
             </span>
@@ -484,7 +485,8 @@ const bookingOpen = ref(false);
 
 // === Hero carousel ===
 // Add or replace image files in /frontend/public/ and update the paths below.
-// Filename suggestions: hero-1.jpeg, hero-2.jpeg, hero-3.jpeg, hero-4.jpeg, hero-5.jpeg
+// Files are served at /frontend/ in production (base path).
+// Filename suggestions: chair1.jpeg, chair2.jpeg, waiting-area.jpeg, hero1.jpeg, hero3.jpeg, reception.jpeg
 const heroImages: string[] = [
   "/assets/frappe_webportals/frontend/chair1.jpeg",
   "/assets/frappe_webportals/frontend/chair2.jpeg",

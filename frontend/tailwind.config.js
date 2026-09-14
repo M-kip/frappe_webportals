@@ -1,15 +1,16 @@
 // config.js
-import preset, { content as frappeUIContent } from 'frappe-ui/tailwind'
+import frappeUIPreset from 'frappe-ui/tailwind'
 
 export default {
   presets: [
-    preset
+    frappeUIPreset
   ],
-  content: [
-    ...Array.isArray(frappeUIContent) ? frappeUIContent : [], // Automatically include all necessary frappe-ui components path
-    "./index.html",
-    "./src/**/*.{vue,js,ts,jsx,tsx}",
-  ],
+	content: [
+		"./index.html",
+		"./src/**/*.{vue,js,ts,jsx,tsx}",
+		"./node_modules/frappe-ui/src/components/**/*.{vue,js,ts,jsx,tsx}",
+		"../node_modules/frappe-ui/src/components/**/*.{vue,js,ts,jsx,tsx}",
+	],
   theme: {
     extend: {},
   },
