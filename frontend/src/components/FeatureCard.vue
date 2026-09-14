@@ -1,15 +1,11 @@
 <template>
-  <div class="flex items-start gap-4 rounded-xl bg-white p-6 shadow-sm">
-    <div class="flex h-12 w-12 flex-shrink-0 items-center justify-center rounded-full bg-sky-50">
-      <FeatherIcon :name="feature.icon" class="h-6 w-6 text-sky-700" />
+  <article class="rounded-[26px] border border-slate-700/60 bg-slate-800/70 p-6 shadow-sm shadow-slate-950/10 backdrop-blur-sm transition-all duration-300 hover:border-sky-400/50 hover:shadow-lg hover:shadow-sky-950/20">
+    <div class="flex h-12 w-12 items-center justify-center rounded-2xl bg-sky-500/10 text-sky-300 ring-1 ring-sky-400/20">
+      <FeatherIcon :name="feature.icon" class="h-5 w-5" />
     </div>
-    <div>
-      <h3 class="text-base font-semibold text-gray-900">{{ feature.title }}</h3>
-      <p class="mt-2 text-sm leading-relaxed text-gray-600">
-        {{ feature.description }}
-      </p>
-    </div>
-  </div>
+    <h3 class="mt-5 text-xl font-bold text-white">{{ feature.title }}</h3>
+    <p class="mt-3 text-sm leading-7 text-slate-300">{{ feature.description }}</p>
+  </article>
 </template>
 
 <script setup lang="ts">
@@ -22,7 +18,6 @@ interface Feature {
   icon: string;
 }
 
-defineProps<{
-  feature: Feature;
-}>();
+defineProps<{ feature: Feature }>();
 </script>
+

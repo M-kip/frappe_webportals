@@ -1,13 +1,17 @@
 <template>
-  <section ref="sectionRef" class="bg-sky-700 py-10">
-    <div class="container mx-auto px-6 lg:px-8">
-      <div class="grid grid-cols-2 gap-8 text-center md:grid-cols-4">
-        <div v-for="stat in stats" :key="stat.id" class="text-white">
-          <div class="flex items-center justify-center text-3xl font-extrabold sm:text-4xl">
-            <FeatherIcon :name="stat.icon" class="mr-2 h-7 w-7 text-sky-200" />
+  <section ref="sectionRef" class="w-full bg-gradient-to-r from-sky-950 via-sky-900 to-blue-950 py-6 sm:py-8">
+    <div class="w-full px-4 sm:px-6 lg:px-8">
+      <div class="grid grid-cols-2 gap-3 md:grid-cols-4">
+        <div
+          v-for="stat in stats"
+          :key="stat.id"
+          class="rounded-2xl border border-white/10 bg-white/5 px-3 py-5 shadow-[inset_0_1px_0_rgba(255,255,255,0.08)] backdrop-blur-sm transition-all duration-300 hover:-translate-y-0.5 hover:bg-white/8"
+        >
+          <div class="flex items-center justify-center gap-2 text-2xl font-black tracking-tight text-white sm:text-3xl">
+            <FeatherIcon :name="stat.icon" class="h-5 w-5 text-sky-200 sm:h-6 sm:w-6" />
             <span class="tabular-nums">{{ formatValue(stat) }}</span>
           </div>
-          <p class="mt-2 text-sm font-medium uppercase tracking-wide text-sky-100">
+          <p class="mt-2 text-[10px] font-bold uppercase tracking-[0.18em] text-sky-100/90">
             {{ stat.label }}
           </p>
         </div>
@@ -25,18 +29,13 @@ interface Stat {
   value: string;
   label: string;
   icon: string;
-  /** Numeric target for the count-up animation. Use 0 to skip. */
   numericValue?: number;
-  /** Decimal places when formatted. */
   decimals?: number;
-  /** Optional prefix (e.g. "+") or suffix (e.g. "/5"). */
   prefix?: string;
   suffix?: string;
 }
 
-const props = defineProps<{
-  stats: Stat[];
-}>();
+const props = defineProps<{ stats: Stat[] }>();
 
 const sectionRef = ref<HTMLElement | null>(null);
 const displayValues = reactive<Record<number, number>>({});
@@ -44,7 +43,6 @@ let observer: IntersectionObserver | null = null;
 let animationFrame: number | null = null;
 let hasAnimated = false;
 
-// Parse a stat value like "10+", "5,000+", "4.9", "24/7" into numeric target + suffix
 function parseStat(stat: Stat): { target: number; prefix: string; suffix: string; decimals: number } {
   if (stat.numericValue !== undefined) {
     return {
@@ -54,7 +52,7 @@ function parseStat(stat: Stat): { target: number; prefix: string; suffix: string
       decimals: stat.decimals ?? 0,
     };
   }
-  // Auto-parse string values
+
   const raw = stat.value.trim();
   const match = raw.match(/^([^\d]*)([\d,]+(?:\.\d+)?)(.*)$/);
   if (match) {
@@ -64,15 +62,16 @@ function parseStat(stat: Stat): { target: number; prefix: string; suffix: string
     const decimals = (match[2] ?? "").includes(".") ? 1 : 0;
     return { target: numeric, prefix, suffix, decimals };
   }
+
   return { target: 0, prefix: "", suffix: raw, decimals: 0 };
 }
 
 function formatValue(stat: Stat): string {
   const parsed = parseStat(stat);
   if (!hasAnimated && stat.numericValue === undefined && !/^\d/.test(stat.value)) {
-    // Non-numeric values like "24/7" — show as-is before animation
     return stat.value;
   }
+
   const current = displayValues[stat.id] ?? 0;
   const num = parsed.decimals > 0 ? current.toFixed(parsed.decimals) : Math.round(current).toLocaleString();
   return `${parsed.prefix}${num}${parsed.suffix}`;
@@ -86,6 +85,7 @@ function animate() {
   const duration = 1800;
   const start = performance.now();
   const targets: Record<number, { target: number; decimals: number }> = {};
+
   for (const stat of props.stats) {
     const parsed = parseStat(stat);
     if (parsed.target > 0) {
@@ -97,24 +97,27 @@ function animate() {
     const elapsed = now - start;
     const progress = Math.min(elapsed / duration, 1);
     const eased = easeOutCubic(progress);
+
     for (const id in targets) {
       const { target, decimals } = targets[id]!;
       displayValues[+id] = decimals > 0 ? target * eased : Math.round(target * eased);
     }
+
     if (progress < 1) {
       animationFrame = requestAnimationFrame(step);
     }
   }
+
   animationFrame = requestAnimationFrame(step);
 }
 
 onMounted(() => {
-  // Pre-populate so non-numeric stats show their full value
   for (const stat of props.stats) {
     displayValues[stat.id] = 0;
   }
 
   if (!sectionRef.value) return;
+
   observer = new IntersectionObserver(
     (entries) => {
       for (const entry of entries) {
@@ -126,8 +129,9 @@ onMounted(() => {
         }
       }
     },
-    { threshold: 0.3 }
+    { threshold: 0.3 },
   );
+
   observer.observe(sectionRef.value);
 });
 

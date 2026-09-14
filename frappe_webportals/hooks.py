@@ -68,7 +68,7 @@ use_json_request_body = True
 
 # Home Pages
 # ----------
-home_page = "frontend"
+home_page = "app"
 # application home page (will override Website Settings)
 # home_page = "login"
 
@@ -305,6 +305,10 @@ require_type_annotated_api_methods = True
 # ignore_translatable_strings_from = []
 
 website_route_rules = [
-    {"from_route": "/frontend/<path:app_path>", "to_route": "frontend"},
-    {"from_route": "/frontend", "to_route": "frontend"},
+    {"from_route": "/app/<path:app_path>", "to_route": "app"},
+    {"from_route": "/app", "to_route": "app"},
+]
+# Near the top or bottom of your hooks.py file
+click_commands = [
+    "frappe_webportals.commands.list_app_sites"
 ]
