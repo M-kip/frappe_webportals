@@ -26,12 +26,13 @@ export default defineConfig({
   plugins: [
     vue(),
     frappeui({
-      frontendRoute: '/frontend',
-      frappeProxy: {
-        port: webserver_port,
-        source: '^/(app|desk|login|api|assets|files|pages)',
-      },
-    }),
+          siteName: 'flairdentalcare.localhost',
+          frontendRoute: '/frontend',
+          frappeProxy: {
+            port: webserver_port,
+            source: '^/(app|desk|login|api|assets|files|pages)',
+          },
+        }),
   ],
   css: {
     postcss: path.resolve(currentDir, 'postcss.config.cjs'),
@@ -39,7 +40,7 @@ export default defineConfig({
   server: {
     allowedHosts: true,
     proxy: {
-      "^/(?!(?:builder|_builder|app|desk|login|api|assets|files|private|pages|src|node_modules)(?:[/?#]|$)|@|__)(?![^?]*\\.)[^/?#].*":
+      "^/(?!(?:app|desk|login|api|assets|files|private|pages|src|node_modules)(?:[/?#]|$)|@|__)(?![^?]*\\.)[^/?#].*":
         {
           target: `http://127.0.0.1:${process.env.FRAPPE_WEB_SERVER_PORT || webserver_port}`,
           router: (req) =>
