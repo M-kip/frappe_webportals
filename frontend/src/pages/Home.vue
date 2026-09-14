@@ -82,7 +82,7 @@
               Creating brighter smiles
             </span>
             <h1 class="mt-6 text-[2.65rem] font-black leading-[0.9] tracking-[-0.07em] text-white drop-shadow-[0_8px_30px_rgba(15,23,42,0.8)] sm:text-5xl lg:text-[5rem]">
-              Boutique dental care
+              Flair Smile dental care
               <span class="mt-2 block bg-gradient-to-r from-cyan-200 via-sky-200 to-blue-300 bg-clip-text text-transparent">
                 for confident living.
               </span>
