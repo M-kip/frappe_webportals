@@ -77,17 +77,17 @@
 
         <div class="relative z-10 mx-auto flex min-h-[620px] max-w-7xl items-center px-4 py-16 sm:px-6 lg:px-8">
           <div class="max-w-3xl">
-            <span class="inline-flex items-center gap-2 rounded-full border border-sky-300/40 bg-sky-500/10 px-4 py-2 text-[10px] font-bold uppercase tracking-[0.26em] text-sky-100 shadow-[0_0_0_1px_rgba(125,211,252,0.18)] backdrop-blur-sm">
-              <FeatherIcon name="sparkles" class="h-3.5 w-3.5 text-sky-200" />
+            <span class="inline-flex items-center gap-2 rounded-full border border-cyan-200/40 bg-sky-500/20 px-4 py-2 text-[10px] font-black uppercase tracking-[0.26em] text-cyan-50 shadow-[0_0_0_1px_rgba(125,211,252,0.2)] backdrop-blur-sm sm:text-[11px]">
+              <FeatherIcon name="sparkles" class="h-3.5 w-3.5 text-cyan-200" />
               Creating brighter smiles
             </span>
-            <h1 class="mt-6 text-4xl font-black leading-[0.96] tracking-[-0.06em] text-white drop-shadow-[0_6px_30px_rgba(15,23,42,0.6)] sm:text-5xl lg:text-7xl">
+            <h1 class="mt-6 text-[2.65rem] font-black leading-[0.9] tracking-[-0.07em] text-white drop-shadow-[0_8px_30px_rgba(15,23,42,0.8)] sm:text-5xl lg:text-[5rem]">
               Boutique dental care
-              <span class="mt-2 block bg-gradient-to-r from-sky-200 via-cyan-300 to-blue-400 bg-clip-text text-transparent">
+              <span class="mt-2 block bg-gradient-to-r from-cyan-200 via-sky-200 to-blue-300 bg-clip-text text-transparent">
                 for confident living.
               </span>
             </h1>
-            <p class="mt-6 max-w-xl text-base leading-7 text-slate-100 sm:text-lg">
+            <p class="mt-6 max-w-xl text-base font-medium leading-7 text-white sm:text-lg">
               Experience modern, gentle dentistry in a refined clinical environment, designed to keep every smile healthier, brighter, and beautifully cared for.
             </p>
 
@@ -181,7 +181,7 @@
           <div class="mx-auto max-w-2xl text-center">
             <span class="text-xs font-bold uppercase tracking-[0.22em] text-sky-600">Patient stories</span>
             <h2 class="mt-4 text-3xl font-black tracking-tight text-slate-900 sm:text-4xl">Loved by our community</h2>
-            <p class="mt-4 text-lg text-slate-600">Real feedback from patients who trust Flair Smile for everyday and advanced dental care.</p>
+            <p class="mt-4 text-lg text-slate-600">Real feedback from patients who trust flairsmiledentalcare for everyday and advanced dental care.</p>
           </div>
 
           <div class="mt-16 grid gap-8 lg:grid-cols-3">
@@ -273,7 +273,7 @@
                 <img src="/favicon.png" alt="Flair Smile" class="h-7 w-7 object-contain" />
               </div>
               <div>
-                <div class="text-xl font-black text-white">Flair Smile</div>
+                <div class="text-xl font-black text-white">flairsmiledentalcare</div>
                 <div class="text-[10px] font-semibold uppercase tracking-[0.22em] text-sky-300">Dental Care</div>
               </div>
             </div>

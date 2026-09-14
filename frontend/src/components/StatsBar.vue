@@ -1,17 +1,17 @@
 <template>
-  <section ref="sectionRef" class="w-full bg-gradient-to-r from-sky-950 via-sky-900 to-blue-950 py-6 sm:py-8">
+  <section ref="sectionRef" class="w-full bg-[#061a2d] py-6 sm:py-8">
     <div class="w-full px-4 sm:px-6 lg:px-8">
       <div class="grid grid-cols-2 gap-3 md:grid-cols-4">
         <div
           v-for="stat in stats"
           :key="stat.id"
-          class="rounded-2xl border border-white/10 bg-white/5 px-3 py-5 shadow-[inset_0_1px_0_rgba(255,255,255,0.08)] backdrop-blur-sm transition-all duration-300 hover:-translate-y-0.5 hover:bg-white/8"
+          class="flex flex-col items-center justify-center rounded-2xl border border-cyan-200/20 bg-[#0c2946] px-4 py-5 text-center shadow-[inset_0_1px_0_rgba(255,255,255,0.08)] transition-all duration-300 hover:-translate-y-0.5 hover:bg-[#123d60]"
         >
           <div class="flex items-center justify-center gap-2 text-2xl font-black tracking-tight text-white sm:text-3xl">
-            <FeatherIcon :name="stat.icon" class="h-5 w-5 text-sky-200 sm:h-6 sm:w-6" />
-            <span class="tabular-nums">{{ formatValue(stat) }}</span>
+            <FeatherIcon :name="stat.icon" class="h-5 w-5 text-cyan-300 sm:h-6 sm:w-6" />
+            <span class="tabular-nums text-white">{{ formatValue(stat) }}</span>
           </div>
-          <p class="mt-2 text-[10px] font-bold uppercase tracking-[0.18em] text-sky-100/90">
+          <p class="mt-3 text-[10px] font-black uppercase tracking-[0.18em] text-cyan-100">
             {{ stat.label }}
           </p>
         </div>
