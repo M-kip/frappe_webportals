@@ -93,7 +93,7 @@
 
             <div class="mt-8 flex flex-col gap-3 sm:flex-row">
               <Button variant="solid" theme="blue" size="lg" label="Book appointment" icon="calendar" class="!rounded-xl !shadow-[0_18px_35px_rgba(14,165,233,0.25)]" @click="bookAppointment" />
-              <Button variant="outline" theme="blue" size="lg" label="Call clinic" icon="phone" class="!rounded-xl !border-white/20 !text-white hover:!bg-white/5" @click="callNow" />
+              <Button variant="outline" theme="blue" size="lg" label="Call clinic" icon="phone" class="!rounded-xl !shadow-[0_18px_35px_rgba(14,165,233,0.25)]" @click="callNow" />
             </div>
 
             <div class="mt-8 flex flex-wrap items-center gap-5 text-sm text-slate-200">
