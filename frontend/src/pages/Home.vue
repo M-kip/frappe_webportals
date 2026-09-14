@@ -273,7 +273,7 @@
                 <img src="/favicon.png" alt="Flair Smile" class="h-7 w-7 object-contain" />
               </div>
               <div>
-                <div class="text-xl font-black text-white">flairsmiledentalcare</div>
+                <div class="text-xl font-black">flairsmiledentalcare</div>
                 <div class="text-[10px] font-semibold uppercase tracking-[0.22em] text-sky-300">Dental Care</div>
               </div>
             </div>
