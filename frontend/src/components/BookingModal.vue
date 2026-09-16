@@ -29,11 +29,12 @@
             <label class="mb-1 block text-sm font-medium text-gray-700">
               Phone <span class="text-red-500">*</span>
             </label>
-            <Input
-              v-model="form.phone"
+            <input
+              v-model.number="form.phone"
               type="tel"
               placeholder="07XX XXX XXX"
               required
+              class="w-full rounded-md border border-gray-300 p-2 text-sm focus:border-blue-500 focus:outline-none"
             />
           </div>
         </div>

@@ -1,6 +1,6 @@
 <template>
   <div class="min-h-screen bg-slate-50 text-slate-900 antialiased">
-    <header class="sticky top-0 z-40 border-b border-sky-100/80 bg-white/80 backdrop-blur-xl shadow-[0_10px_30px_rgba(15,23,42,0.04)]">
+    <header class="sticky top-0 z-20 border-b border-sky-100/80 bg-white/80 backdrop-blur-xl shadow-[0_10px_30px_rgba(15,23,42,0.04)]">
       <nav class="mx-auto flex max-w-7xl items-center justify-between px-4 py-4 sm:px-6 lg:px-8">
         <RouterLink to="/" class="flex items-center gap-3">
           <div class="flex h-11 w-11 items-center justify-center rounded-2xl bg-sky-100 ring-1 ring-sky-200 shadow-sm shadow-sky-100">
@@ -17,6 +17,7 @@
           <a href="#about" class="text-sm font-semibold text-slate-700 transition-colors hover:text-sky-700">About</a>
           <a href="#doctors" class="text-sm font-semibold text-slate-700 transition-colors hover:text-sky-700">Doctors</a>
           <a href="#contact" class="text-sm font-semibold text-slate-700 transition-colors hover:text-sky-700">Contact</a>
+          <Button variant="solid" theme="green" size="md" label="Register" class="!rounded-full !px-5 !shadow-[0_12px_24px_rgba(14,165,233,0.25)]" @click="patientRegistrationOpen = true"/>
           <Button variant="solid" theme="blue" size="md" label="Book now" class="!rounded-full !px-5 !shadow-[0_12px_24px_rgba(14,165,233,0.25)]" @click="bookAppointment" />
         </div>
 
@@ -33,11 +34,12 @@
       <Transition name="slide-down">
         <div v-if="mobileOpen" class="border-t border-sky-100 bg-white md:hidden">
           <div class="mx-auto flex max-w-7xl flex-col gap-2 px-4 py-4">
-            <a href="#services" @click="mobileOpen = false" class="rounded-xl px-3 py-2 text-sm font-semibold text-slate-700 hover:bg-sky-50 hover:text-sky-700">Services</a>
-            <a href="#about" @click="mobileOpen = false" class="rounded-xl px-3 py-2 text-sm font-semibold text-slate-700 hover:bg-sky-50 hover:text-sky-700">About</a>
-            <a href="#doctors" @click="mobileOpen = false" class="rounded-xl px-3 py-2 text-sm font-semibold text-slate-700 hover:bg-sky-50 hover:text-sky-700">Doctors</a>
-            <a href="#contact" @click="mobileOpen = false" class="rounded-xl px-3 py-2 text-sm font-semibold text-slate-700 hover:bg-sky-50 hover:text-sky-700">Contact</a>
-            <Button variant="solid" theme="blue" label="Book now" class="mt-2 !rounded-xl" @click="bookAppointment" />
+            <a href="#services" @click="closeMobileNav" class="rounded-xl px-3 py-2 text-sm font-semibold text-slate-700 hover:bg-sky-50 hover:text-sky-700">Services</a>
+            <a href="#about" @click="closeMobileNav" class="rounded-xl px-3 py-2 text-sm font-semibold text-slate-700 hover:bg-sky-50 hover:text-sky-700">About</a>
+            <a href="#doctors" @click="closeMobileNav" class="rounded-xl px-3 py-2 text-sm font-semibold text-slate-700 hover:bg-sky-50 hover:text-sky-700">Doctors</a>
+            <a href="#contact" @click="closeMobileNav" class="rounded-xl px-3 py-2 text-sm font-semibold text-slate-700 hover:bg-sky-50 hover:text-sky-700">Contact</a>
+            <Button variant="solid" theme="green" label="Register" class="mt-2 !rounded-xl" @click="registerPatient" />
+            <Button variant="solid" theme="blue" label="Book now" class="!rounded-xl" @click="bookAppointment" />
           </div>
         </div>
       </Transition>
@@ -92,14 +94,20 @@
             </p>
 
             <div class="mt-8 flex flex-col gap-3 sm:flex-row">
+              <Button variant="solid" theme="blue" size="lg" label="Register as a patient" icon="user-plus" class="!rounded-xl !shadow-[0_18px_35px_rgba(14,165,233,0.25)]" @click="patientRegistrationOpen = true" />
               <Button variant="solid" theme="blue" size="lg" label="Book appointment" icon="calendar" class="!rounded-xl !shadow-[0_18px_35px_rgba(14,165,233,0.25)]" @click="bookAppointment" />
               <Button variant="outline" theme="blue" size="lg" label="Call clinic" icon="phone" class="!rounded-xl !shadow-[0_18px_35px_rgba(14,165,233,0.25)]" @click="callNow" />
             </div>
-
-            <div class="mt-8 flex flex-wrap items-center gap-5 text-sm text-slate-200">
-              <span class="flex items-center gap-2"><FeatherIcon name="map-pin" class="h-4 w-4 text-cyan-200" /> Nairobi CBD</span>
-              <span class="h-1.5 w-1.5 rounded-full bg-sky-300"></span>
-              <span class="flex items-center gap-2"><FeatherIcon name="clock" class="h-4 w-4 text-cyan-200" /> Mon–Fri: 8:00am–6:00pm</span>
+            <div class="mt-8 flex flex-wrap items-center gap-3 text-sm font-semibold text-white">
+              <span class="flex items-center gap-2 rounded-full border border-white/20 bg-slate-950/55 px-3 py-2 shadow-sm backdrop-blur-sm">
+                <FeatherIcon name="map-pin" class="h-4 w-4 shrink-0 text-cyan-200" />
+                Nairobi CBD
+              </span>
+              <span class="hidden h-1.5 w-1.5 rounded-full bg-sky-300 sm:block"></span>
+              <span class="flex items-center gap-2 rounded-full border border-white/20 bg-slate-950/55 px-3 py-2 shadow-sm backdrop-blur-sm">
+                <FeatherIcon name="clock" class="h-4 w-4 shrink-0 text-cyan-200" />
+                Mon–Fri: 8:00am–6:00pm
+              </span>
             </div>
           </div>
         </div>
@@ -118,17 +126,15 @@
       </section>
 
       <section class="w-full pb-8 pt-6">
-        <div class="w-full overflow-hidden border-y border-sky-100/80 bg-white shadow-[0_30px_80px_rgba(14,116,144,0.12)] ring-1 ring-sky-50">
-          <StatsBar :stats="stats" />
-        </div>
+        <StatsBar :stats="stats" />
       </section>
 
-      <section id="services" class="bg-white py-24">
+      <section id="services" class="bg-slate-50 py-24">
         <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
           <div class="mx-auto max-w-2xl text-center">
             <span class="text-xs font-bold uppercase tracking-[0.22em] text-sky-600">Our care</span>
             <h2 class="mt-4 text-3xl font-black tracking-tight text-slate-900 sm:text-4xl">Complete dental solutions</h2>
-            <p class="mt-4 text-lg text-slate-600">Modern treatment plans built around comfort, precision and long-term oral health.</p>
+            <p class="mt-4 text-lg text-slate-700">Modern treatment plans built around comfort, precision and long-term oral health.</p>
           </div>
 
           <div class="mt-16 grid gap-8 md:grid-cols-2 xl:grid-cols-3">
@@ -144,7 +150,7 @@
         <div class="relative mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
           <div class="mx-auto max-w-2xl text-center">
             <span class="text-xs font-bold uppercase tracking-[0.22em] text-sky-300">Why choose us</span>
-            <h2 class="mt-4 text-3xl font-black tracking-tight text-white sm:text-4xl">A calmer, more personal dental experience</h2>
+            <h2 class="mt-4 text-3xl font-black tracking-tight text-slate-900 sm:text-4xl">A calmer, more personal dental experience</h2>
             <p class="mt-4 text-lg text-slate-300">We blend technology, empathy and attention to detail to make every visit feel reassuring and stress-free.</p>
           </div>
 
@@ -154,12 +160,12 @@
         </div>
       </section>
 
-      <section id="doctors" class="bg-white py-24">
+      <section id="doctors" class="bg-slate-50 py-24">
         <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
           <div class="mx-auto max-w-2xl text-center">
             <span class="text-xs font-bold uppercase tracking-[0.22em] text-sky-600">Our experts</span>
             <h2 class="mt-4 text-3xl font-black tracking-tight text-slate-900 sm:text-4xl">Meet the team</h2>
-            <p class="mt-4 text-lg text-slate-600">Skilled dentists and specialists committed to helping you smile with confidence.</p>
+            <p class="mt-4 text-lg text-slate-700">Skilled dentists and specialists committed to helping you smile with confidence.</p>
           </div>
 
           <div v-if="doctorsResource.loading" class="mt-16 flex justify-center py-10">
@@ -317,6 +323,7 @@
       </div>
     </footer>
 
+    <PatientRegistrationModal v-model="patientRegistrationOpen" />
     <WhatsAppButton phone="0746721164" />
     <BookingModal v-model="bookingOpen" />
   </div>
@@ -324,7 +331,7 @@
 
 <script setup lang="ts">
 import { ref, computed, onMounted, onUnmounted } from "vue";
-import { Button, Card, FeatherIcon, LoadingIndicator, createResource } from "frappe-ui";
+import { Button, Card, FeatherIcon, LoadingIndicator, useList } from "frappe-ui";
 
 import ServiceCard from "../components/ServiceCard.vue";
 import FeatureCard from "../components/FeatureCard.vue";
@@ -333,6 +340,7 @@ import TestimonialCard from "../components/TestimonialCard.vue";
 import StatsBar from "../components/StatsBar.vue";
 import WhatsAppButton from "../components/WhatsAppButton.vue";
 import BookingModal from "../components/BookingModal.vue";
+import PatientRegistrationModal from "../components/PatientRegistrationModal.vue";
 
 interface Service {
   id: number;
@@ -366,6 +374,7 @@ interface Stat {
 
 const mobileOpen = ref(false);
 const bookingOpen = ref(false);
+const patientRegistrationOpen = ref(false);
 
 const heroImages: string[] = [
   "/assets/frappe_webportals/frontend/chair1.jpeg",
@@ -449,15 +458,16 @@ const fallbackDoctors = [
   { name: "Dr. Aisha Noor", qualification: "BDS, Cosmetic Dentistry", specialty: "Cosmetic Dentist", image: null, bio: "Helps patients achieve natural-looking, camera-ready results with gentle precision." },
 ];
 
-const doctorsResource = createResource({
-  url: "frappe.client.get_list",
-  params: {
-    doctype: "Healthcare Practitioner",
-    fields: ["name", "practitioner_name", "status", "image", "qualifications"],
-    filters: { status: "Active" },
-  },
-  method: "GET",
-  auto: true,
+const doctorsResource = useList<{
+  name: string;
+  practitioner_name?: string;
+  status?: string;
+  image?: string | null;
+  qualifications?: string;
+}>({
+  doctype: "Healthcare Practitioner",
+  fields: ["name", "practitioner_name", "status", "image", "qualifications"],
+  filters: { status: "Active" },
   initialData: [],
 });
 
@@ -480,7 +490,17 @@ const doctors = computed(() => {
 });
 
 function bookAppointment() {
+  closeMobileNav();
   bookingOpen.value = true;
+}
+
+function registerPatient() {
+  closeMobileNav();
+  patientRegistrationOpen.value = true;
+}
+
+function closeMobileNav() {
+  mobileOpen.value = false;
 }
 
 function callNow() {

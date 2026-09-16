@@ -13,6 +13,7 @@ declare module 'vue' {
     FeatureCard: typeof import('./src/components/FeatureCard.vue')['default']
     HelloWorld: typeof import('./src/components/HelloWorld.vue')['default']
     InsuranceStrip: typeof import('./src/components/InsuranceStrip.vue')['default']
+    PatientRegistrationModal: typeof import('./src/components/PatientRegistrationModal.vue')['default']
     RouterLink: typeof import('vue-router')['RouterLink']
     RouterView: typeof import('vue-router')['RouterView']
     ServiceCard: typeof import('./src/components/ServiceCard.vue')['default']

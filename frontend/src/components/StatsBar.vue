@@ -1,19 +1,23 @@
 <template>
-  <section ref="sectionRef" class="w-full bg-[#061a2d] py-6 sm:py-8">
-    <div class="w-full px-4 sm:px-6 lg:px-8">
-      <div class="grid grid-cols-2 gap-3 md:grid-cols-4">
+  <section ref="sectionRef" class="w-full bg-transparent py-10 sm:py-14">
+    <div class="mx-auto w-full max-w-7xl px-4 sm:px-6 lg:px-8">
+      <div class="grid grid-cols-2 overflow-hidden rounded-[24px] border border-slate-200/80 bg-white/90 shadow-[0_18px_50px_rgba(15,23,42,0.07)] backdrop-blur-sm md:grid-cols-4">
         <div
           v-for="stat in stats"
           :key="stat.id"
-          class="flex flex-col items-center justify-center rounded-2xl border border-cyan-200/20 bg-[#0c2946] px-4 py-5 text-center shadow-[inset_0_1px_0_rgba(255,255,255,0.08)] transition-all duration-300 hover:-translate-y-0.5 hover:bg-[#123d60]"
+          class="group relative flex min-h-36 items-center gap-3 border-slate-200/80 px-4 py-6 transition-colors duration-300 even:border-l md:border-l md:px-6 md:py-8 md:first:border-l-0 hover:bg-sky-50/65"
         >
-          <div class="flex items-center justify-center gap-2 text-2xl font-black tracking-tight text-white sm:text-3xl">
-            <FeatherIcon :name="stat.icon" class="h-5 w-5 text-cyan-300 sm:h-6 sm:w-6" />
-            <span class="tabular-nums text-white">{{ formatValue(stat) }}</span>
+          <div class="flex h-11 w-11 shrink-0 items-center justify-center rounded-2xl bg-gradient-to-br from-sky-100 to-cyan-50 text-sky-700 ring-1 ring-sky-200/80 transition-transform duration-300 group-hover:scale-105">
+            <FeatherIcon :name="stat.icon" class="h-5 w-5" />
           </div>
-          <p class="mt-3 text-[10px] font-black uppercase tracking-[0.18em] text-cyan-100">
-            {{ stat.label }}
-          </p>
+          <div class="min-w-0 text-left">
+            <div class="text-2xl font-black leading-none tracking-tight text-slate-950 sm:text-3xl">
+              <span class="tabular-nums">{{ formatValue(stat) }}</span>
+            </div>
+            <p class="mt-2 truncate text-[10px] font-bold uppercase tracking-[0.14em] text-slate-500">
+              {{ stat.label }}
+            </p>
+          </div>
         </div>
       </div>
     </div>

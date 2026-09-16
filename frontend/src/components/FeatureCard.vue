@@ -3,7 +3,7 @@
     <div class="flex h-12 w-12 items-center justify-center rounded-2xl bg-sky-500/10 text-sky-300 ring-1 ring-sky-400/20">
       <FeatherIcon :name="feature.icon" class="h-5 w-5" />
     </div>
-    <h3 class="mt-5 text-xl font-bold text-white">{{ feature.title }}</h3>
+    <h3 class="mt-5 text-xl font-bold text-slate-700">{{ feature.title }}</h3>
     <p class="mt-3 text-sm leading-7 text-slate-300">{{ feature.description }}</p>
   </article>
 </template>
