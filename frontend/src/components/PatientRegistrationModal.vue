@@ -170,7 +170,7 @@
         <Button variant="ghost" @click="show = false">Cancel</Button>
         <Button v-if="currentStep > 1" variant="ghost" @click="previousStep">Back</Button>
         <Button v-if="currentStep < steps.length" variant="solid" theme="blue" @click="nextStep">Continue</Button>
-        <Button v-else type="submit" variant="solid" theme="blue" :loading="newPatient.loading" @click="handleSubmit">
+        <Button v-else type="submit" variant="solid" theme="blue" :loading="newPatient.loading" :disabled="newPatient.loading" loading-text="Registering..." @click="handleSubmit">
           Register Patient
         </Button>
       </div>
@@ -197,6 +197,7 @@ const emit = defineEmits<{
 }>()
 
 interface PatientDocument {
+  doctype: "Patient"
   first_name: string
   middle_name: string
   last_name: string
@@ -232,6 +233,7 @@ const steps = [
 
 // Initialize useNewDoc directly for Frappe Health Patient DocType
 const newPatient = useNewDoc<PatientDocument>("Patient", {
+  doctype: "Patient",
   first_name: "",
   middle_name: "",
   last_name: "",
@@ -342,6 +344,8 @@ async function submit() {
   if (!validateStep(1) || !validateStep(2)) return
 
   try {
+    // Re-confirm doctype field on the document object
+    newPatient.doc.doctype = "Patient"
     // Map boolean risk factors to Frappe Health fields
     newPatient.doc.tobacco_past_use = riskForm.tobacco_consumption ? "Yes" : "No"
     newPatient.doc.tobacco_current_use = riskForm.tobacco_use ? "Yes" : "No"
