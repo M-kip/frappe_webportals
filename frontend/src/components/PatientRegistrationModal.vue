@@ -198,6 +198,7 @@ const emit = defineEmits<{
 
 interface PatientDocument {
   doctype: "Patient"
+  name?: string
   first_name: string
   middle_name: string
   last_name: string
@@ -234,6 +235,7 @@ const steps = [
 // Initialize useNewDoc directly for Frappe Health Patient DocType
 const newPatient = useNewDoc<PatientDocument>("Patient", {
   doctype: "Patient",
+  name: "new-patient-registration",
   first_name: "",
   middle_name: "",
   last_name: "",
@@ -346,6 +348,12 @@ async function submit() {
   try {
     // Re-confirm doctype field on the document object
     newPatient.doc.doctype = "Patient"
+
+    // 2. Form dynamic client-side name slug from first and last name
+    const firstNameSlug = newPatient.doc.first_name.trim().toLowerCase().replace(/\s+/g, "-")
+    const lastNameSlug = newPatient.doc.last_name.trim().toLowerCase().replace(/\s+/g, "-")
+    newPatient.doc.name = `new-patient-${firstNameSlug}-${lastNameSlug}`
+       
     // Map boolean risk factors to Frappe Health fields
     newPatient.doc.tobacco_past_use = riskForm.tobacco_consumption ? "Yes" : "No"
     newPatient.doc.tobacco_current_use = riskForm.tobacco_use ? "Yes" : "No"
