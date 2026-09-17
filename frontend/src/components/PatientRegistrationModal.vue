@@ -198,7 +198,6 @@ const emit = defineEmits<{
 
 interface PatientDocument {
   doctype: "Patient"
-  name?: string
   first_name: string
   middle_name: string
   last_name: string
@@ -235,7 +234,6 @@ const steps = [
 // Initialize useNewDoc directly for Frappe Health Patient DocType
 const newPatient = useNewDoc<PatientDocument>("Patient", {
   doctype: "Patient",
-  name: "new-patient-registration",
   first_name: "",
   middle_name: "",
   last_name: "",
