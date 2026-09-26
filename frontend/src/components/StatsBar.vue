@@ -8,7 +8,7 @@
           class="group relative flex min-h-36 items-center gap-3 border-slate-200/80 px-4 py-6 transition-colors duration-300 even:border-l md:border-l md:px-6 md:py-8 md:first:border-l-0 hover:bg-sky-50/65"
         >
           <div class="flex h-11 w-11 shrink-0 items-center justify-center rounded-2xl bg-gradient-to-br from-sky-100 to-cyan-50 text-sky-700 ring-1 ring-sky-200/80 transition-transform duration-300 group-hover:scale-105">
-            <FeatherIcon :name="stat.icon" class="h-5 w-5" />
+            <Icon :icon="stat.icon ? `lucide-${stat.icon}` : 'lucide-activity'" class="h-5 w-5" />
           </div>
           <div class="min-w-0 text-left">
             <div class="text-2xl font-black leading-none tracking-tight text-slate-950 sm:text-3xl">
@@ -26,7 +26,7 @@
 
 <script setup lang="ts">
 import { ref, onMounted, onUnmounted, reactive } from "vue";
-import { FeatherIcon } from "frappe-ui";
+import { Icon } from "frappe-ui";
 
 interface Stat {
   id: number;

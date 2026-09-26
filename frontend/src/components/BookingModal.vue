@@ -13,42 +13,29 @@
         </p>
 
         <div class="grid gap-4 sm:grid-cols-2">
-          <div>
-            <label class="mb-1 block text-sm font-medium text-gray-700">
-              Full name <span class="text-red-500">*</span>
-            </label>
-            <Input
-              v-model="form.name"
-              type="text"
-              placeholder="e.g. Wanjiru Mwangi"
-              required
-            />
-          </div>
+          <FormControl
+            v-model="form.name"
+            type="text"
+            label="Full name"
+            placeholder="e.g. Wanjiru Mwangi"
+            required
+          />
 
-          <div>
-            <label class="mb-1 block text-sm font-medium text-gray-700">
-              Phone <span class="text-red-500">*</span>
-            </label>
-            <input
-              v-model.number="form.phone"
-              type="tel"
-              placeholder="07XX XXX XXX"
-              required
-              class="w-full rounded-md border border-gray-300 p-2 text-sm focus:border-blue-500 focus:outline-none"
-            />
-          </div>
-        </div>
-
-        <div>
-          <label class="mb-1 block text-sm font-medium text-gray-700">
-            Email
-          </label>
-          <Input
-            v-model="form.email"
-            type="email"
-            placeholder="you@example.com"
+          <FormControl
+            v-model="form.phone"
+            type="text"
+            label="Phone"
+            placeholder="07XX XXX XXX"
+            required
           />
         </div>
+
+        <FormControl
+          v-model="form.email"
+          type="email"
+          label="Email"
+          placeholder="you@example.com"
+        />
 
         <div class="grid gap-4 sm:grid-cols-2">
           <div>
@@ -58,52 +45,42 @@
             <DatePicker v-model="form.date" placeholder="Pick a date" />
           </div>
 
-          <div>
-            <label class="mb-1 block text-sm font-medium text-gray-700">
-              Preferred time
-            </label>
-            <select
-              v-model="form.time"
-              class="block w-full rounded-md border border-gray-300 bg-white px-3 py-2 text-sm text-gray-700 shadow-sm focus:border-sky-500 focus:outline-none focus:ring-1 focus:ring-sky-500"
-            >
-              <option value="">Any time</option>
-              <option value="morning">Morning (8am – 12pm)</option>
-              <option value="afternoon">Afternoon (12pm – 4pm)</option>
-              <option value="evening">Evening (4pm – 6pm)</option>
-            </select>
-          </div>
+          <FormControl
+            v-model="form.time"
+            type="select"
+            label="Preferred time"
+            :options="[
+              { label: 'Any time', value: '' },
+              { label: 'Morning (8am – 12pm)', value: 'morning' },
+              { label: 'Afternoon (12pm – 4pm)', value: 'afternoon' },
+              { label: 'Evening (4pm – 6pm)', value: 'evening' },
+            ]"
+          />
         </div>
 
-        <div>
-          <label class="mb-1 block text-sm font-medium text-gray-700">
-            Service
-          </label>
-          <select
-            v-model="form.service"
-            class="block w-full rounded-md border border-gray-300 bg-white px-3 py-2 text-sm text-gray-700 shadow-sm focus:border-sky-500 focus:outline-none focus:ring-1 focus:ring-sky-500"
-          >
-            <option value="">Select a service (optional)</option>
-            <option value="General Dentistry">General Dentistry</option>
-            <option value="Dental Fillings">Dental Fillings</option>
-            <option value="Root Canal Therapy">Root Canal Therapy</option>
-            <option value="Orthodontics">Orthodontics</option>
-            <option value="Cosmetic Dentistry">Cosmetic Dentistry</option>
-            <option value="Dental Implants">Dental Implants</option>
-            <option value="Other">Other</option>
-          </select>
-        </div>
+        <FormControl
+          v-model="form.service"
+          type="select"
+          label="Service"
+          :options="[
+            { label: 'Select a service (optional)', value: '' },
+            { label: 'General Dentistry', value: 'General Dentistry' },
+            { label: 'Dental Fillings', value: 'Dental Fillings' },
+            { label: 'Root Canal Therapy', value: 'Root Canal Therapy' },
+            { label: 'Orthodontics', value: 'Orthodontics' },
+            { label: 'Cosmetic Dentistry', value: 'Cosmetic Dentistry' },
+            { label: 'Dental Implants', value: 'Dental Implants' },
+            { label: 'Other', value: 'Other' },
+          ]"
+        />
 
-        <div>
-          <label class="mb-1 block text-sm font-medium text-gray-700">
-            Anything else we should know?
-          </label>
-          <textarea
-            v-model="form.message"
-            rows="3"
-            placeholder="Tell us about your symptoms, concerns, or questions..."
-            class="block w-full rounded-md border border-gray-300 bg-white px-3 py-2 text-sm text-gray-700 shadow-sm focus:border-sky-500 focus:outline-none focus:ring-1 focus:ring-sky-500"
-          ></textarea>
-        </div>
+        <FormControl
+          v-model="form.message"
+          type="textarea"
+          label="Anything else we should know?"
+          placeholder="Tell us about your symptoms, concerns, or questions..."
+          :rows="3"
+        />
       </form>
     </template>
 
@@ -120,7 +97,7 @@
 
 <script setup lang="ts">
 import { ref, watch } from "vue";
-import { Dialog, Input, DatePicker, Button, toast } from "frappe-ui";
+import { Dialog, FormControl, DatePicker, Button, toast } from "frappe-ui";
 
 interface BookingForm {
   name: string;
@@ -171,17 +148,17 @@ function reset() {
 
 function submit() {
   if (!form.value.name.trim() || !form.value.phone.trim()) {
-    toast("error", {
+    toast.error({
       title: "Missing details",
       message: "Please enter your name and phone number so we can reach you.",
     });
     return;
   }
   submitting.value = true;
-  // Simulate sending — in production this would call a Frappe API endpoint
+  
   setTimeout(() => {
     submitting.value = false;
-    toast("success", {
+    toast.success({
       title: "Request received!",
       message: "We'll call you within 24 hours to confirm your appointment.",
     });

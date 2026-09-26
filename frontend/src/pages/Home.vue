@@ -3,7 +3,7 @@
     <header class="sticky top-0 z-20 border-b border-sky-100/80 bg-white/80 backdrop-blur-xl shadow-[0_10px_30px_rgba(15,23,42,0.04)]">
       <nav class="mx-auto flex max-w-7xl items-center justify-between px-4 py-4 sm:px-6 lg:px-8">
         <RouterLink to="/" class="flex items-center gap-3">
-          <div class="flex h-11 w-11 items-center justify-center rounded-2xl bg-sky-100 ring-1 ring-sky-200 shadow-sm shadow-sky-100">
+          <div class="flex h-11 w-11 items-center justify-center rounded-full big-slate-900 shadow-md">
             <img src="/favicon.png" alt="flairsmiledentalcare" class="h-8 w-8 object-contain" />
           </div>
           <div>
@@ -27,7 +27,7 @@
           @click="mobileOpen = !mobileOpen"
           :aria-label="mobileOpen ? 'Close menu' : 'Open menu'"
         >
-          <FeatherIcon :name="mobileOpen ? 'x' : 'menu'" class="h-5 w-5" />
+          <Icon :name="mobileOpen ? 'lucide-x' : 'lucide-menu'" class="h-5 w-5" />
         </button>
       </nav>
 
@@ -66,7 +66,7 @@
           aria-label="Previous slide"
           class="absolute left-4 top-1/2 z-20 hidden -translate-y-1/2 rounded-full border border-white/20 bg-slate-900/45 p-2 text-white backdrop-blur-sm hover:bg-sky-600 md:inline-flex"
         >
-          <FeatherIcon name="chevron-left" class="h-5 w-5" />
+          <Icon name="lucide-chevron-left" class="h-5 w-5" />
         </button>
         <button
           type="button"
@@ -74,16 +74,16 @@
           aria-label="Next slide"
           class="absolute right-4 top-1/2 z-20 hidden -translate-y-1/2 rounded-full border border-white/20 bg-slate-900/45 p-2 text-white backdrop-blur-sm hover:bg-sky-600 md:inline-flex"
         >
-          <FeatherIcon name="chevron-right" class="h-5 w-5" />
+          <Icon name="lucide-chevron-right" class="h-5 w-5" />
         </button>
 
         <div class="relative z-10 mx-auto flex min-h-[620px] max-w-7xl items-center px-4 py-16 sm:px-6 lg:px-8">
           <div class="max-w-3xl">
             <span class="inline-flex items-center gap-2 rounded-full border border-cyan-200/40 bg-sky-500/20 px-4 py-2 text-[10px] font-black uppercase tracking-[0.26em] text-cyan-50 shadow-[0_0_0_1px_rgba(125,211,252,0.2)] backdrop-blur-sm sm:text-[11px]">
-              <FeatherIcon name="sparkles" class="h-3.5 w-3.5 text-cyan-200" />
+              <Icon name="lucide-sparkles" class="h-3.5 w-3.5 text-cyan-200" />
               Creating brighter smiles
             </span>
-            <h1 class="mt-6 text-[2.65rem] font-black leading-[0.9] tracking-[-0.07em] text-white drop-shadow-[0_8px_30px_rgba(15,23,42,0.8)] sm:text-5xl lg:text-[5rem]">
+            <h1 class="font-serif  sm:text-sm lg:text-9xl tracking-wide font-bold uppercase text-white" >
               Flair Smile dental care
               <span class="mt-2 block bg-gradient-to-r from-cyan-200 via-sky-200 to-blue-300 bg-clip-text text-transparent">
                 for confident living.
@@ -94,18 +94,18 @@
             </p>
 
             <div class="mt-8 flex flex-col gap-3 sm:flex-row">
-              <Button variant="solid" theme="blue" size="lg" label="Register as a patient" icon="user-plus" class="!rounded-xl !shadow-[0_18px_35px_rgba(14,165,233,0.25)]" @click="patientRegistrationOpen = true" />
-              <Button variant="solid" theme="blue" size="lg" label="Book appointment" icon="calendar" class="!rounded-xl !shadow-[0_18px_35px_rgba(14,165,233,0.25)]" @click="bookAppointment" />
-              <Button variant="outline" theme="blue" size="lg" label="Call clinic" icon="phone" class="!rounded-xl !shadow-[0_18px_35px_rgba(14,165,233,0.25)]" @click="callNow" />
+              <Button variant="solid" theme="blue" size="lg" label="Register as a patient" icon="lucide-user-plus" class="!rounded-xl !shadow-[0_18px_35px_rgba(14,165,233,0.25)]" @click="patientRegistrationOpen = true" />
+              <Button variant="solid" theme="blue" size="lg" label="Book appointment" icon="lucide-calendar" class="!rounded-xl !shadow-[0_18px_35px_rgba(14,165,233,0.25)]" @click="bookAppointment" />
+              <Button variant="outline" theme="blue" size="lg" label="Call clinic" icon="lucide-phone" class="!rounded-xl !shadow-[0_18px_35px_rgba(14,165,233,0.25)]" @click="callNow" />
             </div>
             <div class="mt-8 flex flex-wrap items-center gap-3 text-sm font-semibold text-white">
               <span class="flex items-center gap-2 rounded-full border border-white/20 bg-slate-950/55 px-3 py-2 shadow-sm backdrop-blur-sm">
-                <FeatherIcon name="map-pin" class="h-4 w-4 shrink-0 text-cyan-200" />
+                <Icon name="lucide-map-pin" class="h-4 w-4 shrink-0 text-cyan-200" />
                 Nairobi CBD
               </span>
               <span class="hidden h-1.5 w-1.5 rounded-full bg-sky-300 sm:block"></span>
               <span class="flex items-center gap-2 rounded-full border border-white/20 bg-slate-950/55 px-3 py-2 shadow-sm backdrop-blur-sm">
-                <FeatherIcon name="clock" class="h-4 w-4 shrink-0 text-cyan-200" />
+                <Icon name="lucide-clock" class="h-4 w-4 shrink-0 text-cyan-200" />
                 Mon–Fri: 8:00am–6:00pm
               </span>
             </div>
@@ -132,7 +132,7 @@
       <section id="services" class="bg-slate-50 py-24">
         <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
           <div class="mx-auto max-w-2xl text-center">
-            <span class="text-xs font-bold uppercase tracking-[0.22em] text-sky-600">Our care</span>
+            <span class="text-sm font-bold uppercase tracking-[0.22em] text-sky-600">Our care</span>
             <h2 class="mt-4 text-3xl font-black tracking-tight text-slate-900 sm:text-4xl">Complete dental solutions</h2>
             <p class="mt-4 text-lg text-slate-700">Modern treatment plans built around comfort, precision and long-term oral health.</p>
           </div>
@@ -209,7 +209,7 @@
               <div class="space-y-7">
                 <div class="flex items-start gap-4">
                   <div class="flex h-12 w-12 items-center justify-center rounded-2xl bg-sky-100 text-sky-700">
-                    <FeatherIcon name="map-pin" class="h-5 w-5" />
+                    <Icon name="lucide-map-pin" class="h-5 w-5" />
                   </div>
                   <div>
                     <p class="text-sm font-bold uppercase tracking-[0.18em] text-slate-500">Location</p>
@@ -220,7 +220,7 @@
 
                 <div class="flex items-start gap-4">
                   <div class="flex h-12 w-12 items-center justify-center rounded-2xl bg-sky-100 text-sky-700">
-                    <FeatherIcon name="phone" class="h-5 w-5" />
+                    <Icon name="lucide-phone" class="h-5 w-5" />
                   </div>
                   <div>
                     <p class="text-sm font-bold uppercase tracking-[0.18em] text-slate-500">Call us</p>
@@ -233,7 +233,7 @@
 
                 <div class="flex items-start gap-4">
                   <div class="flex h-12 w-12 items-center justify-center rounded-2xl bg-sky-100 text-sky-700">
-                    <FeatherIcon name="mail" class="h-5 w-5" />
+                    <Icon name="lucide-mail" class="h-5 w-5" />
                   </div>
                   <div>
                     <p class="text-sm font-bold uppercase tracking-[0.18em] text-slate-500">Email</p>
@@ -243,7 +243,7 @@
 
                 <div class="flex items-start gap-4">
                   <div class="flex h-12 w-12 items-center justify-center rounded-2xl bg-sky-100 text-sky-700">
-                    <FeatherIcon name="clock" class="h-5 w-5" />
+                    <Icon name="lucide-clock" class="h-5 w-5" />
                   </div>
                   <div>
                     <p class="text-sm font-bold uppercase tracking-[0.18em] text-slate-500">Hours</p>
@@ -254,17 +254,15 @@
               </div>
             </div>
 
-            <Card class="!overflow-hidden !rounded-[28px] !border !border-slate-200 !shadow-lg">
-              <template #default>
-                <iframe
-                  title="Flair Smile Dental Care location"
-                  class="h-[480px] w-full border-0"
-                  src="https://maps.google.com/maps?q=Laxmi+Plaza,+Biashara+Street,+Nairobi+CBD&t=&z=15&ie=UTF8&iwloc=&output=embed"
-                  allowfullscreen
-                  loading="lazy"
-                ></iframe>
-              </template>
-            </Card>
+            <div class="overflow-hidden rounded-[28px] border border-slate-200 bg-white shadow-lg">
+              <iframe
+                title="Flair Smile Dental Care location"
+                class="h-[480px] w-full border-0"
+                src="https://maps.google.com/maps?q=Laxmi+Plaza,+Biashara+Street,+Nairobi+CBD&t=&z=15&ie=UTF8&iwloc=&output=embed"
+                allowfullscreen
+                loading="lazy"
+              ></iframe>
+            </div>
           </div>
         </div>
       </section>
@@ -275,7 +273,7 @@
         <div class="grid gap-10 md:grid-cols-2 lg:grid-cols-4">
           <div>
             <div class="flex items-center gap-3">
-              <div class="flex h-10 w-10 items-center justify-center rounded-xl bg-sky-500/15 ring-1 ring-sky-500/20">
+              <div class="flex h-11 w-11 items-center justify-center rounded-full big-slate-900 shadow-md">
                 <img src="/favicon.png" alt="Flair Smile" class="h-7 w-7 object-contain" />
               </div>
               <div>
@@ -331,7 +329,7 @@
 
 <script setup lang="ts">
 import { ref, computed, onMounted, onUnmounted } from "vue";
-import { Button, Card, FeatherIcon, LoadingIndicator, useList } from "frappe-ui";
+import { Button, Icon, LoadingIndicator, useList } from "frappe-ui";
 
 import ServiceCard from "../components/ServiceCard.vue";
 import FeatureCard from "../components/FeatureCard.vue";
@@ -447,7 +445,7 @@ const testimonials: Testimonial[] = [
 
 const stats: Stat[] = [
   { id: 1, value: "10+", label: "Years of care", icon: "calendar" },
-  { id: 2, value: "5000+", label: "Happy smiles", icon: "users" },
+  { id: 2, value: "5000+", label: "Happy smiles", icon: "face-slightly-smiling-plus" },
   { id: 3, value: "4.9/5", label: "Patient rating", icon: "star" },
   { id: 4, value: "24/7", label: "Emergency support", icon: "phone" },
 ];
@@ -458,17 +456,12 @@ const fallbackDoctors = [
   { name: "Dr. Aisha Noor", qualification: "BDS, Cosmetic Dentistry", specialty: "Cosmetic Dentist", image: null, bio: "Helps patients achieve natural-looking, camera-ready results with gentle precision." },
 ];
 
-const doctorsResource = useList<{
-  name: string;
-  practitioner_name?: string;
-  status?: string;
-  image?: string | null;
-  qualifications?: string;
-}>({
+const doctorsResource = useList({
   doctype: "Healthcare Practitioner",
+  method: "frappe.client.get_list",
   fields: ["name", "practitioner_name", "status", "image", "qualifications"],
   filters: { status: "Active" },
-  initialData: [],
+  auto: true,
 });
 
 const doctors = computed(() => {
@@ -486,7 +479,7 @@ const doctors = computed(() => {
     return fallbackDoctors;
   }
 
-  return [];
+  return fallbackDoctors;
 });
 
 function bookAppointment() {

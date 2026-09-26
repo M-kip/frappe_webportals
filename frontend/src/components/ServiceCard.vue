@@ -1,7 +1,7 @@
 <template>
   <article class="group flex h-full flex-col rounded-[28px] border border-slate-200 bg-gradient-to-b from-white to-sky-50/40 p-6 shadow-[0_18px_50px_rgba(15,23,42,0.06)] transition-all duration-300 hover:-translate-y-1 hover:border-sky-200 hover:shadow-[0_24px_60px_rgba(14,165,233,0.12)]">
     <div class="flex h-14 w-14 items-center justify-center rounded-2xl shadow-sm shadow-sky-100/80" :class="iconClasses">
-      <FeatherIcon :name="service.icon || 'activity'" class="h-6 w-6" />
+      <Icon :icon="service.icon ? `lucide-${service.icon}` : 'lucide-activity'" class="h-6 w-6" />
     </div>
 
     <h3 class="mt-6 text-xl font-bold text-slate-900">{{ service.title }}</h3>
@@ -13,14 +13,14 @@
       @click="$emit('learn-more', service)"
     >
       Learn more
-      <FeatherIcon name="arrow-right" class="h-4 w-4" />
+      <Icon icon="lucide-arrow-right" class="h-4 w-4" />
     </button>
   </article>
 </template>
 
 <script setup lang="ts">
 import { computed } from "vue";
-import { FeatherIcon } from "frappe-ui";
+import { Icon } from "frappe-ui";
 
 interface Service {
   id: number;

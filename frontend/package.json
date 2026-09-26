@@ -5,21 +5,22 @@
   "type": "module",
   "scripts": {
     "dev": "vite",
-    "build": "vite build --base=/assets/frappe_webportals/app/ && yarn copy-html-entry", 
-    "preview": "vite preview",
-    "copy-html-entry": "mkdir -p ../frappe_webportals/www && cp ../frappe_webportals/public/frontend/index.html ../frappe_webportals/www/app.html" 
+    "build": "vite build",
+    "preview": "vite preview"
+  },
+  "engines": {
+        "node": ">=20.19.0"
   },
   "dependencies": {
-    "feather-icons": "^4.29.2",
-    "frappe-ui": "^0.1.278",
-    "vue": "^3.5.42",
+    "frappe-ui": "1.0.0-rc.1",
+    "vue": "^3.5.0",
     "vue-router": "^4.5.0"
   },
   "devDependencies": {
-    "@vitejs/plugin-vue": "^6.0.0",
+    "@vitejs/plugin-vue": "^5.2.1",
     "autoprefixer": "^10.4.20",
     "postcss": "^8.4.49",
-    "tailwindcss": "^3.4.17",
-    "vite": "^8.3.0"
+    "tailwindcss": ">=3.4.2 <4",
+    "vite": "^6.0.0"
   }
 }

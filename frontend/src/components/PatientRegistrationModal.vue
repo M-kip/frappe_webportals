@@ -1,13 +1,14 @@
 <template>
   <Dialog
+    v-model:open="show"
+    title="Register As Patient"
+    size="lg"
     class="z-40"
-    v-model="show"
-    :options="{
-      title: 'Register as Patient',
-      size: 'lg',
-    }"
+    icon="lucide-user-round-plus size-9"
+    theme="blue"
+    :padding-top="90"
   >
-    <template #body-content>
+
       <form class="space-y-5" @submit.prevent="handleSubmit">
         <div class="flex items-center justify-between gap-3">
           <div>
@@ -37,72 +38,76 @@
               Full Name <span class="text-red-500">*</span>
             </label>
             <div class="grid gap-4 sm:grid-cols-3">
-              <Input v-model="newPatient.doc.first_name" type="text" placeholder="First name" required />
-              <Input v-model="newPatient.doc.middle_name" type="text" placeholder="Middle name (optional)" />
-              <Input v-model="newPatient.doc.last_name" type="text" placeholder="Last name" required />
+              <FormControl v-model="newPatient.doc.first_name" type="text" placeholder="First name" required />
+              <FormControl v-model="newPatient.doc.middle_name" type="text" placeholder="Middle name (optional)" />
+              <FormControl v-model="newPatient.doc.last_name" type="text" placeholder="Last name" required />
             </div>
           </div>
 
           <div class="grid gap-4 sm:grid-cols-3">
-            <div>
-              <label class="mb-1 block text-sm font-medium text-gray-700">
-                Gender <span class="text-red-500">*</span>
-              </label>
-              <Select v-model="newPatient.doc.sex" :options="genderOptions" placeholder="Select gender" required />
-            </div>
+            <FormControl
+              v-model="newPatient.doc.sex"
+              type="select"
+              label="Gender *"
+              :options="genderOptions"
+              placeholder="Select gender"
+              required
+            />
             <div>
               <label class="mb-1 block text-sm font-medium text-gray-700">Date of Birth</label>
               <DatePicker v-model="newPatient.doc.dob" placeholder="Pick a date" />
             </div>
-            <div>
-              <label class="mb-1 block text-sm font-medium text-gray-700">Blood Group</label>
-              <Select v-model="newPatient.doc.blood_group" :options="bloodGroupOptions" placeholder="Select blood group" />
-            </div>
+            <FormControl
+              v-model="newPatient.doc.blood_group"
+              type="select"
+              label="Blood Group"
+              :options="bloodGroupOptions"
+              placeholder="Select blood group"
+            />
           </div>
         </div>
 
         <!-- Step 2: Contact and Personal Details -->
         <div v-if="currentStep === 2" class="space-y-5">
           <div class="grid grid-cols-1 gap-4 md:grid-cols-2">
-            <div>
-              <label class="mb-1 block text-sm font-medium text-gray-700">
-                Mobile <span class="text-red-500">*</span>
-              </label>
-              <input
-                v-model="newPatient.doc.mobile"
-                class="w-full rounded-md border border-gray-300 p-2 text-sm focus:border-blue-500 focus:outline-none"
-                type="tel"
-                placeholder="07XX XXX XXX"
-                required
-              />
-            </div>
-            <div>
-              <label class="mb-1 block text-sm font-medium text-gray-700">Phone</label>
-              <input
-                v-model="newPatient.doc.phone"
-                class="w-full rounded-md border border-gray-300 p-2 text-sm focus:border-blue-500 focus:outline-none"
-                type="tel"
-                placeholder="020 XXXXXXX"
-              />
-            </div>
+            <FormControl
+              v-model="newPatient.doc.mobile"
+              type="text"
+              label="Mobile *"
+              placeholder="07XX XXX XXX"
+              required
+            />
+            <FormControl
+              v-model="newPatient.doc.phone"
+              type="text"
+              label="Phone"
+              placeholder="020 XXXXXXX"
+            />
           </div>
 
-          <div>
-            <label class="mb-1 block text-sm font-medium text-gray-700">Email</label>
-            <Input v-model="newPatient.doc.email" type="email" placeholder="you@example.com" />
-          </div>
+          <FormControl
+            v-model="newPatient.doc.email"
+            type="email"
+            label="Email"
+            placeholder="you@example.com"
+          />
 
           <div class="border-t border-gray-200 pt-5">
             <h3 class="mb-4 text-base font-semibold text-gray-900">Personal Details</h3>
             <div class="grid gap-4 sm:grid-cols-2">
-              <div>
-                <label class="mb-1 block text-sm font-medium text-gray-700">Occupation</label>
-                <Input v-model="newPatient.doc.occupation" type="text" placeholder="Occupation" />
-              </div>
-              <div>
-                <label class="mb-1 block text-sm font-medium text-gray-700">Marital Status</label>
-                <Select v-model="newPatient.doc.marital_status" :options="maritalStatusOptions" placeholder="Select marital status" />
-              </div>
+              <FormControl
+                v-model="newPatient.doc.occupation"
+                type="text"
+                label="Occupation"
+                placeholder="Occupation"
+              />
+              <FormControl
+                v-model="newPatient.doc.marital_status"
+                type="select"
+                label="Marital Status"
+                :options="maritalStatusOptions"
+                placeholder="Select marital status"
+              />
             </div>
           </div>
         </div>
@@ -111,22 +116,34 @@
         <div v-if="currentStep === 3" class="space-y-4">
           <h3 class="text-base font-semibold text-gray-900">Allergies, Medical and Surgical History</h3>
           <div class="grid gap-4 sm:grid-cols-2">
-            <div>
-              <label class="mb-1 block text-sm font-medium text-gray-700">Allergies</label>
-              <textarea v-model="newPatient.doc.allergies" class="w-full rounded-md border border-gray-300 p-2 text-sm focus:border-blue-500 focus:outline-none" rows="3" placeholder="List any known allergies" />
-            </div>
-            <div>
-              <label class="mb-1 block text-sm font-medium text-gray-700">Medication</label>
-              <textarea v-model="newPatient.doc.medication" class="w-full rounded-md border border-gray-300 p-2 text-sm focus:border-blue-500 focus:outline-none" rows="3" placeholder="Current medication" />
-            </div>
-            <div>
-              <label class="mb-1 block text-sm font-medium text-gray-700">Medical History</label>
-              <textarea v-model="newPatient.doc.medical_history" class="w-full rounded-md border border-gray-300 p-2 text-sm focus:border-blue-500 focus:outline-none" rows="3" placeholder="Relevant medical history" />
-            </div>
-            <div>
-              <label class="mb-1 block text-sm font-medium text-gray-700">Surgical History</label>
-              <textarea v-model="newPatient.doc.surgical_history" class="w-full rounded-md border border-gray-300 p-2 text-sm focus:border-blue-500 focus:outline-none" rows="3" placeholder="Previous surgeries" />
-            </div>
+            <FormControl
+              v-model="newPatient.doc.allergies"
+              type="textarea"
+              label="Allergies"
+              placeholder="List any known allergies"
+              :rows="3"
+            />
+            <FormControl
+              v-model="newPatient.doc.medication"
+              type="textarea"
+              label="Medication"
+              placeholder="Current medication"
+              :rows="3"
+            />
+            <FormControl
+              v-model="newPatient.doc.medical_history"
+              type="textarea"
+              label="Medical History"
+              placeholder="Relevant medical history"
+              :rows="3"
+            />
+            <FormControl
+              v-model="newPatient.doc.surgical_history"
+              type="textarea"
+              label="Surgical History"
+              placeholder="Previous surgeries"
+              :rows="3"
+            />
           </div>
         </div>
 
@@ -134,43 +151,58 @@
         <div v-if="currentStep === 4" class="space-y-4">
           <h3 class="text-base font-semibold text-gray-900">Risk Factors</h3>
           <div class="space-y-3 text-sm text-gray-700">
-            <label class="flex items-start gap-3">
-              <input v-model="riskForm.tobacco_consumption" type="checkbox" class="mt-1 rounded border-gray-300 text-blue-600" />
-              <span>Check if you have a history of Tobacco Consumption</span>
-            </label>
-            <label class="flex items-start gap-3">
-              <input v-model="riskForm.tobacco_use" type="checkbox" class="mt-1 rounded border-gray-300 text-blue-600" />
-              <span>Check if you consume Tobacco</span>
-            </label>
-            <label class="flex items-start gap-3">
-              <input v-model="riskForm.alcohol_consumption" type="checkbox" class="mt-1 rounded border-gray-300 text-blue-600" />
-              <span>Check if you have a history of Alcohol Consumption</span>
-            </label>
-            <label class="flex items-start gap-3">
-              <input v-model="riskForm.alcohol_use" type="checkbox" class="mt-1 rounded border-gray-300 text-blue-600" />
-              <span>Check if you consume Alcohol</span>
-            </label>
+            <Checkbox
+              v-model="riskForm.tobacco_consumption"
+              label="Check if you have a history of Tobacco Consumption"
+            />
+            <Checkbox
+              v-model="riskForm.tobacco_use"
+              label="Check if you consume Tobacco"
+            />
+            <Checkbox
+              v-model="riskForm.alcohol_consumption"
+              label="Check if you have a history of Alcohol Consumption"
+            />
+            <Checkbox
+              v-model="riskForm.alcohol_use"
+              label="Check if you consume Alcohol"
+            />
           </div>
           <div class="grid gap-4 sm:grid-cols-2">
-            <div>
-              <label class="mb-1 block text-sm font-medium text-gray-700">Occupational Hazards</label>
-              <textarea v-model="newPatient.doc.surrounding_factors" class="w-full rounded-md border border-gray-300 p-2 text-sm focus:border-blue-500 focus:outline-none" rows="3" placeholder="Describe any relevant hazards or factors" />
-            </div>
-            <div>
-              <label class="mb-1 block text-sm font-medium text-gray-700">Other Risk Factors</label>
-              <textarea v-model="newPatient.doc.other_risk_factors" class="w-full rounded-md border border-gray-300 p-2 text-sm focus:border-blue-500 focus:outline-none" rows="3" placeholder="Add any other risk factors" />
-            </div>
+            <FormControl
+              v-model="newPatient.doc.surrounding_factors"
+              type="textarea"
+              label="Occupational Hazards"
+              placeholder="Describe any relevant hazards or factors"
+              :rows="3"
+            />
+            <FormControl
+              v-model="newPatient.doc.other_risk_factors"
+              type="textarea"
+              label="Other Risk Factors"
+              placeholder="Add any other risk factors"
+              :rows="3"
+            />
           </div>
         </div>
       </form>
-    </template>
+
 
     <template #actions>
       <div class="flex flex-col-reverse gap-2 sm:flex-row sm:justify-end">
         <Button variant="ghost" @click="show = false">Cancel</Button>
         <Button v-if="currentStep > 1" variant="ghost" @click="previousStep">Back</Button>
         <Button v-if="currentStep < steps.length" variant="solid" theme="blue" @click="nextStep">Continue</Button>
-        <Button v-else type="submit" variant="solid" theme="blue" :loading="newPatient.loading" :disabled="newPatient.loading" loading-text="Registering..." @click="handleSubmit">
+        <Button
+          v-else
+          type="submit"
+          variant="solid"
+          theme="blue"
+          :loading="newPatient.loading"
+          :disabled="newPatient.loading"
+          loading-text="Registering..."
+          @click="handleSubmit"
+        >
           Register Patient
         </Button>
       </div>
@@ -182,8 +214,8 @@
 import { ref, reactive, watch } from "vue"
 import {
   Dialog,
-  Input,
-  Select,
+  FormControl,
+  Checkbox,
   DatePicker,
   Button,
   toast,
@@ -231,7 +263,6 @@ const steps = [
   { number: 4, title: "Risk factors" },
 ]
 
-// Initialize useNewDoc directly for Frappe Health Patient DocType
 const newPatient = useNewDoc<PatientDocument>("Patient", {
   doctype: "Patient",
   first_name: "",
@@ -253,7 +284,6 @@ const newPatient = useNewDoc<PatientDocument>("Patient", {
   other_risk_factors: "",
 })
 
-// Temporary local state for checkbox booleans mapped to Frappe "Yes"/"No"
 const riskForm = reactive({
   tobacco_consumption: false,
   tobacco_use: false,
@@ -261,7 +291,6 @@ const riskForm = reactive({
   alcohol_use: false,
 })
 
-// Standard Frappe Health Blood Group options (use hyphens, not spaces)
 const bloodGroupOptions = [
   { value: "A-Positive", label: "A Positive" },
   { value: "A-Negative", label: "A Negative" },
@@ -299,11 +328,11 @@ watch(show, (v) => {
 function validateStep(step: number) {
   if (step === 1) {
     if (!newPatient.doc.first_name?.trim() || !newPatient.doc.last_name?.trim()) {
-      toast.error("Please enter first and last name.")
+      toast.error("Please enter both first and last names." )
       return false
     }
     if (!newPatient.doc.sex) {
-      toast.error("Please select gender.")
+      toast.error("Please select gender." )
       return false
     }
   }
@@ -311,12 +340,12 @@ function validateStep(step: number) {
   if (step === 2) {
     const mobile = String(newPatient.doc.mobile || "").trim()
     if (!mobile) {
-      toast.error("Please enter mobile number.")
+      toast.error("Please enter mobile number." )
       return false
     }
     const mobileClean = mobile.replace(/[\s\-]+/g, "")
     if (!/^\d{10,13}$/.test(mobileClean)) {
-      toast.error("Please enter a valid mobile number (10-13 digits).")
+      toast.error("Please enter a valid mobile number (10-13 digits)." )
       return false
     }
   }
@@ -344,15 +373,12 @@ async function submit() {
   if (!validateStep(1) || !validateStep(2)) return
 
   try {
-    // Re-confirm doctype field on the document object
     newPatient.doc.doctype = "Patient"
-    // Map boolean risk factors to Frappe Health fields
     newPatient.doc.tobacco_past_use = riskForm.tobacco_consumption ? "Yes" : "No"
     newPatient.doc.tobacco_current_use = riskForm.tobacco_use ? "Yes" : "No"
     newPatient.doc.alcohol_past_use = riskForm.alcohol_consumption ? "Yes" : "No"
     newPatient.doc.alcohol_current_use = riskForm.alcohol_use ? "Yes" : "No"
 
-    // Execute submission without arguments
     const doc = await newPatient.submit()
 
     toast.success(`Patient registered: ${doc.name}`)
@@ -362,9 +388,7 @@ async function submit() {
     console.error("Patient registration failed:", error)
     const serverError = newPatient.error as any
     const message = serverError?.messages?.join("\n") || serverError?.exception || error?.message
-    toast.error(`Patient registration failed: ${message || "Please try again."}`, {
-      duration: 10,
-    })
+    toast.error(message || "Please try again.")
   }
 }
 </script>

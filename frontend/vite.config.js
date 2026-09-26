@@ -12,19 +12,11 @@ export default defineConfig({
 			siteName: "flairdentalcare.localhost",
 			siteList: ["flairdentalcare.localhost"],
 			frontendRoute: "/app",
-			frappeProxy: {
-				port: 8000,
-				source: "^/(app|desk|login|api|assets|files|pages)",
-			},
+			lucideIcons: true,
 		}),
 		vue(),
 	],
-	css: {
-		postcss: path.resolve(import.meta.dirname, "postcss.config.js"),
-	},
 	build: {
-		outDir: path.resolve(import.meta.dirname, "../public/frontend"),
-		emptyOutDir: true,
 		target: "esnext",
 		commonjsOptions: {
 			include: [/node_modules/],
@@ -42,6 +34,12 @@ export default defineConfig({
 		allowedHosts: true,
 	},
 	optimizeDeps: {
-		include: ["frappe-ui > feather-icons", "engine.io-client", "interactjs", "highlight.js/lib/core"],
+		include: [
+			"engine.io-client",
+			"highlight.js/lib/core",
+		],
+		exclude: [
+			"frappe-ui",
+		],
 	},
 });
