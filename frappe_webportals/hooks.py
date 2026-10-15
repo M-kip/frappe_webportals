@@ -68,7 +68,9 @@ use_json_request_body = True
 
 # Home Pages
 # ----------
-home_page = "app"
+home_page = "/portal"
+# Force login redirections to land on your custom frontend route rather than standard Desk
+login_redirect_url = "/portal"
 # application home page (will override Website Settings)
 # home_page = "login"
 
@@ -305,8 +307,8 @@ require_type_annotated_api_methods = True
 # ignore_translatable_strings_from = []
 
 website_route_rules = [
-    {"from_route": "/app/<path:app_path>", "to_route": "app"},
-    {"from_route": "/app", "to_route": "app"},
+    {"from_route": "/portal/<path:app_path>", "to_route": "portal"},
+    {"from_route": "/portal", "to_route": "portal"},
 ]
 # Near the top or bottom of your hooks.py file
 click_commands = [

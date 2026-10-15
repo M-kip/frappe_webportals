@@ -6,10 +6,15 @@ const routes = [
     name: 'Home',
     component: () => import('@/pages/Home.vue'),
   },
+  {
+    path: '/Profile',
+    name: 'Profile',
+    component: () => import('@/pages/Profile.vue'),
+  },
 ]
 
 let router = createRouter({
-  history: createWebHistory('/app'),
+  history: createWebHistory('/portal'),
   routes,
 })
 

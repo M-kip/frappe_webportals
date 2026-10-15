@@ -11,17 +11,21 @@ export {}
 /* prettier-ignore */
 declare module 'vue' {
   export interface GlobalComponents {
+    AppointmentForm: typeof import('./src/components/AppointmentForm.vue')['default']
     BookingModal: typeof import('./src/components/BookingModal.vue')['default']
     DoctorCard: typeof import('./src/components/DoctorCard.vue')['default']
     FeatureCard: typeof import('./src/components/FeatureCard.vue')['default']
     HelloWorld: typeof import('./src/components/HelloWorld.vue')['default']
     InsuranceStrip: typeof import('./src/components/InsuranceStrip.vue')['default']
+    LogIn: typeof import('./src/components/LogIn.vue')['default']
     PatientRegistrationModal: typeof import('./src/components/PatientRegistrationModal.vue')['default']
     RouterLink: typeof import('vue-router')['RouterLink']
     RouterView: typeof import('vue-router')['RouterView']
     ServiceCard: typeof import('./src/components/ServiceCard.vue')['default']
     StatsBar: typeof import('./src/components/StatsBar.vue')['default']
     TestimonialCard: typeof import('./src/components/TestimonialCard.vue')['default']
+    UserProfileModal: typeof import('./src/components/UserProfileModal.vue')['default']
     WhatsAppButton: typeof import('./src/components/WhatsAppButton.vue')['default']
+    WorkspaceMenu: typeof import('./src/components/WorkspaceMenu.vue')['default']
   }
 }

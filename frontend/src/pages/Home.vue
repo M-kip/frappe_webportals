@@ -7,7 +7,7 @@
             <img src="/favicon.png" alt="flairsmiledentalcare" class="h-8 w-8 object-contain" />
           </div>
           <div>
-            <div class="text-lg font-black tracking-[-0.04em] text-slate-900 sm:text-xl">flairsmiledentalcare</div>
+            <div class="text-lg font-mono tracking-wide font-bold uppercase text-slate-900 sm:text-xl">flairsmiledentalcare</div>
             <div class="text-[10px] font-semibold uppercase tracking-[0.26em] text-sky-600">Dental Care</div>
           </div>
         </RouterLink>
@@ -17,8 +17,7 @@
           <a href="#about" class="text-sm font-semibold text-slate-700 transition-colors hover:text-sky-700">About</a>
           <a href="#doctors" class="text-sm font-semibold text-slate-700 transition-colors hover:text-sky-700">Doctors</a>
           <a href="#contact" class="text-sm font-semibold text-slate-700 transition-colors hover:text-sky-700">Contact</a>
-          <Button variant="solid" theme="green" size="md" label="Register" class="!rounded-full !px-5 !shadow-[0_12px_24px_rgba(14,165,233,0.25)]" @click="patientRegistrationOpen = true"/>
-          <Button variant="solid" theme="blue" size="md" label="Book now" class="!rounded-full !px-5 !shadow-[0_12px_24px_rgba(14,165,233,0.25)]" @click="bookAppointment" />
+          <WorkspaceMenu @user-login="userLogin" @book-appointment="bookAppointment" @register-patient="registerPatient" @edit-profile="editProfile"/>
         </div>
 
         <button
@@ -38,8 +37,7 @@
             <a href="#about" @click="closeMobileNav" class="rounded-xl px-3 py-2 text-sm font-semibold text-slate-700 hover:bg-sky-50 hover:text-sky-700">About</a>
             <a href="#doctors" @click="closeMobileNav" class="rounded-xl px-3 py-2 text-sm font-semibold text-slate-700 hover:bg-sky-50 hover:text-sky-700">Doctors</a>
             <a href="#contact" @click="closeMobileNav" class="rounded-xl px-3 py-2 text-sm font-semibold text-slate-700 hover:bg-sky-50 hover:text-sky-700">Contact</a>
-            <Button variant="solid" theme="green" label="Register" class="mt-2 !rounded-xl" @click="registerPatient" />
-            <Button variant="solid" theme="blue" label="Book now" class="!rounded-xl" @click="bookAppointment" />
+            <WorkspaceMenu  @book-appointment="bookAppointment" @register-patient="registerPatient" @edit-profile="editProfile" @user-login="userLogin" />
           </div>
         </div>
       </Transition>
@@ -323,7 +321,9 @@
 
     <PatientRegistrationModal v-model="patientRegistrationOpen" />
     <WhatsAppButton phone="0746721164" />
-    <BookingModal v-model="bookingOpen" />
+    <AppointmentForm v-model="appointmentFormOpen" />
+    <UserProfileModal v-model="userProfileOpen" />
+    <LogIn v-model="userLoginOpen" />
   </div>
 </template>
 
@@ -337,8 +337,11 @@ import DoctorCard from "../components/DoctorCard.vue";
 import TestimonialCard from "../components/TestimonialCard.vue";
 import StatsBar from "../components/StatsBar.vue";
 import WhatsAppButton from "../components/WhatsAppButton.vue";
-import BookingModal from "../components/BookingModal.vue";
 import PatientRegistrationModal from "../components/PatientRegistrationModal.vue";
+import UserProfileModal from "../components/UserProfileModal.vue";
+import AppointmentForm from "../components/AppointmentForm.vue";
+import WorkspaceMenu from "../components/WorkspaceMenu.vue";
+import LogIn from "../components/LogIn.vue";
 
 interface Service {
   id: number;
@@ -371,8 +374,10 @@ interface Stat {
 }
 
 const mobileOpen = ref(false);
-const bookingOpen = ref(false);
 const patientRegistrationOpen = ref(false);
+const appointmentFormOpen = ref(false);
+const userProfileOpen = ref(false);
+const userLoginOpen = ref(false);
 
 const heroImages: string[] = [
   "/assets/frappe_webportals/frontend/chair1.jpeg",
@@ -445,7 +450,7 @@ const testimonials: Testimonial[] = [
 
 const stats: Stat[] = [
   { id: 1, value: "10+", label: "Years of care", icon: "calendar" },
-  { id: 2, value: "5000+", label: "Happy smiles", icon: "face-slightly-smiling-plus" },
+  { id: 2, value: "5000+", label: "Happy smiles", icon: "face-slightly-smiling" },
   { id: 3, value: "4.9/5", label: "Patient rating", icon: "star" },
   { id: 4, value: "24/7", label: "Emergency support", icon: "phone" },
 ];
@@ -458,7 +463,6 @@ const fallbackDoctors = [
 
 const doctorsResource = useList({
   doctype: "Healthcare Practitioner",
-  method: "frappe.client.get_list",
   fields: ["name", "practitioner_name", "status", "image", "qualifications"],
   filters: { status: "Active" },
   auto: true,
@@ -484,7 +488,7 @@ const doctors = computed(() => {
 
 function bookAppointment() {
   closeMobileNav();
-  bookingOpen.value = true;
+  appointmentFormOpen.value = true;
 }
 
 function registerPatient() {
@@ -492,6 +496,16 @@ function registerPatient() {
   patientRegistrationOpen.value = true;
 }
 
+function editProfile() {
+  closeMobileNav();
+  userProfileOpen.value = true;
+}
+
+function userLogin() {
+  closeMobileNav();
+  console.log("User login triggered");
+  userLoginOpen.value = true;
+} 
 function closeMobileNav() {
   mobileOpen.value = false;
 }

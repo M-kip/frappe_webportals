@@ -373,7 +373,6 @@ async function submit() {
   if (!validateStep(1) || !validateStep(2)) return
 
   try {
-    newPatient.doc.doctype = "Patient"
     newPatient.doc.tobacco_past_use = riskForm.tobacco_consumption ? "Yes" : "No"
     newPatient.doc.tobacco_current_use = riskForm.tobacco_use ? "Yes" : "No"
     newPatient.doc.alcohol_past_use = riskForm.alcohol_consumption ? "Yes" : "No"

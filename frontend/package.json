@@ -9,9 +9,10 @@
     "preview": "vite preview"
   },
   "engines": {
-        "node": ">=20.19.0"
+    "node": ">=20.19.0"
   },
   "dependencies": {
+    "@lucide/vue": "^1.48.0",
     "frappe-ui": "1.0.0-rc.1",
     "vue": "^3.5.0",
     "vue-router": "^4.5.0"
