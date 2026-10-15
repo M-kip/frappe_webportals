@@ -93,7 +93,7 @@ async function handleLogin() {
       usr: form.username,
       pwd: form.password
     })
-    console.log('Login response:', loginCall.data)
+    console.log('Login response:', res.data)
     if (res?.message === "Logged In") {
       toast.success(`${res.full_name || 'User'} logged in successfully!`)
       window.location.href = res.home_page || '/portal'

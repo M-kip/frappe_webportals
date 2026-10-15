@@ -9,7 +9,7 @@ interface UserSession {
 }
 
 export const session = reactive<UserSession>({
-  user: window.boot?.user?.name || null,
+  user: window.user?.name || window.user || null, // Initialize from global window object if available
   isLoggedIn: computed(() => !!session.user && session.user !== 'Guest'),
 })
 
@@ -24,8 +24,8 @@ export function useSession() {
     onSuccess(data: any) {
       // Upon successful password validation, the SID cookie drops automatically
       // Re-hydrate session state and route away
-      if (window.boot?.user) {
-        window.boot.user.name = data.full_name
+      if (window.user) {
+        window.user.name = data.full_name
       }
       session.user = data.full_name
       

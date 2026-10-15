@@ -9,15 +9,19 @@ def get_context(context):
     if user != "Guest":
         patient_name = frappe.db.get_value("Patient", {"user_id": user}, "name")
         if patient_name:
-            patient = frappe.get_doc("Patient", patient_name).as_dict()
+            doc = frappe.get_doc("Patient", patient_name)
+            patient = doc.as_dict()
+            
+            # Convert any datetime/date objects to ISO strings so JSON serialization works
+            for key, value in patient.items():
+                if hasattr(value, "isoformat"):
+                    patient[key] = value.isoformat()
 
     csrf_token = frappe.sessions.get_csrf_token()
 
-    # Pass boot to the Jinja context safely
     context.boot = {
         "csrf_token": csrf_token,
         "user": user,
         "patient": patient,
     }
-    context.csrf_token = csrf_token
     return context

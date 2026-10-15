@@ -1,5 +1,5 @@
-import { createRouter, createWebHistory, useSessionUser } from 'vue-router'
-
+import { createRouter, createWebHistory } from 'vue-router'
+import { session } from '@/data/session'
 const routes = [
   {
     path: '/',
@@ -19,8 +19,8 @@ let router = createRouter({
 })
 
 router.beforeEach(async (to, from, next) => {
-  const sessionUser = useSessionUser()
-  const isLoggedIn = sessionUser.name && sessionUser.name !== 'Guest'
+  //const sessionUser = session.user || { name: 'Guest' }
+  const isLoggedIn = session.isLoggedIn
 
   if (to.meta.requiresAuth && !isLoggedIn) {
     next('/login')
