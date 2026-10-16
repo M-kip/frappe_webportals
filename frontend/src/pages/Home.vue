@@ -330,6 +330,7 @@
 <script setup lang="ts">
 import { ref, computed, onMounted, onUnmounted } from "vue";
 import { Button, Icon, LoadingIndicator, useList } from "frappe-ui";
+import { useRouter } from "vue-router";
 
 import ServiceCard from "../components/ServiceCard.vue";
 import FeatureCard from "../components/FeatureCard.vue";
@@ -378,6 +379,7 @@ const patientRegistrationOpen = ref(false);
 const appointmentFormOpen = ref(false);
 const userProfileOpen = ref(false);
 const userLoginOpen = ref(false);
+const router = useRouter();
 
 const heroImages: string[] = [
   "/assets/frappe_webportals/frontend/chair1.jpeg",
@@ -498,7 +500,8 @@ function registerPatient() {
 
 function editProfile() {
   closeMobileNav();
-  userProfileOpen.value = true;
+  //userProfileOpen.value = true;
+  router.push({ name: "Portal" });
 }
 
 function userLogin() {

@@ -11,6 +11,12 @@ const routes = [
     name: 'Profile',
     component: () => import('@/pages/Profile.vue'),
   },
+  {
+    path: '/portal',
+    name: 'Portal',
+    component: () => import('@/views/AppLayout.vue'),
+  },
+
 ]
 
 let router = createRouter({

@@ -11,7 +11,7 @@ export default defineConfig({
 		frappeui({
 			siteName: "flairdentalcare.localhost",
 			siteList: ["flairdentalcare.localhost"],
-			frontendRoute: "/portal",
+			frontendRoute: "/home",
 			lucideIcons: true,
 			frappeProxy: true,
 		}),

@@ -8,18 +8,18 @@
         theme="blue"
         :padding-top="90"
     >
-        <div class="mx-auto p-6 bg-white rounded-xl shadow-sm border border-gray-100 mt-6">
+        <div class="mx-auto p-6 bg-white rounded-xl  mt-6">
             <div class="flex items-center justify-between border-b pb-4 mb-6">
-            <div>
-                <h1 class="text-2xl font-bold text-gray-900">Patient Profile</h1>
-                <p class="text-sm text-gray-500">Manage your personal and medical profile details</p>
-            </div>
-            <span 
-                class="px-3 py-1 text-xs font-semibold rounded-full"
-                :class="patientData ? 'bg-green-100 text-green-800' : 'bg-yellow-100 text-yellow-800'"
-            >
-                {{ patientData ? `Patient ID: ${patientData.name}` : 'No Patient Linked' }}
-            </span>
+                <div>
+                    <h1 class="text-2xl font-bold text-gray-900">Patient Profile</h1>
+                    <p class="text-sm text-gray-500">Manage your personal and medical profile details</p>
+                    <span 
+                        class="px-3 py-1 text-xs font-semibold rounded-full w-full"
+                        :class="patientData ? 'bg-green-100 text-green-800' : 'bg-yellow-100 text-yellow-800'"
+                    >   {{ patientData ? `Patient ID: ${patientData.name}` : 'No Patient Linked' }} <br>
+                        {{ patientData ? `Patient Data Last Modified: ${patientData.modified}` : 'No Patient Linked' }}
+                    </span>                
+                </div>
             </div>
 
             <!-- State: Patient Profile Not Found -->
@@ -47,6 +47,61 @@
                 />
                 </div>
 
+                <div>
+                <label class="block text-sm font-medium text-gray-700">First Name</label>
+                <input 
+                    v-model="form.first_name" 
+                    type="text" 
+                    required 
+                    class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 p-2 border"
+                />
+                </div>
+
+                <div>
+                <label class="block text-sm font-medium text-gray-700">Middle Name</label>
+                <input 
+                    v-model="form.middle_name" 
+                    type="text" 
+                    class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 p-2 border"
+                />
+                </div>
+
+                <div>
+                <label class="block text-sm font-medium text-gray-700">last Name</label>
+                <input 
+                    v-model="form.last_name" 
+                    type="text" 
+                    required 
+                    class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 p-2 border"
+                />
+                </div>
+                <div>
+                <label class="block text-sm font-medium text-gray-700">National ID</label>
+                <input 
+                    v-model="form.uid" 
+                    type="text" 
+                    required 
+                    class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 p-2 border"
+                />
+                </div>
+                <div>
+                <label class="block text-sm font-medium text-gray-700">Marital Status</label>
+                <input 
+                    v-model="form.marital_status" 
+                    type="text" 
+                    required 
+                    class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 p-2 border"
+                />
+                </div>
+                <div>
+                <label class="block text-sm font-medium text-gray-700">Country</label>
+                <input 
+                    v-model="form.country" 
+                    type="text" 
+                    required 
+                    class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 p-2 border"
+                />
+                </div>
                 <div>
                 <label class="block text-sm font-medium text-gray-700">Mobile Number</label>
                 <input 
@@ -105,6 +160,87 @@
                     class="mt-1 block w-full rounded-md border-gray-200 bg-gray-50 p-2 border cursor-not-allowed text-gray-500"
                 />
                 </div>
+                <div>
+                <label class="block text-sm font-medium text-gray-700">Occupation</label>
+                <input 
+                    v-model="form.occupation" 
+                    type="text" 
+                    required 
+                    class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 p-2 border"
+                />
+                </div>
+                <div>
+                <label class="block text-sm font-medium text-gray-700">Allergies</label>
+                <input 
+                    v-model="form.allergies" 
+                    type="text" 
+                    required 
+                    class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 p-2 border"
+                />
+                </div>
+                <div>
+                <label class="block text-sm font-medium text-gray-700">Alcohol Current Use</label>
+                <input 
+                    v-model="form.alcohol_current_use" 
+                    type="checkbox" 
+                    required 
+                    class="mt-1 block rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 p-2 border"
+                />
+                </div>
+                <div>
+                <label class="block text-sm font-medium text-gray-700">Alcohol Past Use</label>
+                <input 
+                    v-model="form.alcohol_past_use" 
+                    type="checkbox" 
+                    required 
+                    class="mt-1 block rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 p-2 border"
+                />
+                </div>
+                <div>
+                <label class="block text-sm font-medium text-gray-700">Tobacco Current Use</label>
+                <input 
+                    v-model="form.tobacco_current_use" 
+                    type="checkbox" 
+                    required 
+                    class="mt-1 block rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 p-2 border"
+                />
+                </div>
+                <div>
+                <label class="block text-sm font-medium text-gray-700">Tobacco Past Use</label>
+                <input 
+                    v-model="form.tobacco_past_use" 
+                    type="checkbox" 
+                    required 
+                    class="mt-1 block rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 p-2 border"
+                />
+                </div>
+                <div>
+                <label class="block text-sm font-medium text-gray-700">Medication</label>
+                <input 
+                    v-model="form.medication" 
+                    type="text" 
+                    required 
+                    class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 p-2 border"
+                />
+                </div>
+                <div>
+                <label class="block text-sm font-medium text-gray-700">Surgical History</label>
+                <input 
+                    v-model="form.surgical_history" 
+                    type="text" 
+                    required 
+                    class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 p-2 border"
+                />
+                </div>
+                <div>
+                <label class="block text-sm font-medium text-gray-700">Emergency Record</label>
+                <input 
+                    v-model="form.emergency_record" 
+                    type="textarea" 
+                    required 
+                    class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 p-2 border"
+                />
+                </div>
             </div>
 
             <!-- Feedback Messages -->
@@ -122,7 +258,7 @@
                 :disabled="updateCall.loading"
                 class="px-5 py-2.5 bg-blue-600 hover:bg-blue-700 text-white font-medium text-sm rounded-lg shadow-sm disabled:opacity-50"
                 >
-                {{ updateCall.loading ? 'Saving Changes...' : 'Save Profile' }}
+                {{ updateCall.loading ? 'Saving Changes...' : 'Update' }}
                 </button>
             </div>
             </form>
@@ -135,9 +271,9 @@ import { ref, computed, reactive, watch } from 'vue'
 import { useCall, Dialog } from 'frappe-ui'
 
 // 1. Read boot payload passed from your_app.py
-const bootData = ref(window.site_boot?.boot || window.boot || {})
-const user = computed(() => bootData.value.user)
-const patientData = ref(bootData.value.patient)
+const userData = ref(window.user?.name || window.user || null)
+const user = computed(() => userData.value || 'Guest')
+const patientData = ref(window.patient || null) // Boot payload for patient data
 const props = defineProps<{ modelValue: boolean }>()
 const emit = defineEmits(['update:modelValue'])
 
@@ -161,6 +297,23 @@ const form = reactive({
   dob: patientData.value?.dob || '',
   blood_group: patientData.value?.blood_group || '',
   email: patientData.value?.email || user.value || '',
+  uid: patientData.value?.uid || '',
+  status: patientData.value?.status || '',
+  modified: patientData.value?.modified || '',
+  first_name: patientData.value?.first_name || '',
+  last_name: patientData.value?.last_name || '',
+  middle_name: patientData.value?.middle_name || '',
+  alcohol_current_use: patientData.value?.alcohol_current_use || '',
+  alcohol_past_use: patientData.value?.alcohol_past_use || '',
+  allergies: patientData.value?.allergies || '',
+  country: patientData.value?.country || '',
+  emergency_record: patientData.value?.emergency_record || '',
+  marital_status: patientData.value?.marital_status || '',
+  tobacco_past_use: patientData.value?.tobacco_past_use || '',
+  tobacco_current_use: patientData.value?.tobacco_current_use || '',
+  surgical_history: patientData.value?.surgical_history || '',
+  occupation: patientData.value?.occupation || '',
+  medication: patientData.value?.medication || '',
 })
 
 // 3. API Call to save profile modifications directly to the Patient document
@@ -182,6 +335,8 @@ async function saveProfile() {
         sex: form.sex,
         dob: form.dob,
         blood_group: form.blood_group,
+        occupation: form.occupation,
+        medication: form.medication,
       },
     })
     
