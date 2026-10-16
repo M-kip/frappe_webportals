@@ -2,7 +2,42 @@ import frappe
 from frappe import _
 from frappe.utils import getdate
 
-@frappe.whitelist(allow_guest=False)
+
+@frappe.whitelist(allow_guest=True)  # Set to False if only logged-in users should access it
+def get_practitioners_list(department: str | None = None):
+    """
+    Retrieves a list of Healthcare Practitioners (doctors).
+    Optionally filters by department.
+    """
+    filters = {}
+    if department:
+        filters["department"] = department
+
+    try:
+        # Fetch practitioners from the database
+        practitioners = frappe.get_all(
+            "Healthcare Practitioner",
+            filters=filters,
+            fields=[
+                "name", 
+                "practitioner_name", 
+                "department", 
+                "op_consulting_charge", 
+                "image"
+            ],
+            order_by="practitioner_name asc"
+        )
+
+        return {
+            "success": True,
+            "data": practitioners
+        }
+
+    except Exception as e:
+        frappe.log_error(frappe.get_traceback(), "Fetch Practitioners Failed")
+        frappe.throw(str(e))
+        
+@frappe.whitelist(allow_guest=True)
 def get_practitioner_slots(practitioner: str, date: str):
     """
     Fetches available slots for a practitioner using core Healthcare availability logic.
