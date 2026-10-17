@@ -74,7 +74,7 @@ const form = reactive({
 })
 
 const loginCall = useCall({
-  url: '/api/v2/method/login',
+  url: '/api/method/login',
   method: 'POST',
   immediate: false,
   onError(error: any) {
@@ -93,7 +93,7 @@ async function handleLogin() {
       usr: form.username,
       pwd: form.password
     })
-    console.log('Login response:', res.data)
+    console.log('Login response:', res)
     if (res?.message === "Logged In") {
       toast.success(`${res.full_name || 'User'} logged in successfully!`)
       window.location.href = res.home_page || '/portal'
