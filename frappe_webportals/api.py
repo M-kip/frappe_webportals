@@ -2,14 +2,41 @@ import frappe  # pyright: ignore[reportMissingImports]
 from frappe import _ # pyright: ignore[reportMissingImports]
 from frappe.utils import getdate, time_diff_in_seconds # pyright: ignore[reportMissingImports]
 from datetime import timedelta
+from typing import TypedDict, NotRequired
+
+# 1. Define the Python equivalent of your TypeScript Interface
+class PatientDocument(TypedDict):
+    doctype: str  # e.g., "Patient"
+    first_name: str
+    middle_name: str
+    last_name: str
+    sex: str
+    dob: str
+    blood_group: str
+    mobile: str
+    email: str
+    phone: str
+    occupation: str
+    marital_status: str
+    allergies: str
+    medication: str
+    medical_history: str
+    surgical_history: str
+    surrounding_factors: str
+    other_risk_factors: str
+    # Use NotRequired for optional keys (TypeScript's ?)
+    tobacco_past_use: NotRequired[str]
+    tobacco_current_use: NotRequired[str]
+    alcohol_past_use: NotRequired[str]
+    alcohol_current_use: NotRequired[str]
 
 
 @frappe.whitelist(allow_guest=True)
-def register_patient(first_name: str, mobile_no: str, email: str | None = None, gender: str | None = None, birth_date: str | None = None):
+def register_patient(patient_data: PatientDocument):
     """
     Whitelisted public endpoint to register a new Patient in Frappe Health.
     """
-    if not first_name or not mobile_no:
+    if not patient_data.get("first_name") or not patient_data.get("mobile"):
         return {
             "success": False,
             "message": "First Name and Mobile Number are required fields."
@@ -17,7 +44,7 @@ def register_patient(first_name: str, mobile_no: str, email: str | None = None, 
 
     try:
         # Optional: Check if a patient with this mobile number already exists to prevent duplicates
-        existing_patient = frappe.db.exists("Patient", {"mobile_no": mobile_no})
+        existing_patient = frappe.db.exists("Patient", {"mobile_no": patient_data["mobile"]})
         if existing_patient:
             return {
                 "success": False,
@@ -28,11 +55,23 @@ def register_patient(first_name: str, mobile_no: str, email: str | None = None, 
         # Create a new Patient document
         new_patient = frappe.get_doc({
             "doctype": "Patient",
-            "first_name": first_name,
-            "mobile_no": mobile_no,
-            "email": email,
-            "gender": gender,
-            "birth_date": birth_date,
+            "first_name": patient_data["first_name"],
+            "middle_name": patient_data.get("middle_name"),
+            "last_name": patient_data["last_name"],
+            "sex": patient_data["sex"],
+            "dob": patient_data["dob"],
+            "blood_group": patient_data["blood_group"],
+            "mobile_no": patient_data["mobile"],
+            "email": patient_data.get("email"),
+            "phone": patient_data.get("phone"),
+            "occupation": patient_data.get("occupation"),
+            "marital_status": patient_data.get("marital_status"),
+            "allergies": patient_data.get("allergies"),
+            "medication": patient_data.get("medication"),
+            "medical_history": patient_data.get("medical_history"),
+            "surgical_history": patient_data.get("surgical_history"),
+            "surrounding_factors": patient_data.get("surrounding_factors"),
+            "other_risk_factors": patient_data.get("other_risk_factors"),
             # If your custom setup requires a default customer group/territory, you can add them here:
             # "customer_group": "Commercial",
             # "territory": "All Territories"
