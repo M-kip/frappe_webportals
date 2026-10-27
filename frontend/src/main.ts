@@ -7,7 +7,7 @@ import { PiniaColada, PiniaColadaQueryHooksPlugin  } from '@pinia/colada'
 import router from './router.ts'
 import App from './App.vue'
 
-import { Button, setConfig, frappeRequest, resourcesPlugin, FrappeUI } from 'frappe-ui'
+import { Button, setConfig, frappeRequest, resourcesPlugin, FrappeUI, toast } from 'frappe-ui'
 
 let app = createApp(App)
 

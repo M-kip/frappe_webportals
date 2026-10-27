@@ -1,7 +1,11 @@
 {
   "extends": "frappe-ui/tsconfig.base.json",
   "compilerOptions": {
-    "types": ["vite/client"]
+    "types": ["vite/client"],
+    "moduleResolution": "bundler", 
+    "paths": {
+      "@/*": ["./src/*"]
+    }
   },
-  "include": ["src/**/*.ts", "src/**/*.vue", "src/composables/workspaceMenu.js"]
+  "include": ["src/**/*.ts", "src/**/*.vue"]
 }
