@@ -11,13 +11,13 @@ const routes = [
     path: '/Profile',
     name: 'Profile',
     component: () => import('@/pages/Profile.vue'),
-    //meta: { requiresAuth: true }
+    meta: { requiresAuth: true }
   },
   {
     path: '/portal',
     name: 'Portal',
     component: () => import('@/views/AppLayout.vue'),
-    //meta: { requiresAuth: true },
+    meta: { requiresAuth: true },
     // Automatically make dashboard the default view when visiting /portal
     redirect: { name: 'Dashboard' },
     children: [
@@ -56,13 +56,13 @@ const router = createRouter({
   routes,
 })
 
-router.beforeEach(async (to, from, next) => {
+router.beforeEach((to, from) => {
   const isLoggedIn = session.isLoggedIn
 
   if (to.meta.requiresAuth && !isLoggedIn) {
-    next('/login')
-  } else {
-    next()
+    // Perform hard redirect
+    window.location.href = '/login'
+    return false // Cancels the current navigation
   }
 })
 

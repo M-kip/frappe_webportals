@@ -72,6 +72,10 @@ def register_patient(patient_data: PatientDocument):
             "surgical_history": patient_data.get("surgical_history"),
             "surrounding_factors": patient_data.get("surrounding_factors"),
             "other_risk_factors": patient_data.get("other_risk_factors"),
+            "tobacco_past_use": patient_data.get("tobacco_past_use"),
+            "tobacco_current_use": patient_data.get("tobacco_current_use"),
+            "alcohol_past_use": patient_data.get("alcohol_past_use"),
+            "alcohol_current_use": patient_data.get("alcohol_current_use"),
             # If your custom setup requires a default customer group/territory, you can add them here:
             # "customer_group": "Commercial",
             # "territory": "All Territories"

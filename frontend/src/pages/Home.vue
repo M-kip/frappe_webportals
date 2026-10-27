@@ -506,8 +506,7 @@ function editProfile() {
 
 function userLogin() {
   closeMobileNav();
-  console.log("User login triggered");
-  userLoginOpen.value = true;
+  window.location.href = "/login";
 } 
 function closeMobileNav() {
   mobileOpen.value = false;

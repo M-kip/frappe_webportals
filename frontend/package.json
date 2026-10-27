@@ -13,7 +13,10 @@
   },
   "dependencies": {
     "@lucide/vue": "^1.48.0",
+    "@pinia/colada": "^1.4.8",
+    "@vue/devtools-api": "^8.2.1",
     "frappe-ui": "1.0.0-rc.1",
+    "pinia": "^4.1.0",
     "vue": "^3.5.0",
     "vue-router": "^4.5.0"
   },

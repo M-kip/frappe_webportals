@@ -15,10 +15,12 @@ import {
   SidebarRail,
   SidebarRailItem,
 } from 'frappe-ui'
-
+import PatientRegistrationModal from "@/components/PatientRegistrationModal.vue";
+import AppointmentForm from "@/components/AppointmentForm.vue";
 const router = useRouter()
 const route = useRoute()
-
+const patientRegistrationOpen = ref(false);
+const appointmentFormOpen = ref(false);
 const position = ref('design')
 const positions = [
   { id: 'DESK', initials: 'DSK' },
@@ -37,6 +39,15 @@ const isActive = (name: string) => route.name === name
 
 const navigateTo = (name: string) => {
   router.push({ name })
+}
+function goToDesk() {
+  window.location.href = '/desk'
+}
+function registerPatient() {
+  patientRegistrationOpen.value = true;
+}
+function bookAppointment() {
+  appointmentFormOpen.value = true;
 }
 </script>
 
@@ -72,6 +83,12 @@ const navigateTo = (name: string) => {
             icon="lucide-house"
             :active="isActive('Home')"
             @click="navigateTo('Home')" 
+          />
+          <SidebarRailItem 
+            label="Desk"
+            variant="ghost"
+            icon="lucide-layout-dashboard"
+            @click="goToDesk"
           />
         </SidebarRail>
       </template>
@@ -116,11 +133,16 @@ const navigateTo = (name: string) => {
       <!-- Pinned Page Header -->
       <PageHeader>
         <span class="text-lg font-semibold text-ink-gray-8">Patient Portal</span>
-        <Button variant="solid" icon-left="lucide-plus" label="Book New Appointment" />
+        <div class="ml-auto flex gap-2">
+          <Button variant="solid" icon-left="lucide-plus" label="Book Appointment" @click="bookAppointment" />
+          <Button variant="solid" icon-left="lucide-plus" label="Register" @click="registerPatient" />
+        </div>
       </PageHeader>
 
       <!-- Routed Page Container -->
       <router-view />
+      <PatientRegistrationModal v-model="patientRegistrationOpen" />
+      <AppointmentForm v-model="appointmentFormOpen" />
     </DesktopShell>
 
   </div>

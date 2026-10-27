@@ -34,7 +34,7 @@ function UserLogin(){
 const userMenuItems = computed(() => [
   {
     icon: 'lucide-user',
-    label: 'My Profile',
+    label: 'Dashboard',
     onClick: () => EditProfile(),
   },
   {
