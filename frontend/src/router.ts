@@ -1,5 +1,6 @@
 import { createRouter, createWebHistory } from 'vue-router'
-import { session } from '@/data/session'
+import { useSessionStore } from '@/stores/session'
+
 
 const routes = [
   {
@@ -57,9 +58,9 @@ const router = createRouter({
 })
 
 router.beforeEach((to, from) => {
-  const isLoggedIn = session.isLoggedIn
-
-  if (to.meta.requiresAuth && !isLoggedIn) {
+  const store = useSessionStore() // Access the Pinia session store
+  console.log('Navigating to:', to.path, '| Logged In:', store.isLoggedIn)
+  if (to.meta.requiresAuth && !store.isLoggedIn) {
     // Perform hard redirect
     window.location.href = '/login'
     return false // Cancels the current navigation
