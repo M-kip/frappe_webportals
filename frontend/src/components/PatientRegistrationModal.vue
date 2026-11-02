@@ -38,15 +38,15 @@
               Full Name <span class="text-red-500">*</span>
             </label>
             <div class="grid gap-4 sm:grid-cols-3">
-              <FormControl v-model="newPatient.doc.first_name" type="text" placeholder="First name" required />
-              <FormControl v-model="newPatient.doc.middle_name" type="text" placeholder="Middle name (optional)" />
-              <FormControl v-model="newPatient.doc.last_name" type="text" placeholder="Last name" required />
+              <FormControl v-model="form.first_name" type="text" placeholder="First name" required />
+              <FormControl v-model="form.middle_name" type="text" placeholder="Middle name (optional)" />
+              <FormControl v-model="form.last_name" type="text" placeholder="Last name" required />
             </div>
           </div>
 
           <div class="grid gap-4 sm:grid-cols-3">
             <FormControl
-              v-model="newPatient.doc.sex"
+              v-model="form.sex"
               type="select"
               label="Gender *"
               :options="genderOptions"
@@ -55,10 +55,10 @@
             />
             <div>
               <label class="mb-1 block text-sm font-medium text-gray-700">Date of Birth</label>
-              <DatePicker v-model="newPatient.doc.dob" placeholder="Pick a date" />
+              <DatePicker v-model="form.dob" placeholder="Pick a date" />
             </div>
             <FormControl
-              v-model="newPatient.doc.blood_group"
+              v-model="form.blood_group"
               type="select"
               label="Blood Group"
               :options="bloodGroupOptions"
@@ -71,14 +71,14 @@
         <div v-if="currentStep === 2" class="space-y-5">
           <div class="grid grid-cols-1 gap-4 md:grid-cols-2">
             <FormControl
-              v-model="newPatient.doc.mobile"
+              v-model="form.mobile"
               type="text"
               label="Mobile *"
               placeholder="07XX XXX XXX"
               required
             />
             <FormControl
-              v-model="newPatient.doc.phone"
+              v-model="form.phone"
               type="text"
               label="Phone"
               placeholder="020 XXXXXXX"
@@ -86,7 +86,7 @@
           </div>
 
           <FormControl
-            v-model="newPatient.doc.email"
+            v-model="form.email"
             type="email"
             label="Email"
             placeholder="you@example.com"
@@ -96,13 +96,13 @@
             <h3 class="mb-4 text-base font-semibold text-gray-900">Personal Details</h3>
             <div class="grid gap-4 sm:grid-cols-2">
               <FormControl
-                v-model="newPatient.doc.occupation"
+                v-model="form.occupation"
                 type="text"
                 label="Occupation"
                 placeholder="Occupation"
               />
               <FormControl
-                v-model="newPatient.doc.marital_status"
+                v-model="form.marital_status"
                 type="select"
                 label="Marital Status"
                 :options="maritalStatusOptions"
@@ -117,28 +117,28 @@
           <h3 class="text-base font-semibold text-gray-900">Allergies, Medical and Surgical History</h3>
           <div class="grid gap-4 sm:grid-cols-2">
             <FormControl
-              v-model="newPatient.doc.allergies"
+              v-model="form.allergies"
               type="textarea"
               label="Allergies"
               placeholder="List any known allergies"
               :rows="3"
             />
             <FormControl
-              v-model="newPatient.doc.medication"
+              v-model="form.medication"
               type="textarea"
               label="Medication"
               placeholder="Current medication"
               :rows="3"
             />
             <FormControl
-              v-model="newPatient.doc.medical_history"
+              v-model="form.medical_history"
               type="textarea"
               label="Medical History"
               placeholder="Relevant medical history"
               :rows="3"
             />
             <FormControl
-              v-model="newPatient.doc.surgical_history"
+              v-model="form.surgical_history"
               type="textarea"
               label="Surgical History"
               placeholder="Previous surgeries"
@@ -170,14 +170,14 @@
           </div>
           <div class="grid gap-4 sm:grid-cols-2">
             <FormControl
-              v-model="newPatient.doc.surrounding_factors"
+              v-model="form.surrounding_factors"
               type="textarea"
               label="Occupational Hazards"
               placeholder="Describe any relevant hazards or factors"
               :rows="3"
             />
             <FormControl
-              v-model="newPatient.doc.other_risk_factors"
+              v-model="form.other_risk_factors"
               type="textarea"
               label="Other Risk Factors"
               placeholder="Add any other risk factors"
@@ -211,7 +211,7 @@
 </template>
 
 <script setup lang="ts">
-import { ref, reactive, watch } from "vue"
+import { ref, reactive, watch, onMounted } from "vue"
 import {
   Dialog,
   FormControl,
@@ -219,43 +219,18 @@ import {
   DatePicker,
   Button,
   toast,
-  useNewDoc,
+  call,
 } from "frappe-ui"
+import { usePatientStore, type PatientDocument } from "@/stores/patient"
 
 const props = defineProps<{ modelValue: boolean }>()
 const emit = defineEmits<{
   (e: "update:modelValue", value: boolean): void
   (e: "registered", payload: any): void
 }>()
-
-interface PatientDocument {
-  doctype: "Patient"
-  first_name: string
-  middle_name: string
-  last_name: string
-  sex: string
-  dob: string
-  blood_group: string
-  mobile: string
-  email: string
-  phone: string
-  occupation: string
-  marital_status: string
-  allergies: string
-  medication: string
-  medical_history: string
-  surgical_history: string
-  surrounding_factors: string
-  other_risk_factors: string
-  tobacco_past_use?: string
-  tobacco_current_use?: string
-  alcohol_past_use?: string
-  alcohol_current_use?: string
-}
-
 const show = ref(props.modelValue)
 const currentStep = ref(1)
-
+const patientStore = usePatientStore()
 const steps = [
   { number: 1, title: "Demographics" },
   { number: 2, title: "Contact and personal details" },
@@ -263,8 +238,7 @@ const steps = [
   { number: 4, title: "Risk factors" },
 ]
 
-const newPatient = useNewDoc<PatientDocument>("Patient", {
-  doctype: "Patient",
+const form = ref<PatientDocument>({
   first_name: "",
   middle_name: "",
   last_name: "",
@@ -327,18 +301,18 @@ watch(show, (v) => {
 
 function validateStep(step: number) {
   if (step === 1) {
-    if (!newPatient.doc.first_name?.trim() || !newPatient.doc.last_name?.trim()) {
+    if (!form.value.first_name?.trim() || !form.value.last_name?.trim()) {
       toast.error("Please enter both first and last names." )
       return false
     }
-    if (!newPatient.doc.sex) {
+    if (!form.value.sex) {
       toast.error("Please select gender." )
       return false
     }
   }
 
   if (step === 2) {
-    const mobile = String(newPatient.doc.mobile || "").trim()
+    const mobile = String(form.value.mobile || "").trim()
     if (!mobile) {
       toast.error("Please enter mobile number." )
       return false
@@ -373,10 +347,10 @@ async function submit() {
   if (!validateStep(1) || !validateStep(2)) return
 
   try {
-    newPatient.doc.tobacco_past_use = riskForm.tobacco_consumption ? "Yes" : "No"
-    newPatient.doc.tobacco_current_use = riskForm.tobacco_use ? "Yes" : "No"
-    newPatient.doc.alcohol_past_use = riskForm.alcohol_consumption ? "Yes" : "No"
-    newPatient.doc.alcohol_current_use = riskForm.alcohol_use ? "Yes" : "No"
+    form.value.tobacco_past_use = riskForm.tobacco_consumption ? "Yes" : "No"
+    form.value.tobacco_current_use = riskForm.tobacco_use ? "Yes" : "No"
+    form.value.alcohol_past_use = riskForm.alcohol_consumption ? "Yes" : "No"
+    form.value.alcohol_current_use = riskForm.alcohol_use ? "Yes" : "No"
 
     const doc = await newPatient.submit()
 
