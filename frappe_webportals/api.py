@@ -2,7 +2,8 @@ import frappe  # pyright: ignore[reportMissingImports]
 from frappe import _ # pyright: ignore[reportMissingImports]
 from frappe.utils import getdate, time_diff_in_seconds # pyright: ignore[reportMissingImports]
 from datetime import timedelta
-from typing import TypedDict, NotRequired
+from typing import TypedDict, NotRequired, BinaryIO
+import base64
 
 # 1. Define the Python equivalent of your TypeScript Interface
 class PatientDocument(TypedDict):
@@ -32,11 +33,11 @@ class PatientDocument(TypedDict):
 
 
 @frappe.whitelist(allow_guest=True)
-def register_patient(patient_data: PatientDocument):
+def register_patient(image: str | None = None) -> dict:
     """
     Whitelisted public endpoint to register a new Patient in Frappe Health.
     """
-    if not patient_data.get("first_name") or not patient_data.get("mobile"):
+    if not frappe.form_dict.get("first_name") or not frappe.form_dict.get("mobile"):
         return {
             "success": False,
             "message": "First Name and Mobile Number are required fields."
@@ -44,7 +45,7 @@ def register_patient(patient_data: PatientDocument):
 
     try:
         # Optional: Check if a patient with this mobile number already exists to prevent duplicates
-        existing_patient = frappe.db.exists("Patient", {"mobile_no": patient_data["mobile"]})
+        existing_patient = frappe.db.exists("Patient", {"mobile_no": frappe.form_dict.get("mobile")})
         if existing_patient:
             return {
                 "success": False,
@@ -55,27 +56,27 @@ def register_patient(patient_data: PatientDocument):
         # Create a new Patient document
         new_patient = frappe.get_doc({
             "doctype": "Patient",
-            "first_name": patient_data["first_name"],
-            "middle_name": patient_data.get("middle_name"),
-            "last_name": patient_data["last_name"],
-            "sex": patient_data["sex"],
-            "dob": patient_data["dob"],
-            "blood_group": patient_data["blood_group"],
-            "mobile_no": patient_data["mobile"],
-            "email": patient_data.get("email"),
-            "phone": patient_data.get("phone"),
-            "occupation": patient_data.get("occupation"),
-            "marital_status": patient_data.get("marital_status"),
-            "allergies": patient_data.get("allergies"),
-            "medication": patient_data.get("medication"),
-            "medical_history": patient_data.get("medical_history"),
-            "surgical_history": patient_data.get("surgical_history"),
-            "surrounding_factors": patient_data.get("surrounding_factors"),
-            "other_risk_factors": patient_data.get("other_risk_factors"),
-            "tobacco_past_use": patient_data.get("tobacco_past_use"),
-            "tobacco_current_use": patient_data.get("tobacco_current_use"),
-            "alcohol_past_use": patient_data.get("alcohol_past_use"),
-            "alcohol_current_use": patient_data.get("alcohol_current_use"),
+            "first_name": frappe.form_dict.get("first_name"),
+            "middle_name": frappe.form_dict.get("middle_name"),
+            "last_name": frappe.form_dict.get("last_name"),
+            "sex": frappe.form_dict.get("sex"),
+            "dob": frappe.form_dict.get("dob"),
+            "blood_group": frappe.form_dict.get("blood_group"),
+            "mobile_no": frappe.form_dict.get("mobile"),
+            "email": frappe.form_dict.get("email"),
+            "phone": frappe.form_dict.get("phone"),
+            "occupation": frappe.form_dict.get("occupation"),
+            "marital_status": frappe.form_dict.get("marital_status"),
+            "allergies": frappe.form_dict.get("allergies"),
+            "medication": frappe.form_dict.get("medication"),
+            "medical_history": frappe.form_dict.get("medical_history"),
+            "surgical_history": frappe.form_dict.get("surgical_history"),
+            "surrounding_factors": frappe.form_dict.get("surrounding_factors"),
+            "other_risk_factors": frappe.form_dict.get("other_risk_factors"),
+            "tobacco_past_use": frappe.form_dict.get("tobacco_past_use"),
+            "tobacco_current_use": frappe.form_dict.get("tobacco_current_use"),
+            "alcohol_past_use": frappe.form_dict.get("alcohol_past_use"),
+            "alcohol_current_use": frappe.form_dict.get("alcohol_current_use"),
             # If your custom setup requires a default customer group/territory, you can add them here:
             # "customer_group": "Commercial",
             # "territory": "All Territories"
@@ -83,13 +84,31 @@ def register_patient(patient_data: PatientDocument):
         
         # Insert the document into the database (bypassing strict session permissions for guests)
         new_patient.insert(ignore_permissions=True)
-        frappe.db.commit()
+        
+        _file = None
+        if new_patient.get("name") and image:
+            base64_data = image.split(",")[1]
+            _image = base64.b64decode(base64_data)
 
+            _file = frappe.get_doc(
+                {
+                    "doctype": "File",
+                    "file_name": f"{new_patient.name}_profile_image.png",
+                    "attached_to_doctype": "Patient",
+                    "attached_to_name": new_patient.name,
+                    "attached_to_field": "image",
+                    "is_private": 0,
+                    "content": _image,
+                }
+            )
+            _file.insert(ignore_permissions=True)
+        frappe.db.commit()
         return {
             "success": True,
             "message": "Patient registered successfully!",
             "patient_id": new_patient.name,
-            "patient_name": new_patient.patient_name
+            "patient_name": new_patient.patient_name,
+            "file": _file.name if _file else ""
         }
 
     except Exception as e:
