@@ -11,7 +11,7 @@ import { PiniaColadaCachePersister } from '@pinia/colada-plugin-cache-persister'
 import router from './router.ts'
 import App from './App.vue'
 
-import { Button, setConfig, frappeRequest, resourcesPlugin, FrappeUI, toast } from 'frappe-ui'
+import { setConfig, frappeRequest, toast } from 'frappe-ui'
 
 let app = createApp(App)
 const pinia = createPinia()
@@ -19,9 +19,6 @@ const pinia = createPinia()
 setConfig('resourceFetcher', frappeRequest)
 app.use(DataLoaderPlugin, { router }) 
 app.use(router)
-app.use(FrappeUI)
-app.use(resourcesPlugin)
-
 app.use(pinia)
 app.use(PiniaColada, {
   // Optionally provide global options here for queries
@@ -60,5 +57,4 @@ app.use(PiniaColada, {
     }),
   ],
 })
-app.component('Button', Button)
 app.mount('#app')
