@@ -191,6 +191,7 @@
     <template #actions>
       <div class="flex flex-col-reverse gap-2 sm:flex-row sm:justify-end">
         <Button variant="ghost" @click="show = false">Cancel</Button>
+        <Button variant="ghost" @click="clearForm">Clear</Button>
         <Button v-if="currentStep > 1" variant="ghost" @click="previousStep">Back</Button>
         <Button v-if="currentStep < steps.length" variant="solid" theme="blue" @click="nextStep">Continue</Button>
         <Button
@@ -198,8 +199,8 @@
           type="submit"
           variant="solid"
           theme="blue"
-          :loading="newPatient.loading"
-          :disabled="newPatient.loading"
+          :loading="asyncStatus === 'loading'"
+          :disabled="asyncStatus === 'loading'"
           loading-text="Registering..."
           @click="handleSubmit"
         >
@@ -222,7 +223,7 @@ import {
   call,
 } from "frappe-ui"
 import { usePatientStore, type PatientDocument } from "@/stores/patient"
-
+import { usePatientMutation } from "@/mutations/patient"
 const props = defineProps<{ modelValue: boolean }>()
 const emit = defineEmits<{
   (e: "update:modelValue", value: boolean): void
@@ -231,6 +232,7 @@ const emit = defineEmits<{
 const show = ref(props.modelValue)
 const currentStep = ref(1)
 const patientStore = usePatientStore()
+const { registerPatient, asyncStatus, state} = usePatientMutation()
 const steps = [
   { number: 1, title: "Demographics" },
   { number: 2, title: "Contact and personal details" },
@@ -266,14 +268,14 @@ const riskForm = reactive({
 })
 
 const bloodGroupOptions = [
-  { value: "A-Positive", label: "A Positive" },
-  { value: "A-Negative", label: "A Negative" },
-  { value: "AB-Positive", label: "AB Positive" },
-  { value: "AB-Negative", label: "AB Negative" },
-  { value: "B-Positive", label: "B Positive" },
-  { value: "B-Negative", label: "B Negative" },
-  { value: "O-Positive", label: "O Positive" },
-  { value: "O-Negative", label: "O Negative" },
+  { value: "A Positive", label: "A Positive" },
+  { value: "A Negative", label: "A Negative" },
+  { value: "AB Positive", label: "AB Positive" },
+  { value: "AB Negative", label: "AB Negative" },
+  { value: "B Positive", label: "B Positive" },
+  { value: "B Negative", label: "B Negative" },
+  { value: "O Positive", label: "O Positive" },
+  { value: "O Negative", label: "O Negative" },
 ]
 
 const genderOptions = [
@@ -288,7 +290,10 @@ const maritalStatusOptions = [
   { value: "Divorced", label: "Divorced" },
   { value: "Widow", label: "Widow" },
 ]
-
+onMounted(() => {
+  // copy data from patientStore.patient  to form.value
+  Object.assign(form.value, patientStore.patient)
+})
 watch(() => props.modelValue, (v) => {
   show.value = v
   if (v) currentStep.value = 1
@@ -298,6 +303,33 @@ watch(show, (v) => {
   emit("update:modelValue", v)
   if (!v) currentStep.value = 1
 })
+
+function clearForm() {
+  form.value = {
+    first_name: "",
+    middle_name: "",
+    last_name: "",
+    sex: "",
+    dob: "",
+    blood_group: "",
+    mobile: "",
+    email: "",
+    phone: "",
+    occupation: "",
+    marital_status: "",
+    allergies: "",
+    medication: "",
+    medical_history: "",
+    surgical_history: "",
+    surrounding_factors: "",
+    other_risk_factors: "",
+  }
+  riskForm.tobacco_consumption = false
+  riskForm.tobacco_use = false
+  riskForm.alcohol_consumption = false
+  riskForm.alcohol_use = false
+  patientStore.clearPatient()
+}
 
 function validateStep(step: number) {
   if (step === 1) {
@@ -345,21 +377,23 @@ function handleSubmit() {
 
 async function submit() {
   if (!validateStep(1) || !validateStep(2)) return
-
   try {
     form.value.tobacco_past_use = riskForm.tobacco_consumption ? "Yes" : "No"
     form.value.tobacco_current_use = riskForm.tobacco_use ? "Yes" : "No"
     form.value.alcohol_past_use = riskForm.alcohol_consumption ? "Yes" : "No"
     form.value.alcohol_current_use = riskForm.alcohol_use ? "Yes" : "No"
 
-    const doc = await newPatient.submit()
+    // do mutation to patientStore.patient
+    patientStore.setPatient(form.value)
+    
+    const doc = await registerPatient({ patientData: form.value })
 
-    toast.success(`Patient registered: ${doc.name}`)
-    emit("registered", doc)
+    toast.success(`Patient registered: ${doc.data?.patient_id}`)
+    emit("registered", doc?.data)
     show.value = false
   } catch (error: any) {
-    console.error("Patient registration failed:", error)
-    const serverError = newPatient.error as any
+    console.error("Patient registration failed:", state?.error)
+    const serverError = state?.error as any
     const message = serverError?.messages?.join("\n") || serverError?.exception || error?.message
     toast.error(message || "Please try again.")
   }
