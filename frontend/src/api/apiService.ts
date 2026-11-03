@@ -28,12 +28,12 @@ export const apiService = {
    * Fetches a list of records from a DocType with serialized fields and filters
    */
   getList: <T = any>(
-    doctype: string, 
-    fields: string[] = ['*'], 
+    url: string, 
+    fields?: string[], 
     filters?: Record<string, any>, 
     options: RequestOptions = {}
   ) => {
-    return sendRequest<T>('/api/resource/' + doctype, {
+    return sendRequest<T>(url, {
       method: 'GET',
       params: {
         fields: JSON.stringify(fields),

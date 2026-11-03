@@ -6,7 +6,7 @@ import { defineStore } from 'pinia'
 
 export interface HealthcarePractitioner {
   // Basic Details
-  namingSeries?: string; // HLC-PRAC-.YYYY.-
+  naming_series?: string; // HLC-PRAC-.YYYY.-
   first_name: string;
   middle_name?: string;
   last_name: string;
@@ -48,10 +48,10 @@ export interface HealthcarePractitioner {
   accounts?: PartyAccount[];
 
   // Primary Address and Contact
-  practitioner_primaryContact?: string;
+  practitioner_primary_contact?: string;
   mobile_no?: string; // Read Only
   email_id?: string; // Read Only
-  practitioner_primaryAddress?: string;
+  practitioner_primary_address?: string;
   primary_address?: string;
 }
 
@@ -62,3 +62,20 @@ export interface PractitionerSchedule {
 export interface PartyAccount {
   // Define structure for income accounts table row if needed
 }
+
+export const useHealthcarePractitionerStore = defineStore('healthcarePractitioner', () => {
+  const healthcarePractitioner = ref<HealthcarePractitioner | null>(null);
+
+  const full_name = computed(() => {
+    if (!healthcarePractitioner.value) return '';
+    const { practitioner_name } = healthcarePractitioner.value;
+    return practitioner_name || '';
+  })
+  function setHealthcarePractitioner(newPractitioner: HealthcarePractitioner) {
+    healthcarePractitioner.value = newPractitioner;
+  }
+  function clearHealthcarePractitioner() {
+    healthcarePractitioner.value = null;
+  }
+  return { healthcarePractitioner, full_name, setHealthcarePractitioner, clearHealthcarePractitioner };
+});
