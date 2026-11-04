@@ -27,7 +27,7 @@ export const apiService = {
   /**
    * Fetches a list of records from a DocType with serialized fields and filters
    */
-  getList: <T = any>(
+  getList: <T = any> (
     url: string, 
     fields?: string[], 
     filters?: Record<string, any>, 

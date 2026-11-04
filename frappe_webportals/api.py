@@ -1,9 +1,25 @@
+import json
 import frappe  # pyright: ignore[reportMissingImports]
 from frappe import _ # pyright: ignore[reportMissingImports]
 from frappe.utils import getdate, time_diff_in_seconds # pyright: ignore[reportMissingImports]
 from datetime import timedelta
 from typing import TypedDict, NotRequired, BinaryIO
 import base64
+
+# 1. Define your TypedDict schema (matching your interface)
+class HealthcarePractitionerDocument(TypedDict):
+    name: NotRequired[str]
+    first_name: str
+    middle_name: NotRequired[str]
+    last_name: str
+    practitioner_name: NotRequired[str]
+    gender: NotRequired[str]
+    image: NotRequired[str]
+    status: str
+    mobile_phone: NotRequired[str]
+    department: NotRequired[str]
+    designation: NotRequired[str]
+    # Add any other allowed fields from your TypeScript interface here
 
 # 1. Define the Python equivalent of your TypeScript Interface
 class PatientDocument(TypedDict):
@@ -132,23 +148,46 @@ def get_practitioners_list(department: str | None = None):
                 "success": False,
                 "message": "Healthcare module or Practitioner DocType is not installed."
             }
+        # 1. Get allowed fields/keys from the TypedDict schema
+        allowed_keys = set(HealthcarePractitionerDocument.__annotations__.keys())
+
+        # --- SANITIZE FILTERS ---
+        raw_filters = frappe.form_dict.get("filters", {})
+        if isinstance(raw_filters, str):
+            try:
+                raw_filters = json.loads(raw_filters)
+            except Exception:
+                raw_filters = {}
 
         filters = {}
-        # Only filter by department if a valid, non-empty department string is passed
-        if department and department != "null" and department != "undefined":
-            filters["department"] = department
+        if isinstance(raw_filters, dict):
+            # Only keep filter keys that exist in our TypedDict schema
+            # (This drops any malicious or invalid keys completely)
+            filters = {k: v for k, v in raw_filters.items() if k in allowed_keys}
+
+
+        # --- SANITIZE FIELDS ---
+        raw_fields = frappe.form_dict.get("fields", [])
+        if isinstance(raw_fields, str):
+            try:
+                raw_fields = json.loads(raw_fields)
+            except Exception:
+                raw_fields = []
+
+        if raw_fields and isinstance(raw_fields, list):
+            fields = [f for f in raw_fields if f in allowed_keys]
+        else:
+            fields = []
+
+        # Fallback default fields if none provided
+        if not fields:
+            fields = ["name", "practitioner_name", "department", "status", "image"]
 
         # Fetch practitioners from the database
         practitioners = frappe.get_all(
             "Healthcare Practitioner",
             filters=filters,
-            fields=[
-                "name", 
-                "practitioner_name", 
-                "department", 
-                "op_consulting_charge", 
-                "image"
-            ],
+            fields=fields,
             order_by="practitioner_name asc"
         )
 
@@ -158,10 +197,8 @@ def get_practitioners_list(department: str | None = None):
                 # Makes relative paths like /files/doc.jpg accessible to external frontends
                 doc["image"] = frappe.utils.get_url(doc["image"])
 
-        return {
-            "success": True,
-            "practitioners": practitioners
-        }
+        return practitioners
+    
 
     except Exception as e:
         frappe.log_error(title="Fetch Practitioners Failed", message=frappe.get_traceback())

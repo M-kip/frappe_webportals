@@ -166,16 +166,16 @@
             <p class="mt-4 text-lg text-slate-700">Skilled dentists and specialists committed to helping you smile with confidence.</p>
           </div>
 
-          <div v-if="doctorsResource.loading" class="mt-16 flex justify-center py-10">
+          <div v-if="isLoading" class="mt-16 flex justify-center py-10">
             <LoadingIndicator size="lg" />
           </div>
 
-          <div v-else-if="doctors.length === 0" class="mt-16 rounded-3xl border border-slate-200 bg-slate-50 px-6 py-10 text-center text-slate-600">
+          <div v-else-if="practitioners?.length === 0" class="mt-16 rounded-3xl border border-slate-200 bg-slate-50 px-6 py-10 text-center text-slate-600">
             Our team profiles are being prepared. Please check back soon.
           </div>
 
           <div v-else class="mt-16 grid gap-8 md:grid-cols-2 xl:grid-cols-3">
-            <DoctorCard v-for="doctor in doctors" :key="doctor.name" :doctor="doctor" />
+            <DoctorCard v-for="doctor in practitioners" :key="doctor.name" :doctor="doctor" />
           </div>
         </div>
       </section>
@@ -326,6 +326,15 @@
     <LogIn v-model="userLoginOpen" />
   </div>
 </template>
+/*
+* This if for the healthcare practitioners loader, which is used to fetch the list of healthcare practitioners from the API.
+* It is used in the Home.vue page to display the list of doctors.
+*/
+<script lang="ts">
+import { useHealthcarePractitionerLoader } from "@/loaders/healthcarePractitioners.ts";
+export { useHealthcarePractitionerLoader };
+</script>
+
 
 <script setup lang="ts">
 import { ref, computed, onMounted, onUnmounted } from "vue";
@@ -380,6 +389,12 @@ const appointmentFormOpen = ref(false);
 const userProfileOpen = ref(false);
 const userLoginOpen = ref(false);
 const router = useRouter();
+
+// Load healthcare practitioners (doctors) using the loader
+const { 
+  data: practitioners,
+  isLoading,
+} = useHealthcarePractitionerLoader();
 
 const heroImages: string[] = [
   "/assets/frappe_webportals/frontend/chair1.jpeg",
@@ -457,36 +472,6 @@ const stats: Stat[] = [
   { id: 4, value: "24/7", label: "Emergency support", icon: "phone" },
 ];
 
-const fallbackDoctors = [
-  { name: "Dr. Sarah Wanjiku", qualification: "BDS, MSc Endodontics", specialty: "General Dentist", image: null, bio: "Focused on preventive care and long-term oral health for individuals and families." },
-  { name: "Dr. Daniel Kibet", qualification: "DDS, Orthodontics", specialty: "Orthodontist", image: null, bio: "Creates tailored treatment plans for beautiful, balanced and confident smiles." },
-  { name: "Dr. Aisha Noor", qualification: "BDS, Cosmetic Dentistry", specialty: "Cosmetic Dentist", image: null, bio: "Helps patients achieve natural-looking, camera-ready results with gentle precision." },
-];
-
-const doctorsResource = useList({
-  doctype: "Healthcare Practitioner",
-  fields: ["name", "practitioner_name", "status", "image", "qualifications"],
-  filters: { status: "Active" },
-  auto: true,
-});
-
-const doctors = computed(() => {
-  if (doctorsResource.data && doctorsResource.data.length > 0) {
-    return doctorsResource.data.map((doc: any) => ({
-      name: doc.practitioner_name || doc.name,
-      qualification: doc.qualifications || "DDS, PhD",
-      specialty: "Dentist",
-      image: doc.image || null,
-      bio: `${doc.practitioner_name || doc.name} brings modern dental care and a patient-first approach to every visit.`,
-    }));
-  }
-
-  if (doctorsResource.error) {
-    return fallbackDoctors;
-  }
-
-  return fallbackDoctors;
-});
 
 function bookAppointment() {
   closeMobileNav();

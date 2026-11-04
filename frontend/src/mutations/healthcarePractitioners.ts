@@ -8,7 +8,13 @@ import { type RequestOptions } from '@/api/request'
 
 export const useHealthcarePractitionerMutation = defineMutation(() => {
     const { mutate, ...mutation } = useMutation({
-        mutation: (payload: { practitionerData: Record<string, any>, options?: RequestOptions }) => healthcarePractitionerApi.createHealthcarePractitioner(payload.practitionerData, payload.options),
+        mutation: (
+            payload: { 
+                practitionerData: Record<string, any>,
+                 options?: RequestOptions 
+                }) => healthcarePractitionerApi.createHealthcarePractitioner(
+                    payload.practitionerData,
+                     payload.options),
     })
 
     return {

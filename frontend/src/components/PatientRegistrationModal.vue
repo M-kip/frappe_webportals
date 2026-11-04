@@ -220,7 +220,6 @@ import {
   DatePicker,
   Button,
   toast,
-  call,
 } from "frappe-ui"
 import { usePatientStore, type PatientDocument } from "@/stores/patient"
 import { usePatientMutation } from "@/mutations/patient"
@@ -383,7 +382,7 @@ async function submit() {
     form.value.alcohol_past_use = riskForm.alcohol_consumption ? "Yes" : "No"
     form.value.alcohol_current_use = riskForm.alcohol_use ? "Yes" : "No"
 
-    // do mutation to patientStore.patient
+    // add the form data to the patient store so that it can be used in other components
     patientStore.setPatient(form.value)
     
     const doc = await registerPatient({ patientData: form.value })

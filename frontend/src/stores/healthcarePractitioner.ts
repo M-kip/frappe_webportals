@@ -6,7 +6,7 @@ import { defineStore } from 'pinia'
 
 export interface HealthcarePractitioner {
   // Basic Details
-  naming_series?: string; // HLC-PRAC-.YYYY.-
+  name?: string; // HLC-PRAC-.YYYY.-
   first_name: string;
   middle_name?: string;
   last_name: string;

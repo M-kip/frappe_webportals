@@ -7,7 +7,12 @@ import { type RequestOptions } from '@/api/request'
 
 export const usePatientMutation = defineMutation(() => {
     const { mutate, ...mutation } = useMutation({
-        mutation: (payload: { patientData: Record<string, any>, options?: RequestOptions }) => patientApi.createPatient(payload.patientData, payload.options),
+        mutation: (payload: {
+             patientData: Record<string, any>,
+              options?: RequestOptions 
+            }) => patientApi.createPatient(
+                payload.patientData, 
+                payload.options),
     })
 
     return {

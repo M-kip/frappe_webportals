@@ -35,7 +35,7 @@ app.use(PiniaColada, {
     }),
     PiniaColadaAutoRefetch({
       // global default (can be overridden per-query)
-      autoRefetch: true,
+      autoRefetch: false,
     }),
     PiniaColadaRetry({
       // global defaults
